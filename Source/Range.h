@@ -40,12 +40,7 @@ public:
     float getEnd() const noexcept { return end; }
     void setEnd (float newEnd);
 
-    /** An optional skew factor that alters the way values are distributed across the range.
-
-        The skew factor lets you skew the mapping logarithmically so that larger or smaller
-        values are given a larger proportion of the available space.
-        
-        Uses a more computationally expensive calculation than JUCE's skew
+    /** Uses a more computationally expensive calculation than JUCE's skew
         but is more accurate for things like decade based frequency scales.
 
         A factor of 0.0 will be a straight line x=y, (skips calculation)
