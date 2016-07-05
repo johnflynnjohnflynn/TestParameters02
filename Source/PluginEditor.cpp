@@ -15,14 +15,26 @@
 //==============================================================================
 TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor& p)
     : AudioProcessorEditor (&p),
-      gainSlider {*p.getParameters()[0]},                                           // better way than indices?
+      gainStepSizeSlider {*p.getParameters()[0]},                           // better way than indices?
+      freqStepSizeSlider {*p.getParameters()[1]},
+      gainSlider         {*p.getParameters()[2]},
+      freqSlider         {*p.getParameters()[3]}, //freqStepSizeSlider.slider_},
+      qSlider            {*p.getParameters()[4]},
+      gain2Slider        {*p.getParameters()[5]},
+      freq2Slider        {*p.getParameters()[6]},
+      q2Slider           {*p.getParameters()[7]},
       processor (p)
 {
+    addAndMakeVisible (&gainStepSizeSlider);
+    addAndMakeVisible (&freqStepSizeSlider);
     addAndMakeVisible (&gainSlider);
+    addAndMakeVisible (&freqSlider);
+    addAndMakeVisible (&qSlider);
+    addAndMakeVisible (&gain2Slider);
+    addAndMakeVisible (&freq2Slider);
+    addAndMakeVisible (&q2Slider);
 
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (400, 425); // remember to set before xtor finished
 }
 
 TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
@@ -37,12 +49,16 @@ void TestParameters02AudioProcessorEditor::paint (Graphics& g)
 
 void TestParameters02AudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
-
     Rectangle<int> r (getLocalBounds().reduced (10));
 
     const int sliderHeight {50};
 
-    gainSlider.setBounds (r.removeFromTop (sliderHeight));
+    gainStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
+    freqStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
+    gainSlider        .setBounds (r.removeFromTop (sliderHeight));
+    freqSlider        .setBounds (r.removeFromTop (sliderHeight));
+    qSlider           .setBounds (r.removeFromTop (sliderHeight));
+    gain2Slider       .setBounds (r.removeFromTop (sliderHeight));
+    freq2Slider       .setBounds (r.removeFromTop (sliderHeight));
+    q2Slider          .setBounds (r.removeFromTop (sliderHeight));
 }

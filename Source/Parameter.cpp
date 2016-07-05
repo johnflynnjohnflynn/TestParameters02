@@ -15,8 +15,7 @@ namespace jf
 {
 
 //==============================================================================
-/** Non-members 
-*/
+/** Check invariants hold */
 bool isGoodParameter (float val, float min, float max, int steps)
 {
     return (min < max)
@@ -35,12 +34,14 @@ void checkParameter (float val, float min, float max, int steps)
 
 //==============================================================================
 Parameter::Parameter (String pid, String nm, float minValue, float maxValue, float def, int steps, float ske)
-   : AudioProcessorParameterWithID (pid, nm), range (minValue, maxValue, 0, ske), value (def), defaultValue (def), numSteps (steps)
+   : AudioProcessorParameterWithID (pid, nm),
+     range (minValue, maxValue, ske),
+     value (def),
+     defaultValue (def),
+     numSteps (steps)
 {
     checkParameter (def, minValue, maxValue, steps);
 }
-
-Parameter::~Parameter() {}
 
 void Parameter::setNumSteps (int newNumSteps)
 {
@@ -48,21 +49,21 @@ void Parameter::setNumSteps (int newNumSteps)
     numSteps = newNumSteps;
 }
 
-/*Parameter& Parameter::operator= (float newValue)
-{
-    checkParameter(newValue, range.getStart(), range.getEnd(), numSteps);
+                        /*Parameter& Parameter::operator= (float newValue)
+                        {
+                            checkParameter (newValue, range.getStart(), range.getEnd(), numSteps);
 
-    if (value != newValue)
-        setValueNotifyingHost (range.convertTo0to1 (newValue));
+                            if (value != newValue)
+                                setValueNotifyingHost (range.convertTo0to1 (newValue));
 
-    return *this;
-}*/
+                            return *this;
+                        }*/
 
 //==============================================================================
-float Parameter::getValue() const                              { return range.convertTo0to1 (value); }
-void Parameter::setValue (float newValue)                      { value = range.convertFrom0to1 (newValue); }
-float Parameter::getDefaultValue() const                       { return range.convertTo0to1 (defaultValue); }
-float Parameter::getValueForText (const String& text) const    { return range.convertTo0to1 (text.getFloatValue()); }
+float Parameter::getValue() const                           { return range.convertTo0to1 (value); }
+void Parameter::setValue (float newValue)                   { value = range.convertFrom0to1 (newValue); }
+float Parameter::getDefaultValue() const                    { return range.convertTo0to1 (defaultValue); }
+float Parameter::getValueForText (const String& text) const { return range.convertTo0to1 (text.getFloatValue()); }
 
 String Parameter::getText (float v, int length) const
 {
@@ -77,11 +78,9 @@ String Parameter::getText (float v, int length) const
 class ParameterTests  : public UnitTest
 {
 public:
-    ParameterTests() : UnitTest ("jf::Parameter") {}
-
-    bool floatEqualApprox (float a, float b)
+    ParameterTests()
+        : UnitTest ("jf::Parameter")
     {
-        return std::abs(b - a) < 0.01;
     }
 
     void runTest() override

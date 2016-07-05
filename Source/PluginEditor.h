@@ -31,7 +31,15 @@ public:
     void resized() override;
 
 private:
+    //==============================================================================
+    ParameterSlider gainStepSizeSlider;
+    ParameterSlider freqStepSizeSlider;
     ParameterSlider gainSlider;
+    ParameterSlider freqSlider;
+    ParameterSlider qSlider;
+    ParameterSlider gain2Slider;
+    ParameterSlider freq2Slider;
+    ParameterSlider q2Slider;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

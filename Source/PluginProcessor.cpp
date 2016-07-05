@@ -14,12 +14,30 @@
 
 //==============================================================================
 TestParameters02AudioProcessor::TestParameters02AudioProcessor()
+                                           // ID            Name               Min      Max     Def numSteps skew broadcastParam
+    : gainStepSizeParam {new jf::Parameter {"gainStepID", "Gain step size",  0.05f,     3.0f,   0.5f             }},
+      freqStepSizeParam {new jf::Parameter {"freqStepID", "Freq step size",   2.0f,    49.0f,  25.0f,  48        }},
+      gainParam         {new jf::Parameter {"gainID",     "Gain",           -12.0f,    12.0f,   0.0f,   5,   0.0f}},
+      freqParam         {new jf::Parameter {"freqID",     "Freq",            20.0f, 20000.0f, 630.0f,  49,   3.0f}},
+      qParam            {new jf::Parameter {"qID",        "Q",                0.0707f,  7.07f,  0.707f,19,   2.0f}},
+      gain2Param        {new jf::Parameter {"gain2ID",    "Gain2",          -12.0f,    12.0f,   0.0f,   5,   0.0f}},
+      freq2Param        {new jf::Parameter {"freq2ID",    "Freq2",           20.0f, 20000.0f, 630.0f,  49,   3.0f}},
+      q2Param           {new jf::Parameter {"q2ID",       "Q2",               0.0707f,  7.07f,  0.707f,19,   2.0f}}
 {
    #if JF_UNIT_TESTS
     jf::runUnitTests();
    #endif
 
-    addParameter (gainParam = new jf::Parameter {"id", "name", -1, 1, 0, 0, 0});
+        // addParameter()s to the processor's OwnedArray<AudioProcessorParameter>
+        // managedParameters (which takes ownership and deletes appropriately)
+    addParameter (gainStepSizeParam);
+    addParameter (freqStepSizeParam);
+    addParameter (gainParam);
+    addParameter (freqParam);
+    addParameter (qParam);
+    addParameter (gain2Param);
+    addParameter (freq2Param);
+    addParameter (q2Param);
 }
 
 TestParameters02AudioProcessor::~TestParameters02AudioProcessor()
@@ -131,10 +149,6 @@ void TestParameters02AudioProcessor::processBlock (AudioSampleBuffer& buffer, Mi
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    //p->setValueNotifyingHost (val+0.5);
-    std::cout << gainParam->get() << " ";
-    //val *= -1;
-
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
@@ -143,6 +157,13 @@ void TestParameters02AudioProcessor::processBlock (AudioSampleBuffer& buffer, Mi
 
         // ..do something to the data...
     }
+    
+    std::cout << getParameters()[1]->getName(64) << " " << (String) getParameters()[1]->getValue() << "\n";
+    std::cout << "*freqStep  " << (String) *freqStepSizeParam << "\n";
+    std::cout << getParameters()[3]->getName(64) << " " << (String) getParameters()[3]->getValue() << "\n";
+    std::cout << "*freqparam " << (String) *freqParam << "\n";
+    /*std::cout << "*qparam " << (String) *qParam << "\n";*/
+    std::cout << "\n";
 }
 
 //==============================================================================

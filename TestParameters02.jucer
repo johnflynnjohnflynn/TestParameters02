@@ -22,6 +22,7 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="KrvenP" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+      <FILE id="mmJ7be" name="Range.cpp" compile="1" resource="0" file="Source/Range.cpp"/>
       <FILE id="Q7CInT" name="Range.h" compile="0" resource="0" file="Source/Range.h"/>
       <FILE id="cxivNa" name="Slider.h" compile="0" resource="0" file="Source/Slider.h"/>
       <FILE id="Z4kR9S" name="Test.cpp" compile="1" resource="0" file="Source/Test.cpp"/>
