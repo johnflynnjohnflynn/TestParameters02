@@ -18,6 +18,8 @@ TestParameters02AudioProcessor::TestParameters02AudioProcessor()
    #if JF_UNIT_TESTS
     jf::runUnitTests();
    #endif
+
+    addParameter (gainParam = new jf::Parameter {"id", "name", -1, 1, 0, 0, 0});
 }
 
 TestParameters02AudioProcessor::~TestParameters02AudioProcessor()
@@ -129,11 +131,15 @@ void TestParameters02AudioProcessor::processBlock (AudioSampleBuffer& buffer, Mi
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
+    //p->setValueNotifyingHost (val+0.5);
+    std::cout << gainParam->get() << " ";
+    //val *= -1;
+
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        float* channelData = buffer.getWritePointer (channel);
+        //float* channelData = buffer.getWritePointer (channel);
 
         // ..do something to the data...
     }

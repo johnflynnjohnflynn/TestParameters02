@@ -14,6 +14,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 
+#include "Slider.h"
+
 
 //==============================================================================
 /**
@@ -29,6 +31,8 @@ public:
     void resized() override;
 
 private:
+    ParameterSlider gainSlider;
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     TestParameters02AudioProcessor& processor;

@@ -62,7 +62,8 @@ public:
 
 private:
     //==============================================================================
-    jf::Parameter p {"id", "name", 0, 100, 50, 50, 2};
+    jf::Parameter* gainParam {nullptr};
+    float val {-0.5};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessor)
 };
