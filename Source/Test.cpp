@@ -10,22 +10,8 @@
 
 #include "Test.h"
 
-namespace test {
-
 //==============================================================================
-/*void ConsoleLogger::logMessage (const String& message) override
-{
-    std::cout << message << std::endl;
-}*/
-
-//==============================================================================
-/*void ConsoleUnitTestRunner::logMessage (const String& message)
-{
-    Logger::writeToLog (message);
-}*/
-
-//==============================================================================
-void runUnitTests()
+void jf::runUnitTests()
 {
     ScopedPointer<ConsoleLogger> logger;
     Logger::setCurrentLogger (logger);
@@ -33,5 +19,3 @@ void runUnitTests()
     ConsoleUnitTestRunner runner;
     runner.runAllTests();
 }
-
-} // namespace test

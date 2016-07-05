@@ -15,9 +15,9 @@
 //==============================================================================
 TestParameters02AudioProcessor::TestParameters02AudioProcessor()
 {
-  #if JF_UNIT_TESTS
-    test::runUnitTests();
-  #endif
+   #if JF_UNIT_TESTS
+    jf::runUnitTests();
+   #endif
 }
 
 TestParameters02AudioProcessor::~TestParameters02AudioProcessor()

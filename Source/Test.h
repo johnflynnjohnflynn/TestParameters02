@@ -13,26 +13,29 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-namespace test {
+namespace jf {
 
 //==============================================================================
-class ConsoleLogger : public Logger
-{
-    //void logMessage (const String& message) override; // uncomment and customise these if needed
-};
-
-//==============================================================================
-class ConsoleUnitTestRunner : public UnitTestRunner
-{
-    //void logMessage (const String& message) override;
-};
+class ConsoleLogger : public Logger {};
+class ConsoleUnitTestRunner : public UnitTestRunner {};
 
 //==============================================================================
 /**
-    Creates a UnitTestRunner then calls runAllTests()
+    Namespace level method creates a UnitTestRunner then calls runAllTests() 
+    when JF_UNIT_TESTS=1 preprocessor flag set in jucer.
+
+   #if JF_UNIT_TESTS
+    jf::runUnitTests();
+   #endif
+   
+    ...in plugin processor's constructor will run all unit tests automatically. 
+    (See bottom of classes for unit tests i.e. @see RangeLog)
+    
+    Leaked object assertions? Remember to set JF_UNIT_TEST=0 and search for a 
+    problem jassert outside of the tests.
 */
 void runUnitTests();
 
-} // namespace test
+} // namespace jf
 
 #endif  // TESTJF_H_INCLUDED
