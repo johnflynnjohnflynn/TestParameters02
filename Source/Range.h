@@ -6,31 +6,6 @@
     Author:  John Flynn
 
   ==============================================================================
-  ==============================================================================
-
-   This file is part of the juce_core module of the JUCE library.
-   Copyright (c) 2015 - ROLI Ltd.
-
-   Permission to use, copy, modify, and/or distribute this software for any purpose with
-   or without fee is hereby granted, provided that the above copyright notice and this
-   permission notice appear in all copies.
-
-   THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD
-   TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN
-   NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
-   DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
-   IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
-   CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-   ------------------------------------------------------------------------------
-
-   NOTE! This permissive ISC license applies ONLY to files within the juce_core module!
-   All other JUCE modules are covered by a dual GPL/commercial license, so if you are
-   using any other modules, be sure to check that you also comply with their license.
-
-   For more details, visit www.juce.com
-
-  ==============================================================================
 */
 
 #ifndef RANGE_H_INCLUDED
@@ -39,8 +14,177 @@
 
 namespace jf {
 
+template <typename ValueType>                                       // forward declares
+bool isGood (ValueType start, ValueType end, ValueType interval);
+template <typename ValueType>
+void checkInvariants (ValueType start, ValueType end, ValueType interval);
+
 //==============================================================================
-/** Invariants checkers as non-members. */
+/** 
+    Represents a mapping between an arbitrary range of values and a
+    normalised 0->1 range.
+
+    The properties of the mapping also include an optional snapping interval
+    and skew-factor.
+    
+    Modifies JUCE's own NormalisableRange to allow more complex logarithmic
+    skew factor.
+
+    @see juce::NormalisableRange
+*/
+template <typename ValueType>
+class RangeLog
+{
+public:
+    /** Creates a continuous range that performs a dummy mapping.
+    */
+    RangeLog() // noexcept                                  // All xtors need to
+        : start    (static_cast<ValueType> (0)),            // except for unit tests!
+          end      (static_cast<ValueType> (1)),
+          interval (static_cast<ValueType> (0)),
+          skewLog  (static_cast<ValueType> (0))
+    {
+    }
+
+    /** Creates a RangeLog with a given range, interval and skew factor. 
+    */
+    RangeLog (ValueType rangeStart,
+              ValueType rangeEnd,
+              ValueType intervalValue,
+              ValueType skewLogFactor)
+        : start (rangeStart), end (rangeEnd),
+          interval (intervalValue), skewLog (skewLogFactor)
+    {
+        checkInvariants (start, end, interval);
+    }
+
+    /** Creates a RangeLog with a given range and interval, but dummy skew-factors. 
+    */
+    RangeLog (ValueType rangeStart,
+              ValueType rangeEnd,
+              ValueType intervalValue)
+        : start (rangeStart), end (rangeEnd),
+          interval (intervalValue), skewLog (static_cast<ValueType> (0))
+    {
+        checkInvariants (start, end, interval);
+    }
+
+    /** Creates a RangeLog with a given range, continuous interval, but a dummy skew-factor. 
+    */
+    RangeLog (ValueType rangeStart,
+              ValueType rangeEnd)
+        : start (rangeStart), end (rangeEnd),
+          interval(), skewLog (static_cast<ValueType> (0))
+    {
+        checkInvariants (start, end, interval);
+    }
+
+    /** Uses the properties of this mapping to convert a non-normalised value to
+        its 0->1 representation.
+    */
+    ValueType convertTo0to1 (ValueType v) const noexcept
+    {
+        ValueType proportion = (v - start) / (end - start);
+
+        if (skewLog != static_cast<ValueType> (0))
+        {
+            const ValueType one = static_cast<ValueType> (1.0);
+            const ValueType ten = static_cast<ValueType> (10.0);
+            const ValueType tenPowSkewLog = std::pow (ten, skewLog);
+            proportion = (std::log10 ((proportion * (tenPowSkewLog - one)) + one))
+                        / std::log10 (tenPowSkewLog);
+        }
+
+        return proportion;
+    }
+
+    /** Uses the properties of this mapping to convert a normalised 0->1 value to
+        its full-range representation.
+    */
+    ValueType convertFrom0to1 (ValueType proportion) const noexcept
+    {
+        if (skewLog != static_cast<ValueType> (0))
+        {
+            const ValueType one = static_cast<ValueType> (1.0);
+            const ValueType ten = static_cast<ValueType> (10.0);
+            const ValueType tenPowSkewLog = std::pow (ten, skewLog);
+            proportion = (std::pow (tenPowSkewLog, proportion) - one)
+                       / (tenPowSkewLog - one);
+        }
+
+        return start + ((end - start) * proportion);
+    }
+
+    /** The start of the non-normalised range. 
+    */
+    ValueType getStart() const noexcept { return start; }
+    void setStart (ValueType newStart)
+    {
+        checkInvariants (newStart, end, interval);
+        start = newStart;
+    }
+
+    /** The end of the non-normalised range. 
+    */
+    ValueType getEnd() const noexcept { return end; }
+    void setEnd (ValueType newEnd)
+    {
+        checkInvariants (start, newEnd, interval);
+        end = newEnd;
+    }
+
+    /** The snapping interval that should be used (in non-normalised value). 
+        Use 0 for a continuous range. 
+    */
+    ValueType getInterval() const noexcept { return interval; }
+    void setInterval (ValueType newInterval)
+    {
+        checkInvariants (start, end, newInterval);
+        interval = newInterval;
+    }
+
+    /** An optional skew factor that alters the way values are distributed across the range.
+
+        The skew factor lets you skew the mapping logarithmically so that larger or smaller
+        values are given a larger proportion of the available space.
+        
+        Uses a more computationally expensive calculation than JUCE's skew
+        but is more accurate for things like decade based frequency scales.
+
+        A factor of 0.0 will be a straight line x=y, (skips calculation)
+        
+        A factor of 1.0 will have 1 log decade per scale, 2.0 will give 2 etc. 
+        A factor of -1.0 will be the inverse of +1.0.
+
+        For a 3 decade Hz frequency scale, start and end should be 20 and 20000 
+        respectively and skewLog should be set to 3.0.
+    */
+    ValueType getSkewLog() const noexcept { return interval; }
+    void setSkewLog (ValueType newSkewLog)
+    {
+        checkInvariants (start, end, interval);
+        skewLog = newSkewLog;
+    }
+
+private:
+    ValueType start;
+    ValueType end;
+    ValueType interval;
+    ValueType skewLog;
+};
+
+//==============================================================================
+/** Non-members 
+*/
+template <typename ValueType>
+bool operator== (const RangeLog<ValueType>& a, const RangeLog<ValueType>& b)
+{
+    return a.getStart()    == b.getStart()
+        && a.getEnd()      == b.getEnd()
+        && a.getInterval() == b.getInterval()
+        && a.getSkewLog()  == b.getSkewLog();
+}
+
 template <typename ValueType>
 bool isGood (ValueType start, ValueType end, ValueType interval)
 {
@@ -63,161 +207,6 @@ void checkInvariants (ValueType start, ValueType end, ValueType interval) // ske
     jassert (isGood(start, end, interval));
 }
 
-//==============================================================================
-/**
-    Represents a mapping between an arbitrary range of values and a
-    normalised 0->1 range.
-
-    The properties of the mapping also include an optional snapping interval
-    and skew-factor.
-    
-    This modifies JUCE's own NormalisableRange to allow more complex logarithmic
-    skew factor.
-
-    @see juce::NormalisableRange
-*/
-template <typename ValueType>
-class RangeLog
-{
-public:
-    /** Creates a continuous range that performs a dummy mapping. */
-    RangeLog() // noexcept                                              // All xtors need to
-        : start    (static_cast<ValueType> (0)),                        // except for unit tests!
-          end      (static_cast<ValueType> (1)),
-          interval (static_cast<ValueType> (0)),
-          skewLog  (static_cast<ValueType> (0))
-    {
-    }
-
-    /** Creates a RangeLog with a given range, interval and skew factor. */
-    RangeLog (ValueType rangeStart,
-              ValueType rangeEnd,
-              ValueType intervalValue,
-              ValueType skewLogFactor)
-        : start (rangeStart), end (rangeEnd),
-          interval (intervalValue), skewLog (skewLogFactor)
-    {
-        checkInvariants (start, end, interval);
-    }
-
-    /** Creates a RangeLog with a given range and interval, but dummy skew-factors. */
-    RangeLog (ValueType rangeStart,
-              ValueType rangeEnd,
-              ValueType intervalValue)
-        : start (rangeStart), end (rangeEnd),
-          interval (intervalValue), skewLog (static_cast<ValueType> (0))
-    {
-        checkInvariants (start, end, interval);
-    }
-
-    /** Creates a RangeLog with a given range, continuous interval, but a dummy skew-factor. */
-    RangeLog (ValueType rangeStart,
-              ValueType rangeEnd)
-        : start (rangeStart), end (rangeEnd),
-          interval(), skewLog (static_cast<ValueType> (0))
-    {
-        checkInvariants (start, end, interval);
-    }
-
-    /** Uses the properties of this mapping to convert a non-normalised value to
-        its 0->1 representation.
-    */
-    ValueType convertTo0to1 (ValueType v) const noexcept
-    {
-        ValueType proportion = (v - start) / (end - start);
-
-        if (skewLog != static_cast<ValueType> (0))
-        {
-            const ValueType one = static_cast<ValueType> (1.0);
-            const ValueType ten = static_cast<ValueType> (10.0);
-            const ValueType tenPowSkewLog = std::pow (ten, skewLog);
-            proportion = (std::log10 ((proportion * (tenPowSkewLog - one)) + one)) / std::log10 (tenPowSkewLog);
-        }
-
-        return proportion;
-    }
-
-    /** Uses the properties of this mapping to convert a normalised 0->1 value to
-        its full-range representation.
-    */
-    ValueType convertFrom0to1 (ValueType proportion) const noexcept
-    {
-        if (skewLog != static_cast<ValueType> (0))
-        {
-            const ValueType one = static_cast<ValueType> (1.0);
-            const ValueType ten = static_cast<ValueType> (10.0);
-            const ValueType tenPowSkewLog = std::pow (ten, skewLog);
-            proportion = (std::pow (tenPowSkewLog, proportion) - one) / (tenPowSkewLog - one);
-        }
-
-        return start + ((end - start) * proportion);
-    }
-
-    /** The start of the non-normalised range. */
-    ValueType getStart() const noexcept { return start; }
-    void setStart(ValueType newStart)
-    {
-        checkInvariants (newStart, end, interval);
-        start = newStart;
-    }
-
-    /** The end of the non-normalised range. */
-    ValueType getEnd() const noexcept { return end; }
-    void setEnd (ValueType newEnd)
-    {
-        checkInvariants (start, newEnd, interval);
-        end = newEnd;
-    }
-
-    /** The snapping interval that should be used (in non-normalised value). Use 0 for a continuous range. */
-    ValueType getInterval() const noexcept { return interval; }
-    void setInterval (ValueType newInterval)
-    {
-        checkInvariants (start, end, newInterval);
-        interval = newInterval;
-    }
-
-    /** An optional skew factor that alters the way values are distribute across the range.
-
-        The skew factor lets you skew the mapping logarithmically so that larger or smaller
-        values are given a larger proportion of the available space.
-        
-        Uses a more computationally expensive calculation than JUCE's skew
-        but is more accurate for things like decade based frequency scales.
-
-        A factor of 0.0 will be a straight line x=y, (skips
-        calculation) 
-        
-        A factor of 1.0 will have 1 log decade per scale, 2.0 will give 2 etc. A factor of -1.0
-        will be the inverse of +1.0.
-
-        For a 3 decade Hz frequency scale, start and end should be 20 and 20000 respectively and
-        skewLog should be set to 3.0.
-    */
-    ValueType getSkewLog() const noexcept { return interval; }
-    void setSkewLog (ValueType newSkewLog)
-    {
-        checkInvariants (start, end, interval);
-        skewLog = newSkewLog;
-    }
-
-private:
-    ValueType start;
-    ValueType end;
-    ValueType interval;
-    ValueType skewLog;
-};
-
-//==============================================================================
-template <typename ValueType>
-bool operator== (const RangeLog<ValueType>& a, const RangeLog<ValueType>& b)
-{
-    return a.getStart()    == b.getStart()
-        && a.getEnd()      == b.getEnd()
-        && a.getInterval() == b.getInterval()
-        && a.getSkewLog()  == b.getSkewLog();
-}
-
 } // namespace jf
 
 
@@ -229,7 +218,7 @@ class RangeLogTests  : public UnitTest
 public:
     RangeLogTests() : UnitTest ("jf::RangeLog<float>") {}
 
-    bool floatEqual (float a, float b)
+    bool floatEqualApprox (float a, float b)
     {
         return std::abs(b - a) < 0.01;
     }
@@ -288,20 +277,21 @@ public:
         jf::RangeLog<float> rFreq {20, 20000, 0, 3}; // 3 decade log frequency scale
         expect (rFreq.convertTo0to1 (20000) == 1.0f);
         expect (rFreq.convertTo0to1 (20)    == 0.0f);
-        expect (floatEqual (rFreq.convertTo0to1 (632.456), 0.5f));
-        expect (floatEqual (rFreq.convertTo0to1 (200), 0.333f));
-        expect (floatEqual (rFreq.convertTo0to1 (2000), 0.666f));
-        expect (floatEqual (rFreq.convertTo0to1 (6300), 0.833));
+        expect (floatEqualApprox (rFreq.convertTo0to1 (632.456), 0.5f));
+        expect (floatEqualApprox (rFreq.convertTo0to1 (200), 0.333f));
+        expect (floatEqualApprox (rFreq.convertTo0to1 (2000), 0.666f));
+        expect (floatEqualApprox (rFreq.convertTo0to1 (6300), 0.833));
 
         beginTest ("convertFrom0to1()");
-        expect (floatEqual (rFreq.convertFrom0to1 (0.5), 632.456f));
-        expect (floatEqual (rFreq.convertFrom0to1 (0.0), 20.0f));
-        expect (floatEqual (rFreq.convertFrom0to1 (1.0), 20000.0f));
-        expect (floatEqual (rFreq.convertFrom0to1 (0.33333), 200.0f));     // long decimal placings needed for these?
-        expect (floatEqual (rFreq.convertFrom0to1 (0.666666), 2000.0f));
-        expect (floatEqual (rFreq.convertFrom0to1 (0.8333333), 6324.56f));
+        expect (floatEqualApprox (rFreq.convertFrom0to1 (0.5), 632.456f));
+        expect (floatEqualApprox (rFreq.convertFrom0to1 (0.0), 20.0f));
+        expect (floatEqualApprox (rFreq.convertFrom0to1 (1.0), 20000.0f));
+        expect (floatEqualApprox (rFreq.convertFrom0to1 (0.33333), 200.0f));
+        expect (floatEqualApprox (rFreq.convertFrom0to1 (0.666666), 2000.0f));
+        expect (floatEqualApprox (rFreq.convertFrom0to1 (0.8333333), 6324.56f));
+                                                         // long decimals needed, why?
 
-                                                        // Todo: beginTest ("RangeLog<float>::snapToLegalValue()");
+                                    // Todo: beginTest ("RangeLog<float>::snapToLegalValue()");
 
         jf::RangeLog<float> rMemSets;
 
