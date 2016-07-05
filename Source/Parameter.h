@@ -38,13 +38,12 @@ public:
 
     ~Parameter() {}
 
-    float get() const noexcept          { return value; }
-    operator float() const noexcept     { return value; } // allows dereference access
-        //Parameter& operator= (float newValue); // changes value
+    float get() const noexcept                  { return value; }
+    operator float() const noexcept             { return value; } // allows dereference access
 
     jf::RangeLog range;                                  // should we? setRange methods instead?
 
-    int getNumSteps() const override    { return numSteps; }
+    int getNumSteps() const noexcept override   { return numSteps; }
     void setNumSteps (int newNumSteps);
 
 private:

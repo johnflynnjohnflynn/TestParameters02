@@ -14,7 +14,6 @@ namespace jf
 {
 
 //==============================================================================
-/** Non-member == */
 bool operator== (const RangeLog& a, const RangeLog& b)
 {
     return a.getStart()    == b.getStart()
@@ -22,10 +21,9 @@ bool operator== (const RangeLog& a, const RangeLog& b)
         && a.getSkewLog()  == b.getSkewLog();
 }
 
-/** Check invariants hold */
 bool isGoodRangeLog (float start, float end)
 {
-    return (end > start);
+    return (end > start);       // invariants here
 }
 
 void checkRangeLog (float start, float end) // skewLog can be any value

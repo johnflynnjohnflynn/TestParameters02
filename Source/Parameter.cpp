@@ -15,10 +15,9 @@ namespace jf
 {
 
 //==============================================================================
-/** Check invariants hold */
 bool isGoodParameter (float val, float min, float max, int steps)
 {
-    return (min < max)
+    return (min < max)                      // invariants here
         && (min <= val) && (val <= max)
         && (0 <= steps);
 }
@@ -48,16 +47,6 @@ void Parameter::setNumSteps (int newNumSteps)
     checkParameter (value, range.getStart(), range.getEnd(), newNumSteps);
     numSteps = newNumSteps;
 }
-
-                        /*Parameter& Parameter::operator= (float newValue)
-                        {
-                            checkParameter (newValue, range.getStart(), range.getEnd(), numSteps);
-
-                            if (value != newValue)
-                                setValueNotifyingHost (range.convertTo0to1 (newValue));
-
-                            return *this;
-                        }*/
 
 //==============================================================================
 float Parameter::getValue() const                           { return range.convertTo0to1 (value); }
