@@ -12,12 +12,13 @@
 #define RANGE_H_INCLUDED
 
 
-namespace jf {
+namespace jf
+{
 
 template <typename ValueType>                                       // forward declares
-bool isGood (ValueType start, ValueType end, ValueType interval);
+bool isGoodRangeLog (ValueType start, ValueType end, ValueType interval);
 template <typename ValueType>
-void checkInvariants (ValueType start, ValueType end, ValueType interval);
+void checkRangeLog (ValueType start, ValueType end, ValueType interval);
 
 //==============================================================================
 /** 
@@ -55,7 +56,7 @@ public:
         : start (rangeStart), end (rangeEnd),
           interval (intervalValue), skewLog (skewLogFactor)
     {
-        checkInvariants (start, end, interval);
+        checkRangeLog (start, end, interval);
     }
 
     /** Creates a RangeLog with a given range and interval, but dummy skew-factors. 
@@ -66,7 +67,7 @@ public:
         : start (rangeStart), end (rangeEnd),
           interval (intervalValue), skewLog (static_cast<ValueType> (0))
     {
-        checkInvariants (start, end, interval);
+        checkRangeLog (start, end, interval);
     }
 
     /** Creates a RangeLog with a given range, continuous interval, but a dummy skew-factor. 
@@ -76,7 +77,7 @@ public:
         : start (rangeStart), end (rangeEnd),
           interval(), skewLog (static_cast<ValueType> (0))
     {
-        checkInvariants (start, end, interval);
+        checkRangeLog (start, end, interval);
     }
 
     /** Uses the properties of this mapping to convert a non-normalised value to
@@ -120,7 +121,7 @@ public:
     ValueType getStart() const noexcept { return start; }
     void setStart (ValueType newStart)
     {
-        checkInvariants (newStart, end, interval);
+        checkRangeLog (newStart, end, interval);
         start = newStart;
     }
 
@@ -129,7 +130,7 @@ public:
     ValueType getEnd() const noexcept { return end; }
     void setEnd (ValueType newEnd)
     {
-        checkInvariants (start, newEnd, interval);
+        checkRangeLog (start, newEnd, interval);
         end = newEnd;
     }
 
@@ -139,7 +140,7 @@ public:
     ValueType getInterval() const noexcept { return interval; }
     void setInterval (ValueType newInterval)
     {
-        checkInvariants (start, end, newInterval);
+        checkRangeLog (start, end, newInterval);
         interval = newInterval;
     }
 
@@ -162,7 +163,7 @@ public:
     ValueType getSkewLog() const noexcept { return interval; }
     void setSkewLog (ValueType newSkewLog)
     {
-        checkInvariants (start, end, interval);
+        checkRangeLog (start, end, interval);
         skewLog = newSkewLog;
     }
 
@@ -186,7 +187,7 @@ bool operator== (const RangeLog<ValueType>& a, const RangeLog<ValueType>& b)
 }
 
 template <typename ValueType>
-bool isGood (ValueType start, ValueType end, ValueType interval)
+bool isGoodRangeLog (ValueType start, ValueType end, ValueType interval)
 {
     return (end > start)
         && (interval >= static_cast<ValueType> (0))
@@ -198,13 +199,13 @@ bool isGood (ValueType start, ValueType end, ValueType interval)
     regular run-time assertions
 */
 template <typename ValueType>
-void checkInvariants (ValueType start, ValueType end, ValueType interval) // skewLog can be any value
+void checkRangeLog (ValueType start, ValueType end, ValueType interval) // skewLog can be any value
 {
    #if JF_UNIT_TESTS
-    if (! isGood(start, end, interval)) throw std::logic_error ("Invalid RangeLog<>\n");
+    if (! isGoodRangeLog(start, end, interval)) throw std::logic_error ("Invalid RangeLog<>\n");
    #endif // JF_UNIT_TESTS
 
-    jassert (isGood(start, end, interval));
+    jassert (isGoodRangeLog(start, end, interval));
 }
 
 } // namespace jf
@@ -259,7 +260,7 @@ public:
         jf::RangeLog<float> r2Args {0, 1};
         expect (r2Args == r1);
 
-        beginTest ("checkInvariants()");
+        beginTest ("checkRangeLog()");
         expectDoesNotThrow ((jf::RangeLog<float> {-50, 50, 1, -2}));
         expectThrows ((jf::RangeLog<float> {0, -1, 1, 0})); // end before start
         expectThrows ((jf::RangeLog<float> {0, 0, 0, 0}));  // end == start

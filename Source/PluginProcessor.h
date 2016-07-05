@@ -16,6 +16,7 @@
 #include "Test.h"
 
 #include "Range.h"
+#include "Parameter.h"
 
 //==============================================================================
 /**
@@ -61,6 +62,8 @@ public:
 
 private:
     //==============================================================================
+    jf::Parameter p {"id", "name", 0, 100, 50, 50, 2};
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessor)
 };
 

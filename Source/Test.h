@@ -29,7 +29,10 @@ class ConsoleUnitTestRunner : public UnitTestRunner {};
    #endif
    
     ...in plugin processor's constructor will run all unit tests automatically. 
-    (See bottom of classes for unit tests i.e. @see RangeLog)
+    You will probably need an instance of the class in the plugin somewhere so
+    that at the static unit test member is created.
+
+    See bottom of classes for unit tests i.e. @see RangeLog
     
     Leaked object assertions? Remember to set JF_UNIT_TEST=0 and search for a 
     problem jassert outside of the tests.

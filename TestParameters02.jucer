@@ -13,6 +13,8 @@
               defines="JF_UNIT_TESTS=1">
   <MAINGROUP id="y6Q9xL" name="TestParameters02">
     <GROUP id="{22AAC7BD-4C8B-133E-BB8D-E718B9CB5426}" name="Source">
+      <FILE id="Uo8roE" name="Parameter.cpp" compile="1" resource="0" file="Source/Parameter.cpp"/>
+      <FILE id="k5WyrE" name="Parameter.h" compile="0" resource="0" file="Source/Parameter.h"/>
       <FILE id="wYvHVs" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="MtxUaU" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
