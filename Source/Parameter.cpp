@@ -24,10 +24,6 @@ bool isGoodParameter (float val, float min, float max, int steps)
         && (0 <= steps);
 }
 
-/** Throws on creation of invalid object if JF_UNIT_TESTS preprocessor flag
-    is set in jucer. Unit test then catches any throws. Otherwise enforce 
-    regular run-time assertions
-*/
 void checkParameter (float val, float min, float max, int steps)
 {
    #if JF_UNIT_TESTS
@@ -46,21 +42,10 @@ Parameter::Parameter (String pid, String nm, float minValue, float maxValue, flo
 
 Parameter::~Parameter() {}
 
-float Parameter::getValue() const                              { return range.convertTo0to1 (value); }
-void Parameter::setValue (float newValue)                      { value = range.convertFrom0to1 (newValue); }
-float Parameter::getDefaultValue() const                       { return range.convertTo0to1 (defaultValue); }
-float Parameter::getValueForText (const String& text) const    { return range.convertTo0to1 (text.getFloatValue()); }
-
 void Parameter::setNumSteps (int newNumSteps)
 {
     checkParameter (value, range.getStart(), range.getEnd(), newNumSteps);
     numSteps = newNumSteps;
-}
-
-String Parameter::getText (float v, int length) const
-{
-    String asText (range.convertFrom0to1 (v)); // see JUCE to constrain decimal places
-    return length > 0 ? asText.substring (0, length) : asText;
 }
 
 /*Parameter& Parameter::operator= (float newValue)
@@ -72,6 +57,18 @@ String Parameter::getText (float v, int length) const
 
     return *this;
 }*/
+
+//==============================================================================
+float Parameter::getValue() const                              { return range.convertTo0to1 (value); }
+void Parameter::setValue (float newValue)                      { value = range.convertFrom0to1 (newValue); }
+float Parameter::getDefaultValue() const                       { return range.convertTo0to1 (defaultValue); }
+float Parameter::getValueForText (const String& text) const    { return range.convertTo0to1 (text.getFloatValue()); }
+
+String Parameter::getText (float v, int length) const
+{
+    String asText (range.convertFrom0to1 (v)); // see JUCE to constrain decimal places
+    return length > 0 ? asText.substring (0, length) : asText;
+}
 
 
 //==============================================================================
