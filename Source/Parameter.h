@@ -48,6 +48,7 @@ public:
     void setNumSteps (int newNumSteps);
 
     const jf::RangeLog& getRange() const        { return range; }
+    void setRange (float start, float end, float skewLog);
 
 private:
     jf::RangeLog range;

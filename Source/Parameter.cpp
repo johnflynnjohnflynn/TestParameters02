@@ -48,6 +48,13 @@ void Parameter::setNumSteps (int newNumSteps)
     numSteps = newNumSteps;
 }
 
+void Parameter::setRange(float start, float end, float skewLog)
+{
+    range.setStart (start);     // range does invariant checks
+    range.setEnd (end);
+    range.setSkewLog (skewLog);
+}
+
 //==============================================================================
 float Parameter::getValue() const                           { return range.convertTo0to1 (value); }
 void Parameter::setValue (float newValue)                   { value = range.convertFrom0to1 (newValue); }
@@ -111,9 +118,14 @@ public:
         expect (steps.getNumSteps() == 10);
         expectThrows (steps.setNumSteps(-5));
 
-        beginTest("getRange()");
+        beginTest ("getRange()");
         jf::RangeLog range {20, 20000, 3};
         expect (freq.getRange() == range);
+
+        beginTest ("setRange(f,f,f)");
+        expectDoesNotThrow (freq.setRange (0, 1, 0));
+        jf::RangeLog range010 {0, 1, 0};
+        expect (freq.getRange() == range010);
     }
 };
 
