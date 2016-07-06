@@ -142,8 +142,6 @@ public:
         expect (floatEqualApprox (rFreq.convertFrom0to1 (0.8333333), 6324.56f));
                                                          // long decimals needed, why?
 
-                                    // Todo: beginTest ("RangeLog::snapToLegalValue()");
-
         RangeLog rMembSets {0, 1, 0};
         RangeLog r1       {0, 1, 0};
 

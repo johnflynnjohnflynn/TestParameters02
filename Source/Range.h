@@ -21,6 +21,17 @@ namespace jf
     skew factor. (Not templated, just float.)
 
     @see juce::NormalisableRange
+
+    Uses a more computationally expensive calculation than JUCE's skew
+    but is more accurate for things like decade based frequency scales.
+
+    A factor of 0.0 will be a straight line x=y, (skips calculation)
+    
+    A factor of 1.0 will have 1 log decade per scale, 2.0 will give 2 etc. 
+    A factor of -1.0 will be the inverse of +1.0.
+
+    For a 3 decade Hz frequency scale, start and end should be 20 and 20000 
+    respectively and skewLog should be set to 3.0.
 */
 
 class RangeLog
@@ -40,17 +51,6 @@ public:
     float getEnd() const noexcept { return end; }
     void setEnd (float newEnd);
 
-    /** Uses a more computationally expensive calculation than JUCE's skew
-        but is more accurate for things like decade based frequency scales.
-
-        A factor of 0.0 will be a straight line x=y, (skips calculation)
-        
-        A factor of 1.0 will have 1 log decade per scale, 2.0 will give 2 etc. 
-        A factor of -1.0 will be the inverse of +1.0.
-
-        For a 3 decade Hz frequency scale, start and end should be 20 and 20000 
-        respectively and skewLog should be set to 3.0.
-    */
     float getSkewLog() const noexcept { return skewLog; }
     void setSkewLog (float newSkewLog);
 
