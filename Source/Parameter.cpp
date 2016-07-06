@@ -110,6 +110,10 @@ public:
         expectDoesNotThrow (steps.setNumSteps(10));
         expect (steps.getNumSteps() == 10);
         expectThrows (steps.setNumSteps(-5));
+
+        beginTest("getRange()");
+        jf::RangeLog range {20, 20000, 3};
+        expect (freq.getRange() == range);
     }
 };
 

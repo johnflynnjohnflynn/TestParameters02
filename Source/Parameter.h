@@ -21,7 +21,10 @@ namespace jf
 /** Modification of AudioParameterFloat using a jf::RangeLog.
     
     A subclass of AudioProcessorParameter that provides an easy way to create a
-    parameter which maps onto a given RangeLog
+    parameter which maps onto a given RangeLog.
+    
+    Keeps a numSteps member but doesn't implement stepping (handled on slider
+    side only).
 
     @see AudioParameterFloat
 */
@@ -41,12 +44,13 @@ public:
     float get() const noexcept                  { return value; }
     operator float() const noexcept             { return value; } // allows dereference access
 
-    jf::RangeLog range;                                  // should we? setRange methods instead?
-
     int getNumSteps() const noexcept override   { return numSteps; }
     void setNumSteps (int newNumSteps);
 
+    const jf::RangeLog& getRange() const        { return range; }
+
 private:
+    jf::RangeLog range;
     float value;
     float defaultValue;
     int numSteps;
