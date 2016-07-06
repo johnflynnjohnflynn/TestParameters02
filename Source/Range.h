@@ -60,6 +60,8 @@ private:
     float skewLog;
 };
 
+bool operator== (const RangeLog& a, const RangeLog& b);
+
 } // namespace jf
 
 #endif  // RANGE_H_INCLUDED
