@@ -146,6 +146,12 @@ public:
         expectDoesNotThrow (sCont.setValue (0.23894723894));
         expect (sCont.getValue() == 0.23894723894);
 
+        beginTest ("Test end points");
+        expectDoesNotThrow (sCont.setValue (1.0));
+        expect (sCont.getValue() == 1.0);
+        expectDoesNotThrow (sCont.setValue (0.0));
+        expect (sCont.getValue() == 0.0);
+
         beginTest ("Create stepped slider 0 to 10, def 5, 10 steps");
         expectDoesNotThrow (SliderStep {*proc.getParameters()[1]});
         SliderStep sStep {*proc.getParameters()[1]};
@@ -154,6 +160,12 @@ public:
         beginTest ("Move to non-stepped and expect snapped-to-step value");
         expectDoesNotThrow (sStep.setValue (0.23894723894));
         expect (sStep.getValue() == 0.2); // 10 steps
+
+        beginTest ("Test end points stepped");
+        expectDoesNotThrow (sStep.setValue (0.99));
+        expect (sStep.getValue() == 1.0);
+        expectDoesNotThrow (sStep.setValue (0.01));
+        expect (sStep.getValue() == 0.0);
     }
 };
 
