@@ -24,10 +24,6 @@ TestParameters02AudioProcessor::TestParameters02AudioProcessor()
       freq2Param        {new jf::ParamStep           {"freq2ID",    "Freq2",           20.0f, 20000.0f, 632.456f, 48,   3.0f}},
       q2Param           {new jf::ParamStep           {"q2ID",       "Q2",               0.0707f,  7.07f,  0.707f, 18,   2.0f}}
 {
-   #if JF_UNIT_TESTS
-    jf::runUnitTests();
-   #endif
-
         // addParameter()s to the processor's OwnedArray<AudioProcessorParameter>
         // managedParameters (which takes ownership and deletes appropriately)
     addParameter (gainStepSizeParam);
@@ -195,5 +191,9 @@ void TestParameters02AudioProcessor::setStateInformation (const void* /*data*/, 
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
+   #if JF_UNIT_TESTS
+    jf::runUnitTests();
+   #endif
+
     return new TestParameters02AudioProcessor();
 }
