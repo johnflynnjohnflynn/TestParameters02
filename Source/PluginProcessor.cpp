@@ -158,12 +158,12 @@ void TestParameters02AudioProcessor::processBlock (AudioSampleBuffer& buffer, Mi
         // ..do something to the data...
     }
     
-    std::cout << getParameters()[1]->getName(64) << " " << (String) getParameters()[1]->getValue() << "\n";
+    /*std::cout << getParameters()[1]->getName(64) << " " << (String) getParameters()[1]->getValue() << "\n";
     std::cout << "*freqStep  " << (String) *freqStepSizeParam << "\n";
     std::cout << getParameters()[3]->getName(64) << " " << (String) getParameters()[3]->getValue() << "\n";
     std::cout << "*freqparam " << (String) *freqParam << "\n";
-    /*std::cout << "*qparam " << (String) *qParam << "\n";*/
-    std::cout << "\n";
+    std::cout << "*qparam " << (String) *qParam << "\n";
+    std::cout << "\n";*/
 }
 
 //==============================================================================
