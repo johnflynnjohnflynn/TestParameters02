@@ -62,14 +62,14 @@ public:
 
 private:
     //==============================================================================
-    jf::Parameter* gainStepSizeParam;   // Raw pointers here. Processor's
-    jf::Parameter* freqStepSizeParam;   // managedParameters OwnedArray
-    jf::Parameter* gainParam;           // owns and manages. (See xtor.)
-    jf::Parameter* freqParam;
-    jf::Parameter* qParam;
-    jf::Parameter* gain2Param;
-    jf::Parameter* freq2Param;
-    jf::Parameter* q2Param;
+    jf::ParamStep* gainStepSizeParam;   // Raw pointers here. Processor's
+    jf::ParamStep* freqStepSizeParam;   // managedParameters OwnedArray
+    jf::ParamStep* gainParam;           // owns and manages. (See xtor.)
+    jf::ParamStep* freqParam;
+    jf::ParamStep* qParam;
+    jf::ParamStep* gain2Param;
+    jf::ParamStep* freq2Param;
+    jf::ParamStep* q2Param;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessor)

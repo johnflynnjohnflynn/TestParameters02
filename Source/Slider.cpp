@@ -59,18 +59,18 @@ SliderTests::SliderTests()
 }
 
 //==============================================================================
-class DummyProc  : public AudioProcessor
+class SliderTestsProc  : public AudioProcessor
 {
 public:
-    DummyProc()
-        : cont {new Parameter {"id", "name", 0, 10, 5,  0}},
-          step {new Parameter {"id", "name", 0, 10, 5, 10}}
+    SliderTestsProc()
+        : cont {new ParamStep {"id", "name", 0, 10, 5,  0}},
+          step {new ParamStep {"id", "name", 0, 10, 5, 10}}
     {
         addParameter (cont);
         addParameter (step);
     }
 
-    ~DummyProc() {}
+    ~SliderTestsProc() {}
 
     void prepareToPlay (double, int) override {}
     void releaseResources() override {}
@@ -100,10 +100,10 @@ public:
     void setStateInformation (const void*, int) override {}
 
 private:
-    jf::Parameter* cont {nullptr};
-    jf::Parameter* step {nullptr};
+    jf::ParamStep* cont {nullptr};
+    jf::ParamStep* step {nullptr};
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DummyProc)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SliderTestsProc)
 };
 
 //==============================================================================
@@ -111,7 +111,7 @@ void SliderTests::runTest()
 {
     Random rnd = getRandom();
 
-    DummyProc proc;
+    SliderTestsProc proc;
 
     beginTest ("Create continuous slider 0 to 10, def 5");
     expectDoesNotThrow (SliderStep {*proc.getParameters()[0]});
