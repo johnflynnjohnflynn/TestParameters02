@@ -98,8 +98,8 @@ void ParameterTests::runTest()
     for (int i = 0; i < 1000; ++i)
         expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10,  0, 0, rnd.nextFloat()}));
 
-    Parameter freq  {"id", "nm", 20, 20000, 632.456,   0, 3};
-    Parameter steps {"id", "nm",  0,   127,       0, 128, 0};
+    Parameter freq  {"id", "nm", 20, 20000, 632.456f,   0, 3};
+    Parameter steps {"id", "nm",  0,   127,        0, 128, 0};
 
     beginTest ("get() default");
     expect (freq.get() == 632.456f);

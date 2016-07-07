@@ -124,18 +124,18 @@ void RangeLogTests::runTest()
     RangeLog rFreq {20, 20000, 3}; // 3 decade log frequency scale
     expect (rFreq.convertTo0to1 (20000) == 1.0f);
     expect (rFreq.convertTo0to1 (20)    == 0.0f);
-    expect (floatEqualApprox (rFreq.convertTo0to1 (632.456), 0.5f));
+    expect (floatEqualApprox (rFreq.convertTo0to1 (632.456f), 0.5f));
     expect (floatEqualApprox (rFreq.convertTo0to1 (200), 0.333f));
     expect (floatEqualApprox (rFreq.convertTo0to1 (2000), 0.666f));
-    expect (floatEqualApprox (rFreq.convertTo0to1 (6300), 0.833));
+    expect (floatEqualApprox (rFreq.convertTo0to1 (6300), 0.833f));
 
     beginTest ("convertFrom0to1()");
     expect (floatEqualApprox (rFreq.convertFrom0to1 (0.5), 632.456f));
     expect (floatEqualApprox (rFreq.convertFrom0to1 (0.0), 20.0f));
     expect (floatEqualApprox (rFreq.convertFrom0to1 (1.0), 20000.0f));
-    expect (floatEqualApprox (rFreq.convertFrom0to1 (0.33333), 200.0f));
-    expect (floatEqualApprox (rFreq.convertFrom0to1 (0.666666), 2000.0f));
-    expect (floatEqualApprox (rFreq.convertFrom0to1 (0.8333333), 6324.56f));
+    expect (floatEqualApprox (rFreq.convertFrom0to1 (0.33333f), 200.0f));
+    expect (floatEqualApprox (rFreq.convertFrom0to1 (0.666666f), 2000.0f));
+    expect (floatEqualApprox (rFreq.convertFrom0to1 (0.8333333f), 6324.56f));
                                                      // long decimals needed, why?
 
     RangeLog rMembSets {0, 1, 0};

@@ -84,21 +84,21 @@ int TestParameters02AudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void TestParameters02AudioProcessor::setCurrentProgram (int index)
+void TestParameters02AudioProcessor::setCurrentProgram (int /*index*/)
 {
 }
 
-const String TestParameters02AudioProcessor::getProgramName (int index)
+const String TestParameters02AudioProcessor::getProgramName (int /*index*/)
 {
     return String();
 }
 
-void TestParameters02AudioProcessor::changeProgramName (int index, const String& newName)
+void TestParameters02AudioProcessor::changeProgramName (int /*index*/, const String& /*newName*/)
 {
 }
 
 //==============================================================================
-void TestParameters02AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void TestParameters02AudioProcessor::prepareToPlay (double /*sampleRate*/, int /*samplesPerBlock*/)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
@@ -135,7 +135,7 @@ bool TestParameters02AudioProcessor::setPreferredBusArrangement (bool isInput, i
 }
 #endif
 
-void TestParameters02AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
+void TestParameters02AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& /*midiMessages*/)
 {
     const int totalNumInputChannels  = getTotalNumInputChannels();
     const int totalNumOutputChannels = getTotalNumOutputChannels();
@@ -178,14 +178,14 @@ AudioProcessorEditor* TestParameters02AudioProcessor::createEditor()
 }
 
 //==============================================================================
-void TestParameters02AudioProcessor::getStateInformation (MemoryBlock& destData)
+void TestParameters02AudioProcessor::getStateInformation (MemoryBlock& /*destData*/)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void TestParameters02AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void TestParameters02AudioProcessor::setStateInformation (const void* /*data*/, int /*sizeInBytes*/)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.

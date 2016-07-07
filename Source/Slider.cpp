@@ -72,7 +72,7 @@ public:
 
     ~DummyProc() {}
 
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override {}
+    void prepareToPlay (double, int) override {}
     void releaseResources() override {}
 
    #ifndef JucePlugin_PreferredChannelConfigurations
@@ -92,12 +92,12 @@ public:
 
     int getNumPrograms() override { return 0; }
     int getCurrentProgram() override { return 0; }
-    void setCurrentProgram (int index) override {}
-    const String getProgramName (int index) override { return ""; }
-    void changeProgramName (int index, const String& newName) override {}
+    void setCurrentProgram (int) override {}
+    const String getProgramName (int) override { return ""; }
+    void changeProgramName (int, const String&) override {}
 
-    void getStateInformation (MemoryBlock& destData) override {}
-    void setStateInformation (const void* data, int sizeInBytes) override {}
+    void getStateInformation (MemoryBlock&) override {}
+    void setStateInformation (const void*, int) override {}
 
 private:
     jf::Parameter* cont {nullptr};
