@@ -14,15 +14,15 @@
 
 //==============================================================================
 TestParameters02AudioProcessor::TestParameters02AudioProcessor()
-                                           // ID            Name               Min      Max     Def numSteps skew broadcastParam
-    : gainStepSizeParam {new jf::Parameter {"gainStepID", "Gain step size",  0.05f,     3.0f,   0.5f             }},
-      freqStepSizeParam {new jf::Parameter {"freqStepID", "Freq step size",   2.0f,    49.0f,  25.0f,  48        }},
-      gainParam         {new jf::Parameter {"gainID",     "Gain",           -12.0f,    12.0f,   0.0f,   5,   0.0f}},
-      freqParam         {new jf::Parameter {"freqID",     "Freq",            20.0f, 20000.0f, 630.0f,  49,   3.0f}},
-      qParam            {new jf::Parameter {"qID",        "Q",                0.0707f,  7.07f,  0.707f,19,   2.0f}},
-      gain2Param        {new jf::Parameter {"gain2ID",    "Gain2",          -12.0f,    12.0f,   0.0f,   5,   0.0f}},
-      freq2Param        {new jf::Parameter {"freq2ID",    "Freq2",           20.0f, 20000.0f, 630.0f,  49,   3.0f}},
-      q2Param           {new jf::Parameter {"q2ID",       "Q2",               0.0707f,  7.07f,  0.707f,19,   2.0f}}
+                                           // ID            Name               Min      Max     Def nSteps   skew broadcastParam
+    : gainStepSizeParam {new jf::Parameter {"gainStepID", "Gain step size",  0.05f,     3.0f,   0.5f              }},
+      freqStepSizeParam {new jf::Parameter {"freqStepID", "Freq step size",   1.0f,    48.0f,  24.0f,   47        }},
+      gainParam         {new jf::Parameter {"gainID",     "Gain",           -12.0f,    12.0f,   0.0f,    4,   0.0f}},
+      freqParam         {new jf::Parameter {"freqID",     "Freq",            20.0f, 20000.0f, 632.456f, 48,   3.0f}},
+      qParam            {new jf::Parameter {"qID",        "Q",                0.0707f,  7.07f,  0.707f, 18,   2.0f}},
+      gain2Param        {new jf::Parameter {"gain2ID",    "Gain2",          -12.0f,    12.0f,   0.0f,    4,   0.0f}},
+      freq2Param        {new jf::Parameter {"freq2ID",    "Freq2",           20.0f, 20000.0f, 632.456f, 48,   3.0f}},
+      q2Param           {new jf::Parameter {"q2ID",       "Q2",               0.0707f,  7.07f,  0.707f, 18,   2.0f}}
 {
    #if JF_UNIT_TESTS
     jf::runUnitTests();
