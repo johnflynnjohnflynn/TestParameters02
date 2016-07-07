@@ -60,6 +60,7 @@ static SliderTests sliderTests;
 
 #endif // JF_UNIT_TESTS
 
+//==============================================================================
 } // namespace jf
 
 #endif  // PARAMETERSLIDER_H_INCLUDED

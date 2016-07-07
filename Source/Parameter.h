@@ -79,6 +79,7 @@ static ParameterTests parameterTests;
 
 #endif // JF_UNIT_TESTS
 
+//==============================================================================
 } // namespace jf
 
 #endif  // PARAMETER_H_INCLUDED

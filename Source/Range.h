@@ -76,6 +76,7 @@ static RangeLogTests rangeLogTests;
 
 #endif // JF_UNIT_TESTS
 
+//==============================================================================
 } // namespace jf
 
 #endif  // RANGE_H_INCLUDED

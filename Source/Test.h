@@ -38,6 +38,7 @@ class ConsoleUnitTestRunner : public UnitTestRunner {};
 */
 void runUnitTests();
 
+//==============================================================================
 } // namespace jf
 
 #endif  // TESTJF_H_INCLUDED
