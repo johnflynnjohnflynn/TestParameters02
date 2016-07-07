@@ -65,6 +65,20 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Parameter)
 };
 
+//==============================================================================
+#if JF_UNIT_TESTS
+
+class ParameterTests  : public UnitTest
+{
+public:
+    ParameterTests();
+    void runTest() override;
+};
+
+static ParameterTests parameterTests;
+
+#endif // JF_UNIT_TESTS
+
 } // namespace jf
 
 #endif  // PARAMETER_H_INCLUDED

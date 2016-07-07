@@ -59,7 +59,22 @@ private:
     float skewLog;
 };
 
+//==============================================================================
 bool operator== (const RangeLog& a, const RangeLog& b);
+
+//==============================================================================
+#if JF_UNIT_TESTS
+
+class RangeLogTests  : public UnitTest
+{
+public:
+    RangeLogTests();
+    void runTest() override;
+};
+
+static RangeLogTests rangeLogTests;
+
+#endif // JF_UNIT_TESTS
 
 } // namespace jf
 

@@ -69,65 +69,59 @@ String Parameter::getText (float v, int length) const
 //==============================================================================
 #if JF_UNIT_TESTS
 
-class ParameterTests  : public UnitTest
+ParameterTests::ParameterTests()
+    : UnitTest ("jf::Parameter")
 {
-public:
-    ParameterTests()
-        : UnitTest ("jf::Parameter")
-    {
-    }
+}
 
-    void runTest() override
-    {
-        Random rnd = getRandom();
+void ParameterTests::runTest()
+{
+    Random rnd = getRandom();
 
-        beginTest ("min < max");
-        expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10, 0, 0, 0}));
-        expectThrows       ((Parameter {"dummyID", "The Name", 0, -1, 0, 0, 0}));
+    beginTest ("min < max");
+    expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10, 0, 0, 0}));
+    expectThrows       ((Parameter {"dummyID", "The Name", 0, -1, 0, 0, 0}));
 
-        beginTest ("min <= default");
-        expectThrows       ((Parameter {"dummyID", "The Name", 0, 10, -5, 0, 0}));
-        expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10,  0, 0, 0}));
+    beginTest ("min <= default");
+    expectThrows       ((Parameter {"dummyID", "The Name", 0, 10, -5, 0, 0}));
+    expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10,  0, 0, 0}));
 
-        beginTest ("default <= max");
-        expectThrows       ((Parameter {"dummyID", "The Name", 0, 10, 20, 0, 0}));
-        expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10, 10, 0, 0}));
+    beginTest ("default <= max");
+    expectThrows       ((Parameter {"dummyID", "The Name", 0, 10, 20, 0, 0}));
+    expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10, 10, 0, 0}));
 
-        beginTest ("0 <= numSteps");
-        expectThrows       ((Parameter {"dummyID", "The Name", 0, 10,  0, -1, 0}));
-        expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10,  0, 0, 0}));
+    beginTest ("0 <= numSteps");
+    expectThrows       ((Parameter {"dummyID", "The Name", 0, 10,  0, -1, 0}));
+    expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10,  0, 0, 0}));
 
-        beginTest ("set any skew");
-        for (int i = 0; i < 1000; ++i)
-            expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10,  0, 0, rnd.nextFloat()}));
+    beginTest ("set any skew");
+    for (int i = 0; i < 1000; ++i)
+        expectDoesNotThrow ((Parameter {"dummyID", "The Name", 0, 10,  0, 0, rnd.nextFloat()}));
 
-        Parameter freq  {"id", "nm", 20, 20000, 632.456,   0, 3};
-        Parameter steps {"id", "nm",  0,   127,       0, 128, 0};
+    Parameter freq  {"id", "nm", 20, 20000, 632.456,   0, 3};
+    Parameter steps {"id", "nm",  0,   127,       0, 128, 0};
 
-        beginTest ("get() default");
-        expect (freq.get() == 632.456f);
+    beginTest ("get() default");
+    expect (freq.get() == 632.456f);
 
-        beginTest ("getNumSteps()");
-        expect (freq .getNumSteps() == 0);
-        expect (steps.getNumSteps() == 128);
+    beginTest ("getNumSteps()");
+    expect (freq .getNumSteps() == 0);
+    expect (steps.getNumSteps() == 128);
 
-        beginTest ("setNumSteps()");
-        expectDoesNotThrow (steps.setNumSteps(10));
-        expect (steps.getNumSteps() == 10);
-        expectThrows (steps.setNumSteps(-5));
+    beginTest ("setNumSteps()");
+    expectDoesNotThrow (steps.setNumSteps(10));
+    expect (steps.getNumSteps() == 10);
+    expectThrows (steps.setNumSteps(-5));
 
-        beginTest ("getRange()");
-        jf::RangeLog range {20, 20000, 3};
-        expect (freq.getRange() == range);
+    beginTest ("getRange()");
+    jf::RangeLog range {20, 20000, 3};
+    expect (freq.getRange() == range);
 
-        beginTest ("setRange(f,f,f)");
-        expectDoesNotThrow (freq.setRange (0, 1, 0));
-        jf::RangeLog range010 {0, 1, 0};
-        expect (freq.getRange() == range010);
-    }
-};
-
-static ParameterTests parameterTests;
+    beginTest ("setRange(f,f,f)");
+    expectDoesNotThrow (freq.setRange (0, 1, 0));
+    jf::RangeLog range010 {0, 1, 0};
+    expect (freq.getRange() == range010);
+}
 
 #endif // JF_UNIT_TESTS
 
