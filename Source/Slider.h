@@ -16,8 +16,12 @@
 namespace jf
 {
 
+//==============================================================================
 /** Modified version of ParameterSlider from Juce plugin demo that allows
-    stepped sliders as well as continuous 
+    stepped sliders (as well as continuous).
+    
+    Uses numSteps member of jf::Parameter to determine steps. (Set to 0 for 
+    continuous)
 */
 class SliderStep  : public Slider,
                     private Timer

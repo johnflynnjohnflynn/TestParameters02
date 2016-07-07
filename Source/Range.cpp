@@ -90,7 +90,6 @@ void RangeLog::setSkewLog (float newSkewLog)
     skewLog = newSkewLog;
 }
 
-
 //==============================================================================
 #if JF_UNIT_TESTS
 

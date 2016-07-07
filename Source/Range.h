@@ -33,7 +33,6 @@ namespace jf
     For a 3 decade Hz frequency scale, start and end should be 20 and 20000 
     respectively and skewLog should be set to 3.0.
 */
-
 class RangeLog
 {
 public:

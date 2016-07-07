@@ -20,8 +20,7 @@ class ConsoleLogger : public Logger {};
 class ConsoleUnitTestRunner : public UnitTestRunner {};
 
 //==============================================================================
-/**
-    Namespace level method creates a UnitTestRunner then calls runAllTests() 
+/** Namespace level method creates a UnitTestRunner then calls runAllTests() 
     when JF_UNIT_TESTS=1 preprocessor flag set in Jucer.
 
    #if JF_UNIT_TESTS

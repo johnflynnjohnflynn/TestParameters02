@@ -10,7 +10,6 @@
 
 #include "Test.h"
 
-//==============================================================================
 void jf::runUnitTests()
 {
     ScopedPointer<ConsoleLogger> logger;

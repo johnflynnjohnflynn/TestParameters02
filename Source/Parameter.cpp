@@ -10,7 +10,6 @@
 
 #include "Parameter.h"
 
-
 namespace jf
 {
 
@@ -66,7 +65,6 @@ String Parameter::getText (float v, int length) const
     String asText (range.convertFrom0to1 (v)); // see JUCE to constrain decimal places
     return length > 0 ? asText.substring (0, length) : asText;
 }
-
 
 //==============================================================================
 #if JF_UNIT_TESTS
