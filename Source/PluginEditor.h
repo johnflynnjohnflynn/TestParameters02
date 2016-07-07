@@ -32,14 +32,14 @@ public:
 
 private:
     //==============================================================================
-    ParameterSlider gainStepSizeSlider;
-    ParameterSlider freqStepSizeSlider;
-    ParameterSlider gainSlider;
-    ParameterSlider freqSlider;
-    ParameterSlider qSlider;
-    ParameterSlider gain2Slider;
-    ParameterSlider freq2Slider;
-    ParameterSlider q2Slider;
+    jf::SliderStep gainStepSizeSlider;
+    jf::SliderStep freqStepSizeSlider;
+    jf::SliderStep gainSlider;
+    jf::SliderStep freqSlider;
+    jf::SliderStep qSlider;
+    jf::SliderStep gain2Slider;
+    jf::SliderStep freq2Slider;
+    jf::SliderStep q2Slider;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
