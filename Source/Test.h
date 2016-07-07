@@ -13,8 +13,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-#define JF_UNIT_TESTS 1                 // set JF_UNIT_TESTS here or in Jucer
-
 namespace jf {
 
 //==============================================================================
@@ -24,7 +22,7 @@ class ConsoleUnitTestRunner : public UnitTestRunner {};
 //==============================================================================
 /**
     Namespace level method creates a UnitTestRunner then calls runAllTests() 
-    when JF_UNIT_TESTS=1 preprocessor flag set above or in Jucer.
+    when JF_UNIT_TESTS=1 preprocessor flag set in Jucer.
 
    #if JF_UNIT_TESTS
     jf::runUnitTests();
