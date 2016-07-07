@@ -31,6 +31,7 @@ class SliderStep  : public Slider,
 public:
     SliderStep (AudioProcessorParameter& p);
 
+private:
     void valueChanged() override;
 
     void timerCallback() override;

@@ -29,6 +29,7 @@ SliderStep::SliderStep (AudioProcessorParameter& p)
     updateSliderPos();
 }
 
+// private:
 void SliderStep::valueChanged()
 {
     param.setValueNotifyingHost ((float) Slider::getValue());
