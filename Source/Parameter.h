@@ -28,10 +28,10 @@ namespace jf
 
     @see AudioParameterFloat
 */
-class Parameter  : public AudioProcessorParameterWithID
+class ParamStep  : public AudioProcessorParameterWithID
 {
 public:
-    Parameter (String parameterID,  // no spaces
+    ParamStep (String parameterID,  // no spaces
                String name,         // spaces allowed
                float minValue,
                float maxValue,
@@ -39,7 +39,7 @@ public:
                int numSteps = 0,
                float skewLog = 0.0f);
 
-    ~Parameter() {}
+    ~ParamStep() {}
 
     float get() const noexcept                  { return value; }
     operator float() const noexcept             { return value; } // allows dereference access
@@ -50,32 +50,90 @@ public:
     const jf::RangeLog& getRange() const        { return range; }
     void setRange (float start, float end, float skewLog);
 
+protected:
+    float value;
+
 private:
     jf::RangeLog range;
-    float value;
     float defaultValue;
     int numSteps;
 
-    float getValue() const override;                // for base class and host to call.
-    void setValue (float newValue) override;        // no need to public. all vals 0to1.
+    void setValue (float newValue) override;
+    float getValue() const override;
     float getDefaultValue() const override;
     String getText (float, int) const override;
     float getValueForText (const String&) const override;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Parameter)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParamStep)
+};
+
+//==============================================================================
+/** Subclass of ParamStep that allows listeners to be registered. Broadcasts to
+    listeners whenever parameter changes.
+    
+    Use in conjuntion with:
+    @see ParamStepListenGain
+*/
+class ParamStepBroadcast  : public ParamStep,
+                            public ChangeBroadcaster
+{
+public:
+    ParamStepBroadcast (String parameterID,  // no spaces
+                        String name,         // spaces allowed
+                        float minValue,
+                        float maxValue,
+                        float defaultValue,
+                        int numSteps = 0,
+                        float skewLog = 0.0f);
+
+private:
+    void setValue (float newValue) override;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParamStepBroadcast)
+};
+
+//==============================================================================
+/** Subclass of ParamStep that acts as a listener to a given broadcast param.
+
+    Used for gain controls with a broadcasting step size parameter. A change in
+    step size alters this parameter's range accordingly.
+    
+    Centre always zero. Number of steps constant.
+    
+    @see ParamStepBroadcast
+*/
+class ParamStepListenGain  : public ParamStep,
+                             public ChangeListener
+{
+public:
+    ParamStepListenGain (String parameterID,  // no spaces
+                         String name,         // spaces allowed
+                         float minValue,
+                         float maxValue,
+                         float defaultValue,
+                         int numSteps,
+                         float skewLog,
+                         ParamStepBroadcast& stepParam);
+
+private:
+    ParamStepBroadcast& stepSizeParam;
+    
+    void changeListenerCallback (ChangeBroadcaster* source) override;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParamStepListenGain)
 };
 
 //==============================================================================
 #if JF_UNIT_TESTS
 
-class ParameterTests  : public UnitTest
+class ParamStepTests  : public UnitTest
 {
 public:
-    ParameterTests();
+    ParamStepTests();
     void runTest() override;
 };
 
-static ParameterTests parameterTests;
+static ParamStepTests parameterTests;
 
 #endif // JF_UNIT_TESTS
 

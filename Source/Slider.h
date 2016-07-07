@@ -22,6 +22,8 @@ namespace jf
     
     Uses numSteps member of jf::Parameter to determine steps. (Set to 0 for 
     continuous)
+    
+    @see ParameterSlider, Slider, jf::Parameter
 */
 class SliderStep  : public Slider,
                     private Timer

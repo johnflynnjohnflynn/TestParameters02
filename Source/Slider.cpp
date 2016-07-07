@@ -34,7 +34,11 @@ void SliderStep::valueChanged()
     param.setValueNotifyingHost ((float) Slider::getValue());
 }
 
-void SliderStep::timerCallback()       { updateSliderPos(); }
+void SliderStep::timerCallback()
+{
+    updateSliderPos();
+    updateText();
+}
 
 void SliderStep::startedDragging()     { param.beginChangeGesture(); }
 void SliderStep::stoppedDragging()     { param.endChangeGesture();   }
@@ -64,10 +68,14 @@ class SliderTestsProc  : public AudioProcessor
 public:
     SliderTestsProc()
         : cont {new ParamStep {"id", "name", 0, 10, 5,  0}},
-          step {new ParamStep {"id", "name", 0, 10, 5, 10}}
+          step {new ParamStep {"id", "name", 0, 10, 5, 10}},
+          stepSizeParam {new ParamStepBroadcast  {"sid", "sname", 0.01,  3, 0.75, 0, 0}},
+          gainParam     {new ParamStepListenGain {"gid", "gname",  -10, 10, 1,   20, 0, *stepSizeParam}}
     {
         addParameter (cont);
         addParameter (step);
+        addParameter (stepSizeParam);
+        addParameter (gainParam);
     }
 
     ~SliderTestsProc() {}
@@ -102,11 +110,18 @@ public:
 private:
     jf::ParamStep* cont {nullptr};
     jf::ParamStep* step {nullptr};
+    jf::ParamStepBroadcast* stepSizeParam {nullptr};
+    jf::ParamStepListenGain* gainParam {nullptr};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SliderTestsProc)
 };
 
 //==============================================================================
+bool doubleEqualApprox (double a, double b)
+{
+    return std::abs(b - a) < 0.01;
+}
+
 void SliderTests::runTest()
 {
     Random rnd = getRandom();
@@ -142,6 +157,24 @@ void SliderTests::runTest()
     expect (sStep.getValue() == 1.0);
     expectDoesNotThrow (sStep.setValue (0.01));
     expect (sStep.getValue() == 0.0);
+
+    beginTest ("Create stepSize slider");
+    expectDoesNotThrow (SliderStep {*proc.getParameters()[2]});
+    SliderStep stepSizeSlider {*proc.getParameters()[2]};
+
+    beginTest ("Create gain slider");
+    expectDoesNotThrow (SliderStep {*proc.getParameters()[3]});
+    SliderStep gainSlider {*proc.getParameters()[3]};
+
+    beginTest ("Move stepSize slider");
+    expect (doubleEqualApprox (stepSizeSlider.getValue(), 0.247492));
+    stepSizeSlider.setValue(1.0);
+    expect (stepSizeSlider.getValue() == 1.0);
+
+    //beginTest ("Check moved stepSize has updated gainSlider text");
+    // Unfortunately no 'getCurrentText()' method only getTextFromValue (float)
+    // added 'updateText()' method to timer callback to keep textbox updated
+
 }
 
 #endif // JF_UNIT_TESTS
