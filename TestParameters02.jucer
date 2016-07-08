@@ -15,6 +15,8 @@
     <GROUP id="{22AAC7BD-4C8B-133E-BB8D-E718B9CB5426}" name="Source">
       <FILE id="Uo8roE" name="Parameter.cpp" compile="1" resource="0" file="Source/Parameter.cpp"/>
       <FILE id="k5WyrE" name="Parameter.h" compile="0" resource="0" file="Source/Parameter.h"/>
+      <FILE id="tvUq2b" name="ParameterTest.cpp" compile="1" resource="0"
+            file="Source/ParameterTest.cpp"/>
       <FILE id="wYvHVs" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="MtxUaU" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
@@ -24,8 +26,10 @@
             file="Source/PluginProcessor.h"/>
       <FILE id="mmJ7be" name="Range.cpp" compile="1" resource="0" file="Source/Range.cpp"/>
       <FILE id="Q7CInT" name="Range.h" compile="0" resource="0" file="Source/Range.h"/>
+      <FILE id="WB2dee" name="RangeTest.cpp" compile="1" resource="0" file="Source/RangeTest.cpp"/>
       <FILE id="yQUfw6" name="Slider.cpp" compile="1" resource="0" file="Source/Slider.cpp"/>
       <FILE id="cxivNa" name="Slider.h" compile="0" resource="0" file="Source/Slider.h"/>
+      <FILE id="X17XwZ" name="SliderTest.cpp" compile="1" resource="0" file="Source/SliderTest.cpp"/>
       <FILE id="Z4kR9S" name="Test.cpp" compile="1" resource="0" file="Source/Test.cpp"/>
       <FILE id="NCzONt" name="Test.h" compile="0" resource="0" file="Source/Test.h"/>
     </GROUP>
