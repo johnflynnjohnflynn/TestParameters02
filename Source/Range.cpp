@@ -21,18 +21,9 @@ bool operator== (const RangeLog& a, const RangeLog& b)
         && a.getSkewLog()  == b.getSkewLog();
 }
 
-bool isGoodRangeLog (float start, float end)
-{
-    return (end > start);       // invariants here
-}
-
 void checkRangeLog (float start, float end) // skewLog can be any value
 {
-   #if JF_UNIT_TESTS
-    if (! isGoodRangeLog (start, end)) throw std::logic_error ("Invalid\n");
-   #endif // JF_UNIT_TESTS
-
-    jassert (isGoodRangeLog (start, end));
+    jfassert (end > start);     // invariants here
 }
 
 //==============================================================================

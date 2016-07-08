@@ -13,6 +13,42 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+//==============================================================================
+/** Special version of jassert that throws exception instead of assertion when
+    unit tests are switched on with the JF_UNIT_TESTS=1 preprocessor flag.
+    
+    Note: this won't break at the proper point during debugging. If your hitting
+    an assert unrelated to the unit tests, try set JF_UNIT_TESTS=0
+
+    @see jassert
+*/
+#if JF_UNIT_TESTS
+ #define jfassert(expression) JUCE_BLOCK_WITH_FORCED_SEMICOLON (if (! (expression)) throw std::logic_error ("");)
+#else
+ #define jfassert(expression) JUCE_BLOCK_WITH_FORCED_SEMICOLON (jassert (expression);)
+#endif
+
+//==============================================================================
+/** Boilerplate macro to make sure a static instance of a test gets created in 
+    the header. (Otherwise an instance of the class will need to be created 
+    somewhere else before the tests run.)
+
+    @see UnitTestRunner
+*/
+
+#if JF_UNIT_TESTS
+ #define JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE(TestClassName)   \
+ class TestClassName  : public UnitTest                                     \
+ {                                                                          \
+ public:                                                                    \
+     TestClassName();                                                       \
+     void runTest() override;                                               \
+ };                                                                         \
+ static TestClassName TestClassName; // eek! instance same as class name
+#else
+ #define JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE(TestClassName) // do nothing
+#endif
+
 namespace jf {
 
 //==============================================================================

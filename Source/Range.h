@@ -12,6 +12,7 @@
 #define RANGE_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "Test.h"
 
 namespace jf
 {
@@ -63,18 +64,7 @@ private:
 bool operator== (const RangeLog& a, const RangeLog& b);
 
 //==============================================================================
-#if JF_UNIT_TESTS
-
-class RangeLogTests  : public UnitTest
-{
-public:
-    RangeLogTests();
-    void runTest() override;
-};
-
-static RangeLogTests rangeLogTests;
-
-#endif // JF_UNIT_TESTS
+JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE (RangeLogTests)
 
 //==============================================================================
 } // namespace jf

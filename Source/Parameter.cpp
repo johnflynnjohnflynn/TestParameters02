@@ -14,21 +14,11 @@ namespace jf
 {
 
 //==============================================================================
-bool isGoodParamStep (float val, float min, float max, int steps)
-{
-    return (min < max)                      // invariants here
-        && (min <= val) && (val <= max)
-        && (0 <= steps);
-}
-
 void checkParamStep (float val, float min, float max, int steps)
 {
-   #if JF_UNIT_TESTS
-    if (! isGoodParamStep (val, min, max, steps))
-        throw std::logic_error ("Invalid\n");
-   #endif // JF_UNIT_TESTS
-
-    jassert (isGoodParamStep (val, min, max, steps));
+    jfassert ((min < max)                      // invariants here
+           && (min <= val) && (val <= max)
+           && (0 <= steps));
 }
 
 //==============================================================================

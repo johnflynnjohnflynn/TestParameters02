@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Parameter.h"
+#include "Test.h"
 
 namespace jf
 {
@@ -50,18 +51,7 @@ private:
 };
 
 //==============================================================================
-#if JF_UNIT_TESTS
-
-class SliderTests  : public UnitTest
-{
-public:
-    SliderTests();
-    void runTest() override;
-};
-
-static SliderTests sliderTests;
-
-#endif // JF_UNIT_TESTS
+JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE (SliderTests)
 
 //==============================================================================
 } // namespace jf

@@ -13,6 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Range.h"
+#include "Test.h"
 
 namespace jf
 {
@@ -124,18 +125,7 @@ private:
 };
 
 //==============================================================================
-#if JF_UNIT_TESTS
-
-class ParamStepTests  : public UnitTest
-{
-public:
-    ParamStepTests();
-    void runTest() override;
-};
-
-static ParamStepTests parameterTests;
-
-#endif // JF_UNIT_TESTS
+JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE (ParamStepTests)
 
 //==============================================================================
 } // namespace jf
