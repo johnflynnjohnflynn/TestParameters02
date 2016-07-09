@@ -44,6 +44,7 @@ private:
     String getTextFromValue (double value) override;
 
     void updateSliderPos();
+    void updateInterval();
 
     AudioProcessorParameter& param;
 

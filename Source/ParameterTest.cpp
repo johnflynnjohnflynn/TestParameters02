@@ -26,11 +26,15 @@ class ParamStepTestsProc  : public AudioProcessor
 {
 public:
     ParamStepTestsProc()
-        : stepSizeParam {new jf::ParamStepBroadcast  {"sid", "sname", 0.01,  3, 0.75, 0, 0}},
-          gainParam     {new jf::ParamStepListenGain {"gid", "gname",  -10, 10, 0,   20, 0, *stepSizeParam}}
+        : stepSizeParam     {new jf::ParamStepBroadcast  {"sid", "sname", 0.01,     3, 0.75,  0, 0}},
+          gainParam         {new jf::ParamStepListenGain {"gid", "gname",  -10,    10,    0, 20, 0, *stepSizeParam}},
+          numFreqStepsParam {new jf::ParamStepBroadcast  {"sid", "sname",    1,    16,    4, 15, 0}},
+          freqParam         {new jf::ParamStepListenFreq {"gid", "gname",   20, 20000,  200,  0, 3, *numFreqStepsParam}}
     {
         addParameter (stepSizeParam);
         addParameter (gainParam);
+        addParameter (numFreqStepsParam);
+        addParameter (freqParam);
     }
 
     ~ParamStepTestsProc() {}
@@ -63,8 +67,10 @@ public:
     void setStateInformation (const void*, int) override {}
 
 private:
-    jf::ParamStepBroadcast* stepSizeParam {nullptr};
-    jf::ParamStepListenGain* gainParam {nullptr};
+    jf::ParamStepBroadcast* stepSizeParam {nullptr};            // 0
+    jf::ParamStepListenGain* gainParam {nullptr};               // 1
+    jf::ParamStepBroadcast* numFreqStepsParam {nullptr};        // 2
+    jf::ParamStepListenFreq* freqParam {nullptr};               // 3
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParamStepTestsProc)
 };
@@ -121,7 +127,7 @@ void ParamStepTests::runTest()
     beginTest ("Create ParamStepBroadcast");
     expectDoesNotThrow ((jf::ParamStepBroadcast {"id", "name", -10, 10, 0, 20, 0}));
 
-    beginTest ("Create jf::ParamStepBroadcast and ParamStepListenGain in dummy processor");
+    beginTest ("Create jf::ParamStepBroadcast and jf::ParamStepListenGain in dummy processor");
     expectDoesNotThrow (ParamStepTestsProc());
     ParamStepTestsProc paramStepTestsProc;
 
@@ -134,6 +140,18 @@ void ParamStepTests::runTest()
     jf::RangeLog expectedRange {-30, 30, 0}; // now +3dB steps, so 10 steps times 3 is +/-30
     jf::ParamStepListenGain& gainParam = dynamic_cast<jf::ParamStepListenGain&> (*paramStepTestsProc.getParameters()[1]);
     expect (gainParam.getRange() == expectedRange);
+
+    beginTest ("Create jf::ParamStepBroadcast and jf::ParamStepListenFreq in dummy processor");
+    expectDoesNotThrow (ParamStepTestsProc());
+
+    beginTest ("Change numFreqSteps parameter");
+    expect (paramStepTestsProc.getParameters()[2]->getValue() == 0.2f);
+    expectDoesNotThrow (paramStepTestsProc.getParameters()[2]->setValueNotifyingHost (1.0f));
+    expect (paramStepTestsProc.getParameters()[2]->getValue() == 1.0f);
+
+    beginTest ("Check listening freq parameter numSteps changed");
+    jf::ParamStepListenFreq& freqParam = dynamic_cast<jf::ParamStepListenFreq&> (*paramStepTestsProc.getParameters()[3]);
+    expect (freqParam.getNumSteps() == 16);
 }
 
 #endif // JF_UNIT_TESTS

@@ -125,4 +125,34 @@ void ParamStepListenGain::changeListenerCallback (ChangeBroadcaster* source)
 }
 
 //==============================================================================
+ParamStepListenFreq::ParamStepListenFreq (String parameterID,  // no spaces
+                                          String name,         // spaces allowed
+                                          float minValue,
+                                          float maxValue,
+                                          float defaultValue,
+                                          int numSteps,
+                                          float skewLog,
+                                          ParamStepBroadcast& stepsParam)
+    : ParamStep {parameterID, name, minValue, maxValue, defaultValue, numSteps, skewLog},
+      numStepsParam {stepsParam}
+{
+    numStepsParam.addChangeListener (this);
+}
+
+// private:
+void ParamStepListenFreq::changeListenerCallback (ChangeBroadcaster* source)
+{
+    if (source == &numStepsParam)
+    {
+            // calc temp values
+        const float newNumSteps = numStepsParam.get();
+        setNumSteps (newNumSteps); // assumes reasonable newNumSteps
+
+            // set value for parameter (setValueNotifyingHost expects 0to1)
+        const float val0to1 = getRange().convertTo0to1 (get());
+        setValueNotifyingHost (val0to1);
+    }
+}
+
+//==============================================================================
 } // namespace jf

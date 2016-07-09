@@ -18,12 +18,11 @@ SliderStep::SliderStep (AudioProcessorParameter& p)
 {
     if (0 < p.getNumSteps() && p.getNumSteps() <= 100) // <=100? defaults to 37850784 steps!
     {
-        //jassert (param.getNumSteps() >= 2); // slider must have at least 2 positions!
-        const double normStepSize = 1.0 / (p.getNumSteps()); // YES "/ p.getNumSteps()"
-        setRange (0.0, 1.0, normStepSize); // stepped slider
+        const double normStepSize = 1.0 / (p.getNumSteps());
+        setRange (0.0, 1.0, normStepSize); // stepped
     }
     else
-        setRange (0.0, 1.0, 0.0); // continuous slider
+        setRange (0.0, 1.0, 0.0); // continuous
 
     startTimerHz (30);
     updateSliderPos();
@@ -37,6 +36,7 @@ void SliderStep::valueChanged()
 
 void SliderStep::timerCallback()
 {
+    updateInterval();
     updateSliderPos();
     updateText();
 }
@@ -53,6 +53,16 @@ void SliderStep::updateSliderPos()
 
     if (newValue != (float) Slider::getValue() && ! isMouseButtonDown())
         Slider::setValue (newValue);
+}
+void SliderStep::updateInterval()
+{
+    if (jf::ParamStepListenFreq* pslf = dynamic_cast<jf::ParamStepListenFreq*> (&param))
+    {
+        const float numStepsParam = pslf->getNumSteps();
+        const float newSliderInterval0to1 = 1.0f / numStepsParam;
+
+        Slider::setRange (0, 1, newSliderInterval0to1);
+    }
 }
 
 //==============================================================================

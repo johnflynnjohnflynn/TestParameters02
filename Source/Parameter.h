@@ -125,6 +125,35 @@ private:
 };
 
 //==============================================================================
+/** Subclass of ParamStep that acts as a listener to a given broadcast param.
+
+    Used for frequency controls to allow variable number of steps. Range 
+    start/end stays constant.
+    
+    @see ParamStepBroadcast
+*/
+class ParamStepListenFreq  : public ParamStep,
+                             public ChangeListener
+{
+public:
+    ParamStepListenFreq (String parameterID,  // no spaces
+                         String name,         // spaces allowed
+                         float minValue,
+                         float maxValue,
+                         float defaultValue,
+                         int numSteps,
+                         float skewLog,
+                         ParamStepBroadcast& stepsParam);
+
+private:
+    ParamStepBroadcast& numStepsParam;
+    
+    void changeListenerCallback (ChangeBroadcaster* source) override;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParamStepListenFreq)
+};
+
+//==============================================================================
 JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE (ParamStepTests)
 
 //==============================================================================

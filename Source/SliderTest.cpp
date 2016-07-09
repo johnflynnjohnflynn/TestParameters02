@@ -29,12 +29,16 @@ public:
         : cont {new ParamStep {"id", "name", 0, 10, 5,  0}},
           step {new ParamStep {"id", "name", 0, 10, 5, 10}},
           stepSizeParam {new ParamStepBroadcast  {"sid", "sname", 0.01,  3, 0.75, 0, 0}},
-          gainParam     {new ParamStepListenGain {"gid", "gname",  -10, 10, 1,   20, 0, *stepSizeParam}}
+          gainParam     {new ParamStepListenGain {"gid", "gname",  -10, 10, 1,   20, 0, *stepSizeParam}},
+          numFreqStepsParam {new jf::ParamStepBroadcast  {"sid", "sname",    1,    16,    4, 15, 0}},
+          freqParam         {new jf::ParamStepListenFreq {"gid", "gname",   20, 20000,  200,  0, 3, *numFreqStepsParam}}
     {
         addParameter (cont);
         addParameter (step);
         addParameter (stepSizeParam);
         addParameter (gainParam);
+        addParameter (numFreqStepsParam);
+        addParameter (freqParam);
     }
 
     ~SliderTestsProc() {}
@@ -67,10 +71,12 @@ public:
     void setStateInformation (const void*, int) override {}
 
 private:
-    jf::ParamStep* cont {nullptr};
-    jf::ParamStep* step {nullptr};
-    jf::ParamStepBroadcast* stepSizeParam {nullptr};
-    jf::ParamStepListenGain* gainParam {nullptr};
+    jf::ParamStep* cont {nullptr};                              // 0
+    jf::ParamStep* step {nullptr};                              // 1
+    jf::ParamStepBroadcast* stepSizeParam {nullptr};            // 2
+    jf::ParamStepListenGain* gainParam {nullptr};               // 3
+    jf::ParamStepBroadcast* numFreqStepsParam {nullptr};        // 4
+    jf::ParamStepListenFreq* freqParam {nullptr};               // 5
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SliderTestsProc)
 };
@@ -134,6 +140,21 @@ void SliderTests::runTest()
     // Unfortunately no 'getCurrentText()' method only getTextFromValue (float)
     // added 'updateText()' method to timer callback to keep textbox updated
 
+    beginTest ("Create numFreqSteps slider");
+    expectDoesNotThrow (SliderStep {*proc.getParameters()[4]});
+    SliderStep numFreqStepsSlider {*proc.getParameters()[4]};
+
+    beginTest ("Create freq slider");
+    expectDoesNotThrow (SliderStep {*proc.getParameters()[5]});
+    SliderStep freqSlider {*proc.getParameters()[5]};
+
+    beginTest ("Move numFreqSteps slider");
+    expect (doubleEqualApprox (numFreqStepsSlider.getValue(), 0.2f));
+    numFreqStepsSlider.setValue(1.0);
+    expect (numFreqStepsSlider.getValue() == 1.0);
+
+    beginTest ("Check numSteps of listening freq slider has updated");
+    expect (doubleEqualApprox (numFreqStepsSlider.getInterval(), (1.0f / 15.0f)));
 }
 
 #endif // JF_UNIT_TESTS

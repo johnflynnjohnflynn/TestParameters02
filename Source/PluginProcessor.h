@@ -63,9 +63,9 @@ public:
 private:
     //==============================================================================
     jf::ParamStepBroadcast*  gainStepSizeParam;   // Raw pointers here. Processor's
-    jf::ParamStep*           freqStepSizeParam;   // managedParameters OwnedArray
+    jf::ParamStepBroadcast*  freqStepSizeParam;   // managedParameters OwnedArray
     jf::ParamStepListenGain* gainParam;           // owns and manages. (See xtor.)
-    jf::ParamStep*           freqParam;
+    jf::ParamStepListenFreq* freqParam;
     jf::ParamStep*           qParam;
     jf::ParamStep*           gain2Param;
     jf::ParamStep*           freq2Param;
