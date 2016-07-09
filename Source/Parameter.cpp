@@ -145,8 +145,9 @@ void ParamStepListenFreq::changeListenerCallback (ChangeBroadcaster* source)
     if (source == &numStepsParam)
     {
             // calc temp values
-        const float newNumSteps = numStepsParam.get();
-        setNumSteps (newNumSteps); // assumes reasonable newNumSteps
+        const float numStepsPower = numStepsParam.get();
+        const float newNumSteps = 1.5f * std::pow (2.0f, numStepsPower); // for [1:5] yields [3:48]
+        setNumSteps (newNumSteps);
 
             // set value for parameter (setValueNotifyingHost expects 0to1)
         const float val0to1 = getRange().convertTo0to1 (get());

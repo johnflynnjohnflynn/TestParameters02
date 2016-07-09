@@ -28,7 +28,7 @@ public:
     ParamStepTestsProc()
         : stepSizeParam     {new jf::ParamStepBroadcast  {"sid", "sname", 0.01,     3, 0.75,  0, 0}},
           gainParam         {new jf::ParamStepListenGain {"gid", "gname",  -10,    10,    0, 20, 0, *stepSizeParam}},
-          numFreqStepsParam {new jf::ParamStepBroadcast  {"sid", "sname",    1,    16,    4, 15, 0}},
+          numFreqStepsParam {new jf::ParamStepBroadcast  {"sid", "sname",    1,     7,    5,  6, 0}},
           freqParam         {new jf::ParamStepListenFreq {"gid", "gname",   20, 20000,  200,  0, 3, *numFreqStepsParam}}
     {
         addParameter (stepSizeParam);
@@ -145,13 +145,13 @@ void ParamStepTests::runTest()
     expectDoesNotThrow (ParamStepTestsProc());
 
     beginTest ("Change numFreqSteps parameter");
-    expect (paramStepTestsProc.getParameters()[2]->getValue() == 0.2f);
+    expect (paramStepTestsProc.getParameters()[2]->getValue() != 1.0f);
     expectDoesNotThrow (paramStepTestsProc.getParameters()[2]->setValueNotifyingHost (1.0f));
     expect (paramStepTestsProc.getParameters()[2]->getValue() == 1.0f);
 
     beginTest ("Check listening freq parameter numSteps changed");
     jf::ParamStepListenFreq& freqParam = dynamic_cast<jf::ParamStepListenFreq&> (*paramStepTestsProc.getParameters()[3]);
-    expect (freqParam.getNumSteps() == 16);
+    expect (freqParam.getNumSteps() == 192);
 }
 
 #endif // JF_UNIT_TESTS
