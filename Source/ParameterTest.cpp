@@ -22,7 +22,7 @@ ParamStepTests::ParamStepTests()
 }
 
 //==============================================================================
-class ParamStepTestsProc  : public AudioProcessor
+class ParamStepTestsProc  : public AudioProcessor   // Dummy processor for use in tests below
 {
 public:
     ParamStepTestsProc()

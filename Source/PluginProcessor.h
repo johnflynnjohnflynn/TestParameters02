@@ -12,9 +12,7 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
 #include "Test.h"
-
 #include "Range.h"
 #include "Parameter.h"
 
@@ -71,9 +69,7 @@ private:
     jf::ParamStep*           freq2Param;
     jf::ParamStep*           q2Param;
 
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessor)
 };
-
 
 #endif  // PLUGINPROCESSOR_H_INCLUDED

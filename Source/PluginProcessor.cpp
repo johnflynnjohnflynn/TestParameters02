@@ -11,7 +11,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-
 //==============================================================================
 TestParameters02AudioProcessor::TestParameters02AudioProcessor()
                                                       // ID            Name               Min      Max     Def nSteps   skew broadcastParam

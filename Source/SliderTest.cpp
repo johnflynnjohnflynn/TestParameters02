@@ -22,7 +22,7 @@ SliderTests::SliderTests()
 }
 
 //==============================================================================
-class SliderTestsProc  : public AudioProcessor
+class SliderTestsProc  : public AudioProcessor  // Dummy processor for use in tests below
 {
 public:
     SliderTestsProc()
