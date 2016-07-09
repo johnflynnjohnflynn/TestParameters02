@@ -16,9 +16,9 @@ namespace jf
 //==============================================================================
 void checkParamStep (float val, float min, float max, int steps)
 {
-    jfassert ((min < max)                      // invariants here
-           && (min <= val) && (val <= max)
-           && (0 <= steps));
+    jassert ((min < max)                      // invariants here
+          && (min <= val) && (val <= max)
+          && (0 <= steps));
 }
 
 //==============================================================================

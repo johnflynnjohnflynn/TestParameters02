@@ -23,7 +23,7 @@ bool operator== (const RangeLog& a, const RangeLog& b)
 
 void checkRangeLog (float start, float end) // skewLog can be any value
 {
-    jfassert (end > start);     // invariants here
+    jassert (end > start);     // invariants here
 }
 
 //==============================================================================

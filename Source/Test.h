@@ -19,13 +19,14 @@
     
     Note: this won't break at the proper point during debugging. If your hitting
     an assert unrelated to the unit tests, try set JF_UNIT_TESTS=0
+    
+    This will trigger warning:
+    "Lexical or Preprocessor Issue 'jassert' macro redefined"
 
     @see jassert
 */
 #if JF_UNIT_TESTS
- #define jfassert(expression) JUCE_BLOCK_WITH_FORCED_SEMICOLON (if (! (expression)) throw std::logic_error ("");)
-#else
- #define jfassert(expression) JUCE_BLOCK_WITH_FORCED_SEMICOLON (jassert (expression);)
+ #define jassert(expression) JUCE_BLOCK_WITH_FORCED_SEMICOLON (if (! (expression)) throw std::logic_error ("");)
 #endif
 
 //==============================================================================
@@ -37,7 +38,7 @@
 */
 
 #if JF_UNIT_TESTS
- #define JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE(TestClassName)   \
+ #define JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE(TestClassName)           \
  class TestClassName  : public UnitTest                                     \
  {                                                                          \
  public:                                                                    \
