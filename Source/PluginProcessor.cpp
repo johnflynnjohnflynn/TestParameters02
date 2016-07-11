@@ -16,10 +16,10 @@ TestParameters02AudioProcessor::TestParameters02AudioProcessor()
                                                       // ID            Name               Min      Max     Def nSteps   skew broadcastParam
     : gainStepSizeParam {new jf::ParamStepBroadcast  {"gainStepID", "Gain step size",  0.05f,     3.0f,   0.5f              }},
       freqStepSizeParam {new jf::ParamStepBroadcast  {"freqStepID", "Freq step size",      1,        7,      5,    6        }},
-      gainParam         {new jf::ParamStepListenGain {"gainID",     "Gain",           -12.0f,    12.0f,   0.0f,    4,   0.0f, *gainStepSizeParam}},
+      gainParam         {new jf::ParamStepListenGain {"gainID",     "Gain",           -12.0f,    12.0f,   0.0f,   22,   0.0f, *gainStepSizeParam}},
       freqParam         {new jf::ParamStepListenFreq {"freqID",     "Freq",            20.0f, 20000.0f, 632.456f, 48,   3.0f, *freqStepSizeParam}},
       qParam            {new jf::ParamStep           {"qID",        "Q",                0.0707f,  7.07f,  0.707f, 18,   2.0f}},
-      gain2Param        {new jf::ParamStep           {"gain2ID",    "Gain2",          -12.0f,    12.0f,   0.0f,    4,   0.0f}},
+      gain2Param        {new jf::ParamStep           {"gain2ID",    "Gain2",          -12.0f,    12.0f,   0.0f,   22,   0.0f}},
       freq2Param        {new jf::ParamStep           {"freq2ID",    "Freq2",           20.0f, 20000.0f, 632.456f, 48,   3.0f}},
       q2Param           {new jf::ParamStep           {"q2ID",       "Q2",               0.0707f,  7.07f,  0.707f, 18,   2.0f}}
 {
