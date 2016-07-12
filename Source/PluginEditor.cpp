@@ -14,6 +14,8 @@
 //==============================================================================
 TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor& p)
     : AudioProcessorEditor (&p),
+      toggleABButton {"A-B"},
+      copyABButton {"Copy"},
       gainStepSizeSlider {*p.getParameters()[0]},                           // better way than indices?
       freqStepSizeSlider {*p.getParameters()[1]},
       gainSlider         {*p.getParameters()[2]},
@@ -24,6 +26,11 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
       q2Slider           {*p.getParameters()[7]},
       processor (p)
 {
+    addAndMakeVisible (toggleABButton);
+    addAndMakeVisible (copyABButton);
+    toggleABButton.addListener (this);
+    copyABButton.addListener (this);
+    
     addAndMakeVisible (&gainStepSizeSlider);
     addAndMakeVisible (&freqStepSizeSlider);
     addAndMakeVisible (&gainSlider);
@@ -33,7 +40,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
     addAndMakeVisible (&freq2Slider);
     addAndMakeVisible (&q2Slider);
 
-    setSize (400, 425); // remember to set before xtor finished
+    setSize (400, 550); // remember to set before xtor finished
 }
 
 TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
@@ -52,6 +59,8 @@ void TestParameters02AudioProcessorEditor::resized()
 
     const int sliderHeight {50};
 
+    toggleABButton    .setBounds (r.removeFromTop (sliderHeight));
+    copyABButton      .setBounds (r.removeFromTop (sliderHeight));
     gainStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     freqStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     gainSlider        .setBounds (r.removeFromTop (sliderHeight));
@@ -60,4 +69,10 @@ void TestParameters02AudioProcessorEditor::resized()
     gain2Slider       .setBounds (r.removeFromTop (sliderHeight));
     freq2Slider       .setBounds (r.removeFromTop (sliderHeight));
     q2Slider          .setBounds (r.removeFromTop (sliderHeight));
+}
+
+void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
+{
+    if (clickedButton == &toggleABButton) processor.abState.toggleAB();
+    if (clickedButton == &copyABButton)   processor.abState.copyAB();
 }

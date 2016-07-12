@@ -59,6 +59,9 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //==============================================================================
+    state::StateAB abState;
+
 private:
     //==============================================================================
     jf::ParamStepBroadcast*  gainStepSizeParam;   // Raw pointers here. Processor's

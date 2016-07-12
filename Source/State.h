@@ -22,19 +22,34 @@ XmlElement& saveStateToXml (const AudioProcessor& processor, XmlElement& xml);
 AudioProcessor& loadStateFromXml (const XmlElement& xml, AudioProcessor& processor);
 
 //==============================================================================
-/*class PluginState
+class StateAB
 {
 public:
-    PluginState (AudioProcessor& p)
+    StateAB (AudioProcessor& p)
         : pluginProcessor {p}
     {
+        copyAB();
+    }
+    
+    void toggleAB()
+    {
+        XmlElement temp {"Temp"};
+        saveStateToXml (pluginProcessor, temp); // current to temp
+        loadStateFromXml (ab, pluginProcessor); // ab to current
+        ab = temp;                              // temp to ab
+    }
+    
+    void copyAB()
+    {
+        saveStateToXml (pluginProcessor, ab);
     }
 
 private:
     AudioProcessor& pluginProcessor;
+    XmlElement ab {"AB"};
 
 };
-*/
+
 //==============================================================================
 } // namespace state
 

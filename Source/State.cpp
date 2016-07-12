@@ -16,6 +16,8 @@ namespace state
 //==============================================================================
 XmlElement& saveStateToXml (const AudioProcessor& proc, XmlElement& xml)
 {
+    xml.removeAllAttributes(); // clear first
+
     for (const auto& param : proc.getParameters())
         if (auto* p = dynamic_cast<AudioProcessorParameterWithID*> (param))
             xml.setAttribute (p->paramID, p->getValue()); // 0to1

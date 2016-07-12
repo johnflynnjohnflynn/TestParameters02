@@ -18,7 +18,8 @@
 //==============================================================================
 /**
 */
-class TestParameters02AudioProcessorEditor  : public AudioProcessorEditor
+class TestParameters02AudioProcessorEditor  : public AudioProcessorEditor,
+                                              public Button::Listener
 {
 public:
     TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor&);
@@ -30,6 +31,9 @@ public:
 
 private:
     //==============================================================================
+    TextButton toggleABButton;
+    TextButton copyABButton;
+
     jf::SliderStep gainStepSizeSlider;
     jf::SliderStep freqStepSizeSlider;
     jf::SliderStep gainSlider;
@@ -42,6 +46,8 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     TestParameters02AudioProcessor& processor;
+
+    void buttonClicked (Button* clickedButton) override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessorEditor)
 };
