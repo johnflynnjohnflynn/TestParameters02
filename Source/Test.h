@@ -76,6 +76,19 @@ class ConsoleUnitTestRunner : public UnitTestRunner {};
 void runUnitTests();
 
 //==============================================================================
+/** Utility function for checking if two floating point numbers are within two 
+    decimal places of each other.
+*/
+template <typename FloatType>
+bool equalApprox (FloatType a, FloatType b)
+{
+    const auto difference = std::abs (b - a);
+    const auto tolerence = static_cast<FloatType> (0.01);
+
+    return difference < tolerence;
+}
+
+//==============================================================================
 } // namespace jf
 
 #endif  // TESTJF_H_INCLUDED

@@ -24,12 +24,16 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="KrvenP" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+      <FILE id="pLEePb" name="PluginProcessorTest.cpp" compile="1" resource="0"
+            file="Source/PluginProcessorTest.cpp"/>
       <FILE id="mmJ7be" name="Range.cpp" compile="1" resource="0" file="Source/Range.cpp"/>
       <FILE id="Q7CInT" name="Range.h" compile="0" resource="0" file="Source/Range.h"/>
       <FILE id="WB2dee" name="RangeTest.cpp" compile="1" resource="0" file="Source/RangeTest.cpp"/>
-      <FILE id="yQUfw6" name="Slider.cpp" compile="1" resource="0" file="Source/Slider.cpp"/>
-      <FILE id="cxivNa" name="Slider.h" compile="0" resource="0" file="Source/Slider.h"/>
-      <FILE id="X17XwZ" name="SliderTest.cpp" compile="1" resource="0" file="Source/SliderTest.cpp"/>
+      <FILE id="YLL5P6" name="Slider.cpp" compile="1" resource="0" file="Source/Slider.cpp"/>
+      <FILE id="M1Pl0k" name="Slider.h" compile="0" resource="0" file="Source/Slider.h"/>
+      <FILE id="zcWvmN" name="SliderTest.cpp" compile="1" resource="0" file="Source/SliderTest.cpp"/>
+      <FILE id="yyORfn" name="State.cpp" compile="1" resource="0" file="Source/State.cpp"/>
+      <FILE id="wTIogb" name="State.h" compile="0" resource="0" file="Source/State.h"/>
       <FILE id="Z4kR9S" name="Test.cpp" compile="1" resource="0" file="Source/Test.cpp"/>
       <FILE id="NCzONt" name="Test.h" compile="0" resource="0" file="Source/Test.h"/>
     </GROUP>

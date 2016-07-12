@@ -10,7 +10,11 @@
 
 #include "Test.h"
 
-void jf::runUnitTests()
+namespace jf
+{
+
+//==============================================================================
+void runUnitTests()
 {
     ScopedPointer<ConsoleLogger> logger;
     Logger::setCurrentLogger (logger);
@@ -18,3 +22,6 @@ void jf::runUnitTests()
     ConsoleUnitTestRunner runner;
     runner.runAllTests();
 }
+
+//==============================================================================
+} // namespace jf
