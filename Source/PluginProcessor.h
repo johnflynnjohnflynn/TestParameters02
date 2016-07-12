@@ -15,6 +15,7 @@
 #include "Test.h"
 #include "Range.h"
 #include "Parameter.h"
+#include "State.h"
 
 //==============================================================================
 /**
@@ -71,5 +72,8 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessor)
 };
+
+//==============================================================================
+JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE (PluginProcessorTests);
 
 #endif  // PLUGINPROCESSOR_H_INCLUDED
