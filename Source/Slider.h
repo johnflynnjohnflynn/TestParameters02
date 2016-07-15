@@ -14,7 +14,7 @@
 #include "Parameter.h"
 #include "Test.h"
 
-namespace jf
+namespace slider
 {
 
 //==============================================================================
@@ -55,6 +55,6 @@ private:
 JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE (SliderTests)
 
 //==============================================================================
-} // namespace jf
+} // namespace slider
 
 #endif  // PARAMETERSLIDER_H_INCLUDED

@@ -10,14 +10,14 @@
 
 #include "Slider.h"
 
-namespace jf
+namespace slider
 {
 
 //==============================================================================
 #if JF_UNIT_TESTS
 
 SliderTests::SliderTests()
-    : UnitTest ("jf::SliderStep")
+    : UnitTest ("parameter::SliderStep")
 {
 }
 
@@ -26,12 +26,12 @@ class SliderTestsProc  : public AudioProcessor  // Dummy processor for use in te
 {
 public:
     SliderTestsProc()
-        : cont {new ParamStep {"id", "name", 0, 10, 5,  0}},
-          step {new ParamStep {"id", "name", 0, 10, 5, 10}},
-          stepSizeParam {new ParamStepBroadcast  {"sid", "sname", 0.01,  3, 0.75, 0, 0}},
-          gainParam     {new ParamStepListenGain {"gid", "gname",  -10, 10, 1,   20, 0, *stepSizeParam}},
-          numFreqStepsParam {new jf::ParamStepBroadcast  {"sid", "sname",    1,    16,    4, 15, 0}},
-          freqParam         {new jf::ParamStepListenFreq {"gid", "gname",   20, 20000,  200,  0, 3, *numFreqStepsParam}}
+        : cont {new parameter::ParamStep {"id", "name", 0, 10, 5,  0}},
+          step {new parameter::ParamStep {"id", "name", 0, 10, 5, 10}},
+          stepSizeParam {new parameter::ParamStepBroadcast  {"sid", "sname", 0.01,  3, 0.75, 0, 0}},
+          gainParam     {new parameter::ParamStepListenGain {"gid", "gname",  -10, 10, 1,   20, 0, *stepSizeParam}},
+          numFreqStepsParam {new parameter::ParamStepBroadcast  {"sid", "sname",    1,    16,    4, 15, 0}},
+          freqParam         {new parameter::ParamStepListenFreq {"gid", "gname",   20, 20000,  200,  0, 3, *numFreqStepsParam}}
     {
         addParameter (cont);
         addParameter (step);
@@ -71,12 +71,12 @@ public:
     void setStateInformation (const void*, int) override {}
 
 private:
-    jf::ParamStep* cont {nullptr};                              // 0
-    jf::ParamStep* step {nullptr};                              // 1
-    jf::ParamStepBroadcast* stepSizeParam {nullptr};            // 2
-    jf::ParamStepListenGain* gainParam {nullptr};               // 3
-    jf::ParamStepBroadcast* numFreqStepsParam {nullptr};        // 4
-    jf::ParamStepListenFreq* freqParam {nullptr};               // 5
+    parameter::ParamStep* cont {nullptr};                              // 0
+    parameter::ParamStep* step {nullptr};                              // 1
+    parameter::ParamStepBroadcast* stepSizeParam {nullptr};            // 2
+    parameter::ParamStepListenGain* gainParam {nullptr};               // 3
+    parameter::ParamStepBroadcast* numFreqStepsParam {nullptr};        // 4
+    parameter::ParamStepListenFreq* freqParam {nullptr};               // 5
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SliderTestsProc)
 };
@@ -160,4 +160,4 @@ void SliderTests::runTest()
 #endif // JF_UNIT_TESTS
 
 //==============================================================================
-} // namespace jf
+} // namespace slider

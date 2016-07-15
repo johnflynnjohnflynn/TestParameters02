@@ -10,7 +10,7 @@
 
 #include "Parameter.h"
 
-namespace jf
+namespace parameter
 {
 
 //==============================================================================
@@ -156,4 +156,4 @@ void ParamStepListenFreq::changeListenerCallback (ChangeBroadcaster* source)
 }
 
 //==============================================================================
-} // namespace jf
+} // namespace parameter

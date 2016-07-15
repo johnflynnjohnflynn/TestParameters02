@@ -10,7 +10,7 @@
 
 #include "Range.h"
 
-namespace jf
+namespace maths
 {
 
 //==============================================================================
@@ -82,4 +82,4 @@ void RangeLog::setSkewLog (float newSkewLog)
 }
 
 //==============================================================================
-} // namespace jf
+} // namespace maths

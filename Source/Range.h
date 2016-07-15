@@ -14,7 +14,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Test.h"
 
-namespace jf
+namespace maths
 {
 
 //==============================================================================
@@ -67,6 +67,6 @@ bool operator== (const RangeLog& a, const RangeLog& b);
 JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE (RangeLogTests)
 
 //==============================================================================
-} // namespace jf
+} // namespace maths
 
 #endif  // RANGE_H_INCLUDED

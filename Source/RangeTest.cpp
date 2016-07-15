@@ -10,7 +10,7 @@
 
 #include "Range.h"
 
-namespace jf
+namespace maths
 {
 
 //==============================================================================
@@ -86,4 +86,4 @@ void RangeLogTests::runTest()
 #endif // JF_UNIT_TESTS
 
 //==============================================================================
-} // namespace jf
+} // namespace maths

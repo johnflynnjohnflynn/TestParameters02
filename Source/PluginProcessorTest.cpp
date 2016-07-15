@@ -33,7 +33,7 @@ void PluginProcessorTests::runTest()
     beginTest ("State: Check parameter was stored");
     expect (xml.getDoubleAttribute ("gainID") == 0.5);
     beginTest ("State: Check first parameter was stored");
-    expect (jf::equalApprox (xml.getDoubleAttribute ("gainStepID"), 0.152542));
+    expect (test::equalApprox (xml.getDoubleAttribute ("gainStepID"), 0.152542));
     beginTest ("State: Check last parameter was stored");
     expect (xml.getDoubleAttribute ("q2ID") == 0.5);
 

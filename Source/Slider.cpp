@@ -10,7 +10,7 @@
 
 #include "Slider.h"
 
-namespace jf
+namespace slider
 {
 
 SliderStep::SliderStep (AudioProcessorParameter& p)
@@ -56,7 +56,7 @@ void SliderStep::updateSliderPos()
 }
 void SliderStep::updateInterval()
 {
-    if (jf::ParamStepListenFreq* pslf = dynamic_cast<jf::ParamStepListenFreq*> (&param))
+    if (parameter::ParamStepListenFreq* pslf = dynamic_cast<parameter::ParamStepListenFreq*> (&param))
     {
         const float numStepsParam = pslf->getNumSteps();
         const float newSliderInterval0to1 = 1.0f / numStepsParam;
@@ -66,4 +66,4 @@ void SliderStep::updateInterval()
 }
 
 //==============================================================================
-} // namespace jf
+} // namespace slider

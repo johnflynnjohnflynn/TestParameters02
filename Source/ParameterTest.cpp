@@ -10,14 +10,14 @@
 
 #include "Parameter.h"
 
-namespace jf
+namespace parameter
 {
 
 //==============================================================================
 #if JF_UNIT_TESTS
 
 ParamStepTests::ParamStepTests()
-    : UnitTest ("jf::ParamStep")
+    : UnitTest ("parameter::ParamStep")
 {
 }
 
@@ -26,10 +26,10 @@ class ParamStepTestsProc  : public AudioProcessor   // Dummy processor for use i
 {
 public:
     ParamStepTestsProc()
-        : stepSizeParam     {new jf::ParamStepBroadcast  {"sid", "sname", 0.01,     3, 0.75,  0, 0}},
-          gainParam         {new jf::ParamStepListenGain {"gid", "gname",  -10,    10,    0, 20, 0, *stepSizeParam}},
-          numFreqStepsParam {new jf::ParamStepBroadcast  {"sid", "sname",    1,     7,    5,  6, 0}},
-          freqParam         {new jf::ParamStepListenFreq {"gid", "gname",   20, 20000,  200,  0, 3, *numFreqStepsParam}}
+        : stepSizeParam     {new parameter::ParamStepBroadcast  {"sid", "sname", 0.01,     3, 0.75,  0, 0}},
+          gainParam         {new parameter::ParamStepListenGain {"gid", "gname",  -10,    10,    0, 20, 0, *stepSizeParam}},
+          numFreqStepsParam {new parameter::ParamStepBroadcast  {"sid", "sname",    1,     7,    5,  6, 0}},
+          freqParam         {new parameter::ParamStepListenFreq {"gid", "gname",   20, 20000,  200,  0, 3, *numFreqStepsParam}}
     {
         addParameter (stepSizeParam);
         addParameter (gainParam);
@@ -67,10 +67,10 @@ public:
     void setStateInformation (const void*, int) override {}
 
 private:
-    jf::ParamStepBroadcast* stepSizeParam {nullptr};            // 0
-    jf::ParamStepListenGain* gainParam {nullptr};               // 1
-    jf::ParamStepBroadcast* numFreqStepsParam {nullptr};        // 2
-    jf::ParamStepListenFreq* freqParam {nullptr};               // 3
+    parameter::ParamStepBroadcast* stepSizeParam {nullptr};            // 0
+    parameter::ParamStepListenGain* gainParam {nullptr};               // 1
+    parameter::ParamStepBroadcast* numFreqStepsParam {nullptr};        // 2
+    parameter::ParamStepListenFreq* freqParam {nullptr};               // 3
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParamStepTestsProc)
 };
@@ -81,27 +81,27 @@ void ParamStepTests::runTest()
     Random rnd = getRandom();
 
     beginTest ("min < max");
-    expectDoesNotThrow ((jf::ParamStep {"dummyID", "The Name", 0, 10, 0, 0, 0}));
-    expectThrows       ((jf::ParamStep {"dummyID", "The Name", 0, -1, 0, 0, 0}));
+    expectDoesNotThrow ((parameter::ParamStep {"dummyID", "The Name", 0, 10, 0, 0, 0}));
+    expectThrows       ((parameter::ParamStep {"dummyID", "The Name", 0, -1, 0, 0, 0}));
 
     beginTest ("min <= default");
-    expectThrows       ((jf::ParamStep {"dummyID", "The Name", 0, 10, -5, 0, 0}));
-    expectDoesNotThrow ((jf::ParamStep {"dummyID", "The Name", 0, 10,  0, 0, 0}));
+    expectThrows       ((parameter::ParamStep {"dummyID", "The Name", 0, 10, -5, 0, 0}));
+    expectDoesNotThrow ((parameter::ParamStep {"dummyID", "The Name", 0, 10,  0, 0, 0}));
 
     beginTest ("default <= max");
-    expectThrows       ((jf::ParamStep {"dummyID", "The Name", 0, 10, 20, 0, 0}));
-    expectDoesNotThrow ((jf::ParamStep {"dummyID", "The Name", 0, 10, 10, 0, 0}));
+    expectThrows       ((parameter::ParamStep {"dummyID", "The Name", 0, 10, 20, 0, 0}));
+    expectDoesNotThrow ((parameter::ParamStep {"dummyID", "The Name", 0, 10, 10, 0, 0}));
 
     beginTest ("0 <= numSteps");
-    expectThrows       ((jf::ParamStep {"dummyID", "The Name", 0, 10,  0, -1, 0}));
-    expectDoesNotThrow ((jf::ParamStep {"dummyID", "The Name", 0, 10,  0, 0, 0}));
+    expectThrows       ((parameter::ParamStep {"dummyID", "The Name", 0, 10,  0, -1, 0}));
+    expectDoesNotThrow ((parameter::ParamStep {"dummyID", "The Name", 0, 10,  0, 0, 0}));
 
     beginTest ("set any skew");
     for (int i = 0; i < 1000; ++i)
-        expectDoesNotThrow ((jf::ParamStep {"dummyID", "The Name", 0, 10,  0, 0, rnd.nextFloat()}));
+        expectDoesNotThrow ((parameter::ParamStep {"dummyID", "The Name", 0, 10,  0, 0, rnd.nextFloat()}));
 
-    jf::ParamStep freq  {"id", "nm", 20, 20000, 632.456f,   0, 3};
-    jf::ParamStep steps {"id", "nm",  0,   127,        0, 128, 0};
+    parameter::ParamStep freq  {"id", "nm", 20, 20000, 632.456f,   0, 3};
+    parameter::ParamStep steps {"id", "nm",  0,   127,        0, 128, 0};
 
     beginTest ("get() default");
     expect (freq.get() == 632.456f);
@@ -116,18 +116,18 @@ void ParamStepTests::runTest()
     expectThrows (steps.setNumSteps(-5));
 
     beginTest ("getRange()");
-    jf::RangeLog range {20, 20000, 3};
+    maths::RangeLog range {20, 20000, 3};
     expect (freq.getRange() == range);
 
     beginTest ("setRange(f,f,f)");
     expectDoesNotThrow (freq.setRange (0, 1, 0));
-    jf::RangeLog range010 {0, 1, 0};
+    maths::RangeLog range010 {0, 1, 0};
     expect (freq.getRange() == range010);
 
     beginTest ("Create ParamStepBroadcast");
-    expectDoesNotThrow ((jf::ParamStepBroadcast {"id", "name", -10, 10, 0, 20, 0}));
+    expectDoesNotThrow ((parameter::ParamStepBroadcast {"id", "name", -10, 10, 0, 20, 0}));
 
-    beginTest ("Create jf::ParamStepBroadcast and jf::ParamStepListenGain in dummy processor");
+    beginTest ("Create parameter::ParamStepBroadcast and parameter::ParamStepListenGain in dummy processor");
     expectDoesNotThrow (ParamStepTestsProc());
     ParamStepTestsProc paramStepTestsProc;
 
@@ -137,11 +137,11 @@ void ParamStepTests::runTest()
     expect (paramStepTestsProc.getParameters()[0]->getValue() == 1.0f);
 
     beginTest ("Check listening gain parameter's range changed");
-    jf::RangeLog expectedRange {-30, 30, 0}; // now +3dB steps, so 10 steps times 3 is +/-30
-    jf::ParamStepListenGain& gainParam = dynamic_cast<jf::ParamStepListenGain&> (*paramStepTestsProc.getParameters()[1]);
+    maths::RangeLog expectedRange {-30, 30, 0}; // now +3dB steps, so 10 steps times 3 is +/-30
+    parameter::ParamStepListenGain& gainParam = dynamic_cast<parameter::ParamStepListenGain&> (*paramStepTestsProc.getParameters()[1]);
     expect (gainParam.getRange() == expectedRange);
 
-    beginTest ("Create jf::ParamStepBroadcast and jf::ParamStepListenFreq in dummy processor");
+    beginTest ("Create parameter::ParamStepBroadcast and parameter::ParamStepListenFreq in dummy processor");
     expectDoesNotThrow (ParamStepTestsProc());
 
     beginTest ("Change numFreqSteps parameter");
@@ -150,11 +150,11 @@ void ParamStepTests::runTest()
     expect (paramStepTestsProc.getParameters()[2]->getValue() == 1.0f);
 
     beginTest ("Check listening freq parameter numSteps changed");
-    jf::ParamStepListenFreq& freqParam = dynamic_cast<jf::ParamStepListenFreq&> (*paramStepTestsProc.getParameters()[3]);
+    parameter::ParamStepListenFreq& freqParam = dynamic_cast<parameter::ParamStepListenFreq&> (*paramStepTestsProc.getParameters()[3]);
     expect (freqParam.getNumSteps() == 192);
 }
 
 #endif // JF_UNIT_TESTS
 
 //==============================================================================
-} // namespace jf
+} // namespace parameter

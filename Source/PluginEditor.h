@@ -34,14 +34,14 @@ private:
     TextButton toggleABButton;
     TextButton copyABButton;
 
-    jf::SliderStep gainStepSizeSlider;
-    jf::SliderStep freqStepSizeSlider;
-    jf::SliderStep gainSlider;
-    jf::SliderStep freqSlider;
-    jf::SliderStep qSlider;
-    jf::SliderStep gain2Slider;
-    jf::SliderStep freq2Slider;
-    jf::SliderStep q2Slider;
+    slider::SliderStep gainStepSizeSlider;
+    slider::SliderStep freqStepSizeSlider;
+    slider::SliderStep gainSlider;
+    slider::SliderStep freqSlider;
+    slider::SliderStep qSlider;
+    slider::SliderStep gain2Slider;
+    slider::SliderStep freq2Slider;
+    slider::SliderStep q2Slider;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

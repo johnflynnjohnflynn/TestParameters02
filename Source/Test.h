@@ -50,7 +50,7 @@
  #define JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE(TestClassName) // do nothing
 #endif
 
-namespace jf {
+namespace test {
 
 //==============================================================================
 class ConsoleLogger : public Logger {};
@@ -89,6 +89,6 @@ bool equalApprox (FloatType a, FloatType b)
 }
 
 //==============================================================================
-} // namespace jf
+} // namespace test
 
 #endif  // TESTJF_H_INCLUDED

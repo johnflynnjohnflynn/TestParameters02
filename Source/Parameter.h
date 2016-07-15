@@ -15,7 +15,7 @@
 #include "Range.h"
 #include "Test.h"
 
-namespace jf
+namespace parameter
 {
 
 //==============================================================================
@@ -48,14 +48,14 @@ public:
     int getNumSteps() const noexcept override   { return numSteps; }
     void setNumSteps (int newNumSteps);
 
-    const jf::RangeLog& getRange() const        { return range; }
+    const maths::RangeLog& getRange() const        { return range; }
     void setRange (float start, float end, float skewLog);
 
 protected:
     float value;
 
 private:
-    jf::RangeLog range;
+    maths::RangeLog range;
     float defaultValue;
     int numSteps;
 
@@ -157,6 +157,6 @@ private:
 JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE (ParamStepTests)
 
 //==============================================================================
-} // namespace jf
+} // namespace parameter
 
 #endif  // PARAMETER_H_INCLUDED
