@@ -18,8 +18,8 @@ namespace state
 {
 
 //==============================================================================
-XmlElement& saveStateToXml (const AudioProcessor& processor, XmlElement& xml);
-AudioProcessor& loadStateFromXml (const XmlElement& xml, AudioProcessor& processor);
+void saveStateToXml (const AudioProcessor& processor, XmlElement& xml);
+void loadStateFromXml (const XmlElement& xml, AudioProcessor& processor);
 
 //==============================================================================
 class StateAB
