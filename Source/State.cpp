@@ -30,5 +30,16 @@ void loadStateFromXml (const XmlElement& xml, AudioProcessor& proc)
                                                                                   // if not in xml set current
             p->setValueNotifyingHost ((float) xml.getDoubleAttribute (p->paramID, p->getValue()));
 }
+//==============================================================================
+/** Removes any character in a string that isn't alphanumeric or an underscore.
+    Returns an "_" instead of an empty string.
+*/
+String makeValidIdentifier (const String& identifierToTest)
+{
+    String validId = identifierToTest.retainCharacters("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789_");
+    if (validId == "")
+        return "_";
+    return validId;
+}
 
 } // namespace state

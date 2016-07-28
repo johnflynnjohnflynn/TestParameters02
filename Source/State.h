@@ -21,6 +21,8 @@ namespace state
 void saveStateToXml (const AudioProcessor& processor, XmlElement& xml);
 void loadStateFromXml (const XmlElement& xml, AudioProcessor& processor);
 
+String makeValidIdentifier (const String& identifierToTest);
+
 //==============================================================================
 class StateAB
 {
@@ -49,6 +51,38 @@ private:
     XmlElement ab {"AB"};
 
 };
+
+//==============================================================================
+class StatePresets
+{
+public:
+    StatePresets (AudioProcessor& p)
+        : pluginProcessor {p}
+    {
+    }
+    
+    void savePreset (String presetName)
+    {
+        // handle cases:
+        // Illegal name?
+        // Name already in use
+
+        if (presetName != "")
+        {
+            XmlElement currentState {presetName};
+            saveStateToXml (pluginProcessor, currentState);
+            presets.addChildElement (&currentState);
+        }
+    }
+
+private:
+    AudioProcessor& pluginProcessor;
+    XmlElement presets {"PRESETS"};
+
+};
+
+//==============================================================================
+JF_DECLARE_UNIT_TEST_WITH_STATIC_INSTANCE (StateTests)
 
 //==============================================================================
 } // namespace state
