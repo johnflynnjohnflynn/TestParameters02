@@ -191,7 +191,7 @@ void TestParameters02AudioProcessor::setStateInformation (const void* /*data*/, 
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-   #if parameter_UNIT_TESTS
+   #if JF_UNIT_TESTS
     test::runUnitTests();
    #endif
 
