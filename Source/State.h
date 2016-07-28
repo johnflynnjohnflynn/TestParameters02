@@ -21,7 +21,7 @@ namespace state
 void saveStateToXml (const AudioProcessor& processor, XmlElement& xml);
 void loadStateFromXml (const XmlElement& xml, AudioProcessor& processor);
 
-String makeValidIdentifier (const String& identifierToTest);
+String makeValidXmlName (const String& identifierToTest);
 
 //==============================================================================
 class StateAB

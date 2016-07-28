@@ -23,24 +23,30 @@ StateTests::StateTests()
 
 void StateTests::runTest()
 {
-    beginTest ("makeValidIdentifier(): Empty string");
-    expect (makeValidIdentifier("") == "_");
+    beginTest ("makeValidXmlName(): Empty string");
+    expect (makeValidXmlName("") == "_");
     
-    beginTest ("makeValidIdentifier(): Good string");
-    expect (makeValidIdentifier("laksjf0923490283SDFLKDF") == "laksjf0923490283SDFLKDF");
+    beginTest ("makeValidXmlName(): Good string");
+    expect (makeValidXmlName("laksjf0923490283SDFLKDF") == "laksjf0923490283SDFLKDF");
     
-    beginTest ("makeValidIdentifier(): Brute force all good characters");
-    expect (makeValidIdentifier("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890_")
+    beginTest ("makeValidXmlName(): Brute force all good characters");
+    expect (makeValidXmlName("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890_")
                              == "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890_");
     
-    beginTest ("makeValidIdentifier(): Some bad chars");
-    expect (makeValidIdentifier("lwekf$%lks(&3jdsfli<>#sdlk") == "lwekflks3jdsflisdlk");
+    beginTest ("makeValidXmlName(): Some bad chars");
+    expect (makeValidXmlName("lwekf$%lks(&3jdsfli<>#sdlk") == "lwekflks3jdsflisdlk");
     
-    beginTest ("makeValidIdentifier(): Only bad chars");
-    expect (makeValidIdentifier("<>:;?\[]") == "_");
+    beginTest ("makeValidXmlName(): Only bad chars");
+    expect (makeValidXmlName("<>:;?\[]") == "_");
     
-    beginTest ("makeValidIdentifier(): Some spaces");
-    expect (makeValidIdentifier("slkdfj sdlfkj sdlkfj") == "slkdfjsdlfkjsdlkfj");
+    beginTest ("makeValidXmlName(): Some spaces");
+    expect (makeValidXmlName("slkdfj sdlfkj sdlkfj") == "slkdfjsdlfkjsdlkfj");
+    
+    beginTest ("makeValidXmlName(): Starting with numbers");
+    expect (makeValidXmlName("293847skdjfwne2343kjhw skdjhf wer njs%^&") == "skdjfwne2343kjhwskdjhfwernjs");
+    
+    beginTest ("makeValidXmlName(): Starting with underscores");
+    expect (makeValidXmlName("_2w93wer_njs%^&") == "w93wer_njs");
 }
 
 #endif // JF_UNIT_TESTS

@@ -34,6 +34,7 @@
       <FILE id="zcWvmN" name="SliderTest.cpp" compile="1" resource="0" file="Source/SliderTest.cpp"/>
       <FILE id="yyORfn" name="State.cpp" compile="1" resource="0" file="Source/State.cpp"/>
       <FILE id="wTIogb" name="State.h" compile="0" resource="0" file="Source/State.h"/>
+      <FILE id="kOhVWk" name="StateTest.cpp" compile="1" resource="0" file="Source/StateTest.cpp"/>
       <FILE id="Z4kR9S" name="Test.cpp" compile="1" resource="0" file="Source/Test.cpp"/>
       <FILE id="NCzONt" name="Test.h" compile="0" resource="0" file="Source/Test.h"/>
     </GROUP>

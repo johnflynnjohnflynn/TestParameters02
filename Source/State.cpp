@@ -31,15 +31,17 @@ void loadStateFromXml (const XmlElement& xml, AudioProcessor& proc)
             p->setValueNotifyingHost ((float) xml.getDoubleAttribute (p->paramID, p->getValue()));
 }
 //==============================================================================
-/** Removes any character in a string that isn't alphanumeric or an underscore.
+/** Checks string doesn't start with number or underscore then 
+    removes any character that isn't alphanumeric or an underscore.
     Returns an "_" instead of an empty string.
 */
-String makeValidIdentifier (const String& identifierToTest)
+String makeValidXmlName (const String& in)
 {
-    String validId = identifierToTest.retainCharacters("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789_");
-    if (validId == "")
+    String out = in.trimCharactersAtStart ("1234567890_");
+    out = out.retainCharacters("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789_");
+    if (out == "")
         return "_";
-    return validId;
+    return out;
 }
 
 } // namespace state
