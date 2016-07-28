@@ -19,7 +19,8 @@
 /**
 */
 class TestParameters02AudioProcessorEditor  : public AudioProcessorEditor,
-                                              public Button::Listener
+                                              public Button::Listener,
+                                              public ComboBox::Listener
 {
 public:
     TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor&);
@@ -33,6 +34,9 @@ private:
     //==============================================================================
     TextButton toggleABButton;
     TextButton copyABButton;
+
+    ComboBox presetBox;
+    TextButton savePresetButton;
 
     slider::SliderStep gainStepSizeSlider;
     slider::SliderStep freqStepSizeSlider;
@@ -48,7 +52,10 @@ private:
     TestParameters02AudioProcessor& processor;
 
     void buttonClicked (Button* clickedButton) override;
+    void comboBoxChanged (ComboBox* changedComboBox) override;
 
+    void savePresetAlertWindow();
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessorEditor)
 };
 

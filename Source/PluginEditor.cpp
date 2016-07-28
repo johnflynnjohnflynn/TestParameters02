@@ -16,6 +16,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
     : AudioProcessorEditor (&p),
       toggleABButton {"A-B"},
       copyABButton {"Copy"},
+      savePresetButton {"Save preset"},
       gainStepSizeSlider {*p.getParameters()[0]},                           // better way than indices?
       freqStepSizeSlider {*p.getParameters()[1]},
       gainSlider         {*p.getParameters()[2]},
@@ -30,6 +31,15 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
     addAndMakeVisible (copyABButton);
     toggleABButton.addListener (this);
     copyABButton.addListener (this);
+
+    addAndMakeVisible (presetBox);
+    presetBox.addItem ("Item ID 1", 1);
+    presetBox.addItem ("Item ID 2", 2);
+    presetBox.addItem ("Item ID 3", 3);
+    presetBox.addListener (this);
+
+    addAndMakeVisible (savePresetButton);
+    savePresetButton.addListener (this);
     
     addAndMakeVisible (&gainStepSizeSlider);
     addAndMakeVisible (&freqStepSizeSlider);
@@ -40,7 +50,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
     addAndMakeVisible (&freq2Slider);
     addAndMakeVisible (&q2Slider);
 
-    setSize (400, 550); // remember to set before xtor finished
+    setSize (400, 650); // remember to set before xtor finished
 }
 
 TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
@@ -61,6 +71,8 @@ void TestParameters02AudioProcessorEditor::resized()
 
     toggleABButton    .setBounds (r.removeFromTop (sliderHeight));
     copyABButton      .setBounds (r.removeFromTop (sliderHeight));
+    presetBox         .setBounds (r.removeFromTop (sliderHeight));
+    savePresetButton  .setBounds (r.removeFromTop (sliderHeight));
     gainStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     freqStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     gainSlider        .setBounds (r.removeFromTop (sliderHeight));
@@ -73,6 +85,29 @@ void TestParameters02AudioProcessorEditor::resized()
 
 void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
 {
-    if (clickedButton == &toggleABButton) processor.abState.toggleAB();
-    if (clickedButton == &copyABButton)   processor.abState.copyAB();
+    if (clickedButton == &toggleABButton)   processor.abState.toggleAB();
+    if (clickedButton == &copyABButton)     processor.abState.copyAB();
+    if (clickedButton == &savePresetButton) savePresetAlertWindow();
+}
+
+void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedComboBox)
+{
+    if (changedComboBox->getSelectedId() == 0)
+        DBG ("changedComboBox->getSelectedId() == 0");
+}
+
+void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
+{
+    enum choice { ok, cancel };
+
+    AlertWindow alert {"Save preset...", "", AlertWindow::AlertIconType::NoIcon};
+    alert.addTextEditor ("presetEditorID", "Enter preset name");
+    alert.addButton ("OK",     choice::ok,     KeyPress (KeyPress::returnKey, 0, 0));
+    alert.addButton ("Cancel", choice::cancel, KeyPress (KeyPress::escapeKey, 0, 0));
+    
+    if (alert.runModalLoop() == choice::ok) // runModalLoop to show alert, check okay   // LEAKS when quit while open !!!
+    {
+        String presetName {alert.getTextEditorContents ("presetEditorID")};
+        processor.presetsState.savePreset (presetName);
+    }
 }
