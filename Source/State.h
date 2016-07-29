@@ -63,16 +63,16 @@ public:
     
     void savePreset (String presetName)
     {
-        // handle cases:
-        // Illegal name?
-        // Name already in use
+        int newPresetIDNumber = presets.getNumChildElements();
+        String newPresetID = "preset" + static_cast<String> (newPresetIDNumber); // format: preset###
 
-        if (presetName != "")
-        {
-            XmlElement currentState {presetName};
-            saveStateToXml (pluginProcessor, currentState);
-            presets.addChildElement (&currentState);
-        }
+        std::unique_ptr<XmlElement> currentState {new XmlElement {newPresetID}};
+        saveStateToXml (pluginProcessor, *currentState);
+        currentState->setAttribute ("presetName", presetName);
+        
+        presets.addChildElement (currentState.release()); // will be deleted by parent element
+
+        DBG (presets.createDocument (String()));
     }
 
 private:
