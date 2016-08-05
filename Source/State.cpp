@@ -30,18 +30,70 @@ void loadStateFromXml (const XmlElement& xml, AudioProcessor& proc)
                                                                                   // if not in xml set current
             p->setValueNotifyingHost ((float) xml.getDoubleAttribute (p->paramID, p->getValue()));
 }
+
 //==============================================================================
-/** Checks string doesn't start with number or underscore then 
-    removes any character that isn't alphanumeric or an underscore.
-    Returns an "_" instead of an empty string.
-*/
-String makeValidXmlName (const String& in)
+StateAB::StateAB (AudioProcessor& p)
+    : pluginProcessor {p}
 {
-    String out = in.trimCharactersAtStart ("1234567890_");
-    out = out.retainCharacters("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789_");
-    if (out == "")
-        return "_";
-    return out;
+    copyAB();
+}
+
+void StateAB::toggleAB()
+{
+    XmlElement temp {"Temp"};
+    saveStateToXml (pluginProcessor, temp); // current to temp
+    loadStateFromXml (ab, pluginProcessor); // ab to current
+    ab = temp;                              // temp to ab
+}
+
+void StateAB::copyAB()
+{
+    saveStateToXml (pluginProcessor, ab);
+}
+
+//==============================================================================
+void createFileIfNonExistant (const File& file)
+{
+    if (! file.exists())
+        file.create();
+    jassert (file.exists());
+}
+
+void parseFileToXmlElement (const File& file, XmlElement& xml)                  // what could go wrong here?
+{
+    std::unique_ptr<XmlElement> parsed {XmlDocument::parse (file)};
+    if (parsed)
+        xml = *parsed;
+}
+
+String getNextAvailablePresetID (const XmlElement& presetXml)
+{
+    int newPresetIDNumber = presetXml.getNumChildElements();
+    return "preset" + static_cast<String> (newPresetIDNumber); // format: preset###
+}
+
+//==============================================================================
+StatePresets::StatePresets (AudioProcessor& p)
+    : pluginProcessor {p}
+{
+    parseFileToXmlElement (presetFile, presetXml);
+}
+
+StatePresets::~StatePresets()
+{
+    createFileIfNonExistant (presetFile);
+    presetXml.writeToFile (presetFile, "");
+}
+
+void StatePresets::savePreset (String presetName)
+{
+    String newPresetID = getNextAvailablePresetID (presetXml); // presetID format: "preset##"
+
+    std::unique_ptr<XmlElement> currentState {new XmlElement {newPresetID}};    // must be pointer as
+    saveStateToXml (pluginProcessor, *currentState);                            // parent takes ownership
+    currentState->setAttribute ("presetName", presetName);
+    
+    presetXml.addChildElement (currentState.release()); // will be deleted by parent element
 }
 
 } // namespace state

@@ -18,33 +18,13 @@ namespace state
 {
 
 //==============================================================================
-void saveStateToXml (const AudioProcessor& processor, XmlElement& xml);
-void loadStateFromXml (const XmlElement& xml, AudioProcessor& processor);
-
-String makeValidXmlName (const String& identifierToTest);
-
-//==============================================================================
 class StateAB
 {
 public:
-    StateAB (AudioProcessor& p)
-        : pluginProcessor {p}
-    {
-        copyAB();
-    }
+    StateAB (AudioProcessor& p);
     
-    void toggleAB()
-    {
-        XmlElement temp {"Temp"};
-        saveStateToXml (pluginProcessor, temp); // current to temp
-        loadStateFromXml (ab, pluginProcessor); // ab to current
-        ab = temp;                              // temp to ab
-    }
-    
-    void copyAB()
-    {
-        saveStateToXml (pluginProcessor, ab);
-    }
+    void toggleAB();
+    void copyAB();
 
 private:
     AudioProcessor& pluginProcessor;
@@ -56,29 +36,16 @@ private:
 class StatePresets
 {
 public:
-    StatePresets (AudioProcessor& p)
-        : pluginProcessor {p}
-    {
-    }
+    StatePresets (AudioProcessor& p);
+    ~StatePresets();
     
-    void savePreset (String presetName)
-    {
-        int newPresetIDNumber = presets.getNumChildElements();
-        String newPresetID = "preset" + static_cast<String> (newPresetIDNumber); // format: preset###
-
-        std::unique_ptr<XmlElement> currentState {new XmlElement {newPresetID}};
-        saveStateToXml (pluginProcessor, *currentState);
-        currentState->setAttribute ("presetName", presetName);
-        
-        presets.addChildElement (currentState.release()); // will be deleted by parent element
-
-        DBG (presets.createDocument (String()));
-    }
+    void savePreset (String presetName);
 
 private:
     AudioProcessor& pluginProcessor;
-    XmlElement presets {"PRESETS"};
-
+    XmlElement presetXml {"PRESETS"};
+    File presetFile {File::getSpecialLocation (File::userApplicationDataDirectory)
+                    .getChildFile ("JohnFlynn/TestParameters02/presets.xml")};
 };
 
 //==============================================================================
