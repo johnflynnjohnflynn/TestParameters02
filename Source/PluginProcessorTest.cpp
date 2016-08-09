@@ -22,7 +22,7 @@ void PluginProcessorTests::runTest()
 {
     Random rnd = getRandom();
 
-    // State
+    // StateAB
 
     TestParameters02AudioProcessor proc;
     XmlElement xml {"TestXml"};
@@ -64,7 +64,6 @@ void PluginProcessorTests::runTest()
     beginTest ("State: Toggle AB state and check");
     expectDoesNotThrow(proc.abState.toggleAB());
     expect (proc.getParameters()[0]->getValue() == 0.2f);
-
 }
 
 #endif // JF_UNIT_TESTS

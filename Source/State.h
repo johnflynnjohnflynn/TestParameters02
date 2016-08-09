@@ -18,10 +18,14 @@ namespace state
 {
 
 //==============================================================================
+void saveStateToXml (const AudioProcessor& params, XmlElement& xml);
+void loadStateFromXml (const XmlElement& xml, AudioProcessor& params);
+
+//==============================================================================
 class StateAB
 {
 public:
-    StateAB (AudioProcessor& p);
+    explicit StateAB (AudioProcessor& p);
     
     void toggleAB();
     void copyAB();
@@ -30,6 +34,7 @@ private:
     AudioProcessor& pluginProcessor;
     XmlElement ab {"AB"};
 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StateAB);
 };
 
 //==============================================================================
