@@ -42,14 +42,14 @@ private:
 };
 
 //==============================================================================
+/** Create StatePresets object with XML file saved relative to user
+    data directory.
+    e.g. StatePresets my_sps {"JohnFlynnPlugins/ThisPlugin/presets.xml"}
+    Full path Mac  = ~/Library/JohnFlynnPlugins/ThisPlugin/presets.xml
+*/
 class StatePresets
 {
 public:
-    /** Create StatePresets object with XML file saved relative to user
-        data directory.
-        e.g. presetFileLocation = "JohnFlynnPlugins/ThisPlugin/presets.xml"
-        Full path Mac  = ~/Library/JohnFlynnPlugins/ThisPlugin/presets.xml
-    */
     explicit StatePresets (const String& presetFileLocation);
     ~StatePresets();
 
