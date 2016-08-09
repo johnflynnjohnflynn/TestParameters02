@@ -50,16 +50,16 @@ private:
 class StatePresets
 {
 public:
-    explicit StatePresets (const String& presetFileLocation);
+    explicit StatePresets (AudioProcessor& proc, const String& presetFileLocation);
     ~StatePresets();
 
     void clearAllPresets();
-    void savePreset (const String& presetName,
-                     const OwnedArray<AudioProcessorParameter>& params); // preset already exists? confirm overwrite
+    void savePreset (const String& presetName); // preset already exists? confirm overwrite
                      
     std::vector<String> getPresetNames() const;
 
 private:
+    AudioProcessor& pluginProcessor;
     XmlElement presetXml {"PRESETS"}; // local, in-plugin representation
     File presetFile;                  // on-disk representation
     

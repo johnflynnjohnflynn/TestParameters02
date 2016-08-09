@@ -66,6 +66,12 @@ void parseFileToXmlElement (const File& file, XmlElement& xml)                  
         xml = *parsed;
 }
 
+void writeXmlElementToFile (const XmlElement& xml, File& file)
+{
+    createFileIfNonExistant (file);
+    xml.writeToFile (file, "");         // "" is DTD (unused)
+}
+
 String getNextAvailablePresetID (const XmlElement& presetXml)
 {
     int newPresetIDNumber = presetXml.getNumChildElements();
@@ -73,19 +79,26 @@ String getNextAvailablePresetID (const XmlElement& presetXml)
 }
 
 //==============================================================================
-StatePresets::StatePresets (AudioProcessor& p)
-    : pluginProcessor {p}
+StatePresets::StatePresets (AudioProcessor& proc, const String& presetFileLocation)
+    : pluginProcessor {proc},
+      presetFile {File::getSpecialLocation (File::userApplicationDataDirectory)
+                    .getChildFile (presetFileLocation)}
 {
     parseFileToXmlElement (presetFile, presetXml);
 }
 
 StatePresets::~StatePresets()
 {
-    createFileIfNonExistant (presetFile);
-    presetXml.writeToFile (presetFile, "");
+    writeXmlElementToFile (presetXml, presetFile);
 }
 
-void StatePresets::savePreset (String presetName)
+void StatePresets::clearAllPresets()
+{
+    presetXml.deleteAllChildElements();
+    writeXmlElementToFile (presetXml, presetFile);
+}
+
+void StatePresets::savePreset (const String& presetName)
 {
     String newPresetID = getNextAvailablePresetID (presetXml); // presetID format: "preset##"
 
@@ -93,7 +106,22 @@ void StatePresets::savePreset (String presetName)
     saveStateToXml (pluginProcessor, *currentState);                            // parent takes ownership
     currentState->setAttribute ("presetName", presetName);
     
-    presetXml.addChildElement (currentState.release()); // will be deleted by parent element
+    presetXml.addChildElement (currentState.release());                         // will be deleted by parent element
+}
+
+std::vector<String> StatePresets::getPresetNames() const
+{
+    std::vector<String> names;
+
+    forEachXmlChildElement(presetXml, child)                                    // should avoid macro?
+    {
+        String n = child->getStringAttribute("presetName");
+        if (n == "")
+            n = "(Unnamed preset)";
+        names.push_back(n);
+    }
+    
+    return names;
 }
 
 } // namespace state

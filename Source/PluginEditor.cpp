@@ -33,9 +33,8 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
     copyABButton.addListener (this);
 
     addAndMakeVisible (presetBox);
-    presetBox.addItem ("Item ID 1", 1);
-    presetBox.addItem ("Item ID 2", 2);
-    presetBox.addItem ("Item ID 3", 3);
+    presetBox.setTextWhenNothingSelected("Load preset...");
+    //updatePresetBox();
     presetBox.addListener (this);
 
     addAndMakeVisible (savePresetButton);
@@ -96,6 +95,20 @@ void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedCom
         DBG ("changedComboBox->getSelectedId() == 0");
 }
 
+/** Scan processor's StatePresets object for presets and update presetBox menu
+    Returns the final ID in the list
+*/
+int TestParameters02AudioProcessorEditor::updatePresetBox()
+{
+    presetBox.clear();
+    std::vector<String> presetNames {processor.presetsState.getPresetNames()};
+    for (int i = 0; i < presetNames.size(); ++i)
+        presetBox.addItem (presetNames.at(i), i + 1); // must count from 1
+
+    int lastID {static_cast<int> (presetNames.size())};
+    return lastID;
+}
+
 void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
 {
     enum choice { ok, cancel };
@@ -109,5 +122,8 @@ void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
     {
         String presetName {alert.getTextEditorContents ("presetEditorID")};
         processor.presetsState.savePreset (presetName);
+        
+        int lastID {updatePresetBox()};
+        presetBox.setSelectedId(lastID);
     }
 }
