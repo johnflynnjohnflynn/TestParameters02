@@ -18,10 +18,14 @@ namespace state
 {
 
 //==============================================================================
-void saveStateToXml (const AudioProcessor& params, XmlElement& xml);
-void loadStateFromXml (const XmlElement& xml, AudioProcessor& params);
+void saveStateToXml (const AudioProcessor& processor, XmlElement& xml);
+void loadStateFromXml (const XmlElement& xml, AudioProcessor& processor);
 
 //==============================================================================
+/** Handler for AB state toggling and copying in plugin.
+    Create public instance in processor and call .toggleAB() and .copyAB()
+    methods from button callback in editor.
+*/
 class StateAB
 {
 public:
@@ -41,16 +45,25 @@ private:
 class StatePresets
 {
 public:
-    StatePresets (AudioProcessor& p);
+    /** Create StatePresets object with XML file saved relative to user
+        data directory.
+        e.g. presetFileLocation = "JohnFlynnPlugins/ThisPlugin/presets.xml"
+        Full path Mac  = ~/Library/JohnFlynnPlugins/ThisPlugin/presets.xml
+    */
+    explicit StatePresets (const String& presetFileLocation);
     ~StatePresets();
-    
-    void savePreset (String presetName);
+
+    void clearAllPresets();
+    void savePreset (const String& presetName,
+                     const OwnedArray<AudioProcessorParameter>& params); // preset already exists? confirm overwrite
+                     
+    std::vector<String> getPresetNames() const;
 
 private:
-    AudioProcessor& pluginProcessor;
-    XmlElement presetXml {"PRESETS"};
-    File presetFile {File::getSpecialLocation (File::userApplicationDataDirectory)
-                    .getChildFile ("JohnFlynn/TestParameters02/presets.xml")};
+    XmlElement presetXml {"PRESETS"}; // local, in-plugin representation
+    File presetFile;                  // on-disk representation
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StatePresets);
 };
 
 //==============================================================================
