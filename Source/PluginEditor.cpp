@@ -17,6 +17,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
       toggleABButton {"A-B"},
       copyABButton {"Copy"},
       savePresetButton {"Save preset"},
+      deletePresetButton {"Delete preset"},
       gainStepSizeSlider {*p.getParameters()[0]},                           // better way than indices?
       freqStepSizeSlider {*p.getParameters()[1]},
       gainSlider         {*p.getParameters()[2]},
@@ -39,6 +40,8 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
 
     addAndMakeVisible (savePresetButton);
     savePresetButton.addListener (this);
+    addAndMakeVisible (deletePresetButton);
+    deletePresetButton.addListener (this);
     
     addAndMakeVisible (&gainStepSizeSlider);
     addAndMakeVisible (&freqStepSizeSlider);
@@ -49,7 +52,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
     addAndMakeVisible (&freq2Slider);
     addAndMakeVisible (&q2Slider);
 
-    setSize (400, 650); // remember to set before xtor finished
+    setSize (400, 700); // remember to set before xtor finished
 }
 
 TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
@@ -72,6 +75,7 @@ void TestParameters02AudioProcessorEditor::resized()
     copyABButton      .setBounds (r.removeFromTop (sliderHeight));
     presetBox         .setBounds (r.removeFromTop (sliderHeight));
     savePresetButton  .setBounds (r.removeFromTop (sliderHeight));
+    deletePresetButton.setBounds (r.removeFromTop (sliderHeight));
     gainStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     freqStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     gainSlider        .setBounds (r.removeFromTop (sliderHeight));

@@ -37,6 +37,7 @@ private:
 
     ComboBox presetBox;
     TextButton savePresetButton;
+    TextButton deletePresetButton;
 
     slider::SliderStep gainStepSizeSlider;
     slider::SliderStep freqStepSizeSlider;
