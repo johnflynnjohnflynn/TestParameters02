@@ -26,7 +26,7 @@ class ParamStepTestsProc  : public AudioProcessor   // Dummy processor for use i
 {
 public:
     ParamStepTestsProc()
-        : stepSizeParam     {new parameter::ParamStepBroadcast  {"sid", "sname", 0.01,     3, 0.75,  0, 0}},
+        : stepSizeParam     {new parameter::ParamStepBroadcast  {"sid", "sname", 0.01f,    3, 0.75,  0, 0}},
           gainParam         {new parameter::ParamStepListenGain {"gid", "gname",  -10,    10,    0, 20, 0, *stepSizeParam}},
           numFreqStepsParam {new parameter::ParamStepBroadcast  {"sid", "sname",    1,     7,    5,  6, 0}},
           freqParam         {new parameter::ParamStepListenFreq {"gid", "gname",   20, 20000,  200,  0, 3, *numFreqStepsParam}}

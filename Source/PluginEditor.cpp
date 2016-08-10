@@ -106,10 +106,11 @@ int TestParameters02AudioProcessorEditor::updatePresetBox()
 {
     presetBox.clear();
     std::vector<String> presetNames {processor.statePresets.getPresetNames()};
-    for (int i = 0; i < presetNames.size(); ++i)
+    const int preset_names_size {static_cast<int> (presetNames.size())};
+    for (int i = 0; i < preset_names_size; ++i)
         presetBox.addItem (presetNames.at(i), i + 1); // must count from 1
 
-    int lastID {static_cast<int> (presetNames.size())};
+    int lastID {preset_names_size};
     return lastID;
 }
 

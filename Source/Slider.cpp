@@ -58,7 +58,7 @@ void SliderStep::updateInterval()
 {
     if (parameter::ParamStepListenFreq* pslf = dynamic_cast<parameter::ParamStepListenFreq*> (&param))
     {
-        const float numStepsParam = pslf->getNumSteps();
+        const int numStepsParam = pslf->getNumSteps();
         const float newSliderInterval0to1 = 1.0f / numStepsParam;
 
         Slider::setRange (0, 1, newSliderInterval0to1);
