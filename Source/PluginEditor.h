@@ -23,7 +23,7 @@ class TestParameters02AudioProcessorEditor  : public AudioProcessorEditor,
                                               public ComboBox::Listener
 {
 public:
-    TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor&);
+    explicit TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor&);
     ~TestParameters02AudioProcessorEditor();
 
     //==============================================================================

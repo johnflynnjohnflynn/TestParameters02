@@ -30,7 +30,7 @@ class SliderStep  : public Slider,
                     private Timer
 {
 public:
-    SliderStep (AudioProcessorParameter& p);
+    explicit SliderStep (AudioProcessorParameter& p);
 
 private:
     void valueChanged() override;
