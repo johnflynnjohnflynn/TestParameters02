@@ -54,6 +54,16 @@ void StateTests::runTest()
     expect (xml2.getStringAttribute("name") == "Nigel");
     expect (xml2.getStringAttribute("age") == "10");
 
+    beginTest("state::getNextAvailablePresetID");
+    expect (state::getNextAvailablePresetID(xml1) == "preset0");
+
+    std::unique_ptr<XmlElement> child {new XmlElement {"CHILD"}};
+    child->setAttribute ("name", "Terry");
+    child->setAttribute ("age", "11");
+    xml1.addChildElement(child.release());
+
+    expect (state::getNextAvailablePresetID(xml1) == "preset1");
+
     file.deleteFile();
 }
 
