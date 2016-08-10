@@ -59,7 +59,6 @@ public:
     explicit StatePresets (AudioProcessor& proc, const String& presetFileLocation);
     ~StatePresets();
 
-    void clearAllPresets();
     void savePreset (const String& presetName); // preset already exists? confirm overwrite
                      
     std::vector<String> getPresetNames() const;

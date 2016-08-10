@@ -92,12 +92,6 @@ StatePresets::~StatePresets()
     writeXmlElementToFile (presetXml, presetFile);
 }
 
-void StatePresets::clearAllPresets()
-{
-    presetXml.deleteAllChildElements();
-    writeXmlElementToFile (presetXml, presetFile);
-}
-
 void StatePresets::savePreset (const String& presetName)
 {
     String newPresetID = getNextAvailablePresetID (presetXml); // presetID format: "preset##"
@@ -120,7 +114,6 @@ std::vector<String> StatePresets::getPresetNames() const
             n = "(Unnamed preset)";
         names.push_back(n);
     }
-    
     return names;
 }
 
