@@ -26,7 +26,7 @@ void StateTests::runTest()
 {
     beginTest("state::createFileIfNonExistant()");
     File file {File::getSpecialLocation (File::userApplicationDataDirectory)
-               .getChildFile ("JohnFlynn/TestParameters02/unit-test-createFileIfNonExistant")};
+               .getChildFile ("JohnFlynn/TestParameters02/unit-test-createFileIfNonExistant.xml")};
     expect (! file.exists());
 
     state::createFileIfNonExistant(file);
@@ -37,6 +37,24 @@ void StateTests::runTest()
 
     file.deleteFile();
     expect (! file.exists());
+
+    beginTest("state::writeXmlElementToFile()");
+    state::createFileIfNonExistant(file);
+
+    XmlElement xml1 {"TEST"};
+    xml1.setAttribute ("name", "Nigel");
+    xml1.setAttribute ("age", "10");
+
+    expectDoesNotThrow(state::writeXmlElementToFile(xml1, file));
+
+    beginTest("state::parseFileToElement()");
+    XmlElement xml2 {"CheckTEST"};
+    expectDoesNotThrow(state::parseFileToXmlElement(file, xml2));
+
+    expect (xml2.getStringAttribute("name") == "Nigel");
+    expect (xml2.getStringAttribute("age") == "10");
+
+    file.deleteFile();
 }
 
 #endif // JF_UNIT_TESTS
