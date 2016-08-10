@@ -42,6 +42,12 @@ private:
 };
 
 //==============================================================================
+void createFileIfNonExistant (const File& file);
+void parseFileToXmlElement (const File& file, XmlElement& xml);
+void writeXmlElementToFile (const XmlElement& xml, File& file);
+String getNextAvailablePresetID (const XmlElement& presetXml);
+
+//==============================================================================
 /** Create StatePresets object with XML file saved relative to user
     data directory.
     e.g. StatePresets my_sps {"JohnFlynnPlugins/ThisPlugin/presets.xml"}
