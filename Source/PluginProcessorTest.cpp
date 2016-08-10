@@ -64,6 +64,31 @@ void PluginProcessorTests::runTest()
     beginTest ("StateAB: Toggle AB state and check");
     expectDoesNotThrow(proc.stateAB.toggleAB());
     expect (proc.getParameters()[0]->getValue() == 0.2f);
+
+    // StatePresets
+
+    beginTest("Load preset 1");                                                 // these tests will quickly go out of sync
+    expectDoesNotThrow (proc.statePresets.loadPreset(1));
+    DBG(proc.getParameters()[0]->getValue());
+    expect (proc.getParameters()[0]->getValue() == 0.18515901267528533936);
+
+    beginTest("Load preset 2");
+    expectDoesNotThrow (proc.statePresets.loadPreset(2));
+    DBG(proc.getParameters()[0]->getValue());
+    expect (proc.getParameters()[0]->getValue() == 0.37275597453117370605);
+
+    beginTest("Load preset 3");
+    expectDoesNotThrow (proc.statePresets.loadPreset(3));
+    DBG(proc.getParameters()[0]->getValue());
+    expect (proc.getParameters()[0]->getValue() == 0.67068374156951904297);
+
+    beginTest("Load preset 0");
+    expectDoesNotThrow (proc.statePresets.loadPreset(0));
+    DBG(proc.getParameters()[0]->getValue());
+    expect (proc.getParameters()[0]->getValue() == 0.0);
+
+    beginTest("Load preset out of range");
+    expectThrows (proc.statePresets.loadPreset(999));
 }
 
 #endif // JF_UNIT_TESTS

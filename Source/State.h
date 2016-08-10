@@ -56,10 +56,11 @@ String getNextAvailablePresetID (const XmlElement& presetXml);
 class StatePresets
 {
 public:
-    explicit StatePresets (AudioProcessor& proc, const String& presetFileLocation);
+    StatePresets (AudioProcessor& proc, const String& presetFileLocation);
     ~StatePresets();
 
     void savePreset (const String& presetName); // preset already exists? confirm overwrite
+    void loadPreset (int presetID);
                      
     std::vector<String> getPresetNames() const;
 

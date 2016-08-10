@@ -103,6 +103,13 @@ void StatePresets::savePreset (const String& presetName)
     presetXml.addChildElement (currentState.release());                         // will be deleted by parent element
 }
 
+void StatePresets::loadPreset (int presetID)
+{
+    jassert (presetID <= presetXml.getNumChildElements());
+    XmlElement loadThisChild {*presetXml.getChildElement (presetID)};
+    loadStateFromXml (loadThisChild, pluginProcessor);
+}
+
 std::vector<String> StatePresets::getPresetNames() const
 {
     std::vector<String> names;

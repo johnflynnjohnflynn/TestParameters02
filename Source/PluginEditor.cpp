@@ -34,7 +34,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
 
     addAndMakeVisible (presetBox);
     presetBox.setTextWhenNothingSelected("Load preset...");
-    //updatePresetBox();
+    updatePresetBox();
     presetBox.addListener (this);
 
     addAndMakeVisible (savePresetButton);
@@ -91,11 +91,11 @@ void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
 
 void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedComboBox)
 {
-    if (changedComboBox->getSelectedId() == 0)
-        DBG ("changedComboBox->getSelectedId() == 0");
+    int selectedId {changedComboBox->getSelectedId()};
+    processor.statePresets.loadPreset (selectedId - 1); // zero indexed
 }
 
-/** Scan processor's StatePresets object for presets and update presetBox menu
+/** Scan processor's StatePresets object for presets and update presetBox menu          // messy function. better way?
     Returns the final ID in the list
 */
 int TestParameters02AudioProcessorEditor::updatePresetBox()
