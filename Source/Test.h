@@ -21,12 +21,12 @@
     an assert unrelated to the unit tests, try set JF_UNIT_TESTS=0
     
     This will trigger warning:
-    "Lexical or Preprocessor Issue 'jassert' macro redefined"
+    "Lexical or Preprocessor Issue 'jassertfalse' macro redefined"
 
     @see jassert
 */
 #if JF_UNIT_TESTS
- #define jassert(expression) JUCE_BLOCK_WITH_FORCED_SEMICOLON (if (! (expression)) throw std::logic_error ("");)
+ #define jassertfalse JUCE_BLOCK_WITH_FORCED_SEMICOLON (throw std::logic_error ("");)
 #endif
 
 //==============================================================================
