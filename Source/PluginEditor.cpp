@@ -84,8 +84,8 @@ void TestParameters02AudioProcessorEditor::resized()
 
 void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
 {
-    if (clickedButton == &toggleABButton)   processor.abState.toggleAB();
-    if (clickedButton == &copyABButton)     processor.abState.copyAB();
+    if (clickedButton == &toggleABButton)   processor.stateAB.toggleAB();
+    if (clickedButton == &copyABButton)     processor.stateAB.copyAB();
     if (clickedButton == &savePresetButton) savePresetAlertWindow();
 }
 
@@ -101,7 +101,7 @@ void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedCom
 int TestParameters02AudioProcessorEditor::updatePresetBox()
 {
     presetBox.clear();
-    std::vector<String> presetNames {processor.presetsState.getPresetNames()};
+    std::vector<String> presetNames {processor.statePresets.getPresetNames()};
     for (int i = 0; i < presetNames.size(); ++i)
         presetBox.addItem (presetNames.at(i), i + 1); // must count from 1
 
@@ -121,7 +121,7 @@ void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
     if (alert.runModalLoop() == choice::ok) // runModalLoop to show alert, check okay   // LEAKS when quit while open !!!
     {
         String presetName {alert.getTextEditorContents ("presetEditorID")};
-        processor.presetsState.savePreset (presetName);
+        processor.statePresets.savePreset (presetName);
         
         int lastID {updatePresetBox()};
         presetBox.setSelectedId(lastID);

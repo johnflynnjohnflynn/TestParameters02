@@ -60,8 +60,8 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     //==============================================================================
-    state::StateAB abState;
-    state::StatePresets presetsState;
+    state::StateAB stateAB;
+    state::StatePresets statePresets;
 
 private:
     //==============================================================================

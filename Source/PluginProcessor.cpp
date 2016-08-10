@@ -14,8 +14,8 @@
 //==============================================================================
 TestParameters02AudioProcessor::TestParameters02AudioProcessor()
 
-    : abState {*this},
-      presetsState {*this, "JohnFlynn/TestParameters02/presets.xml"}, // ID     Name            Min      Max     Def nSteps   skew broadcastParam
+    : stateAB {*this},
+      statePresets {*this, "JohnFlynn/TestParameters02/presets.xml"}, // ID     Name            Min      Max     Def nSteps   skew broadcastParam
       gainStepSizeParam {new parameter::ParamStepBroadcast  {"gainStepID", "Gain step size",  0.05f,     3.0f,   0.5f              }},
       freqStepSizeParam {new parameter::ParamStepBroadcast  {"freqStepID", "Freq step size",      1,        7,      5,    6        }},
       gainParam         {new parameter::ParamStepListenGain {"gainID",     "Gain",           -12.0f,    12.0f,   0.0f,   22,   0.0f, *gainStepSizeParam}},

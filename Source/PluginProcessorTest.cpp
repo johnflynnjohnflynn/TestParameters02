@@ -52,17 +52,17 @@ void PluginProcessorTests::runTest()
     expect (proc.getParameters()[7]->getValue() == 0.93f);
 
     beginTest ("State: Toggle AB state");
-    expectDoesNotThrow(proc.abState.toggleAB());
+    expectDoesNotThrow(proc.stateAB.toggleAB());
     beginTest ("State: Check parameter is same");
     expect (proc.getParameters()[0]->getValue() == 0.11f);
 
     beginTest ("State: Change parameter");
     expectDoesNotThrow(proc.getParameters()[0]->setValueNotifyingHost(0.2));
     beginTest ("State: Toggle AB state and check");
-    expectDoesNotThrow(proc.abState.toggleAB());
+    expectDoesNotThrow(proc.stateAB.toggleAB());
     expect (proc.getParameters()[0]->getValue() == 0.11f);
     beginTest ("State: Toggle AB state and check");
-    expectDoesNotThrow(proc.abState.toggleAB());
+    expectDoesNotThrow(proc.stateAB.toggleAB());
     expect (proc.getParameters()[0]->getValue() == 0.2f);
 }
 
