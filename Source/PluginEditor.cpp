@@ -12,6 +12,14 @@
 #include "PluginEditor.h"
 
 //==============================================================================
+void populateComboBox (ComboBox& comboBox, const std::vector<String> listItems)
+{
+    const int listItems_size {static_cast<int> (listItems.size())};
+    for (int i = 0; i < listItems_size; ++i)
+        comboBox.addItem (listItems[i], i + 1); // 1-indexed ID for ComboBox
+}
+
+//==============================================================================
 TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor& p)
     : AudioProcessorEditor (&p),
       toggleABButton {"A-B"},
@@ -99,19 +107,12 @@ void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedCom
     processor.statePresets.loadPreset (selectedId);
 }
 
-/** Scan processor's StatePresets object for presets and update presetBox menu      // messy function. better way?
-    Returns the final ID in the list                                                // (why return? just to play well with below)
-*/
-int TestParameters02AudioProcessorEditor::updatePresetBox()
+void TestParameters02AudioProcessorEditor::updatePresetBox()
 {
     presetBox.clear();
-    std::vector<String> presetNames {processor.statePresets.getPresetNames()};
-    const int preset_names_size {static_cast<int> (presetNames.size())};
-    for (int i = 0; i < preset_names_size; ++i)
-        presetBox.addItem (presetNames[i], i + 1); // 1-indexed ID for ComboBox
+    const std::vector<String>& presetNames {processor.statePresets.getPresetNames()};
 
-    int lastID {preset_names_size};
-    return lastID;
+    populateComboBox (presetBox, presetNames);
 }
 
 void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
@@ -127,8 +128,10 @@ void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
     {
         String presetName {alert.getTextEditorContents ("presetEditorID")};
         processor.statePresets.savePreset (presetName);
-        
-        int lastID {updatePresetBox()};
-        presetBox.setSelectedId(lastID);
+
+        updatePresetBox();
+
+        //int lastID {updatePresetBox()};
+        //presetBox.setSelectedId(lastID);
     }
 }

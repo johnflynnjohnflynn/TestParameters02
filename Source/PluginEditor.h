@@ -54,7 +54,7 @@ private:
 
     void buttonClicked (Button* clickedButton) override;
     void comboBoxChanged (ComboBox* changedComboBox) override;
-    int updatePresetBox();
+    void updatePresetBox();
     void savePresetAlertWindow();
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessorEditor)
