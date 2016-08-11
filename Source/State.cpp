@@ -113,10 +113,11 @@ void StatePresets::loadPreset (int presetID)
 
 bool StatePresets::deletePreset()
 {
-    XmlElement* childToDelete {presetXml.getChildElement (currentPresetID)};
+    XmlElement* childToDelete {presetXml.getChildElement (currentPresetID - 1)};
     if (childToDelete)
     {
         presetXml.removeChildElement (childToDelete, true);
+        currentPresetID = 0;
         return true;
     }
     return false;

@@ -99,6 +99,10 @@ void PluginProcessorTests::runTest()
 
         beginTest("getNumPresets()");
         expect (proc.statePresets.getNumPresets() == 4);
+
+        beginTest("deletePreset()");
+        expectDoesNotThrow (proc.statePresets.deletePreset());
+        expect (proc.statePresets.getNumPresets() == 3);
     }                                                       // proc destructor called
 
     presetsBackup.copyFileTo (presets);                     // now copy presets file back in place

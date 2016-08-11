@@ -96,9 +96,14 @@ void TestParameters02AudioProcessorEditor::resized()
 
 void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
 {
-    if (clickedButton == &toggleABButton)   processor.stateAB.toggleAB();
-    if (clickedButton == &copyABButton)     processor.stateAB.copyAB();
-    if (clickedButton == &savePresetButton) savePresetAlertWindow();
+    if (clickedButton == &toggleABButton)     processor.stateAB.toggleAB();
+    if (clickedButton == &copyABButton)       processor.stateAB.copyAB();
+    if (clickedButton == &savePresetButton)   savePresetAlertWindow();
+    if (clickedButton == &deletePresetButton)
+    {
+        processor.statePresets.deletePreset();
+        updatePresetBox();
+    }
 }
 
 void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedComboBox)
@@ -113,7 +118,11 @@ void TestParameters02AudioProcessorEditor::updatePresetBox()
     const std::vector<String>& presetNames {processor.statePresets.getPresetNames()};
 
     populateComboBox (presetBox, presetNames);
-    presetBox.setSelectedId (processor.statePresets.getCurrentPresetId());
+
+    const int currentPresetId {processor.statePresets.getCurrentPresetId()};
+    const int numPresets      {processor.statePresets.getNumPresets()};
+    if (1 < currentPresetId && currentPresetId <= numPresets)
+        presetBox.setSelectedId (processor.statePresets.getCurrentPresetId());
 }
 
 void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
