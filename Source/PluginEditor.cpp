@@ -96,11 +96,11 @@ void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
 void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedComboBox)
 {
     int selectedId {changedComboBox->getSelectedId()};
-    processor.statePresets.loadPreset (selectedId - 1); // zero indexed
+    processor.statePresets.loadPreset (selectedId);
 }
 
-/** Scan processor's StatePresets object for presets and update presetBox menu          // messy function. better way?
-    Returns the final ID in the list
+/** Scan processor's StatePresets object for presets and update presetBox menu      // messy function. better way?
+    Returns the final ID in the list                                                // (why return? just to play well with below)
 */
 int TestParameters02AudioProcessorEditor::updatePresetBox()
 {
@@ -108,7 +108,7 @@ int TestParameters02AudioProcessorEditor::updatePresetBox()
     std::vector<String> presetNames {processor.statePresets.getPresetNames()};
     const int preset_names_size {static_cast<int> (presetNames.size())};
     for (int i = 0; i < preset_names_size; ++i)
-        presetBox.addItem (presetNames.at(i), i + 1); // must count from 1
+        presetBox.addItem (presetNames[i], i + 1); // 1-indexed ID for ComboBox
 
     int lastID {preset_names_size};
     return lastID;

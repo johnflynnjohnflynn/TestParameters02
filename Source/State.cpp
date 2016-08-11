@@ -74,8 +74,8 @@ void writeXmlElementToFile (const XmlElement& xml, File& file)
 
 String getNextAvailablePresetID (const XmlElement& presetXml)
 {
-    int newPresetIDNumber = presetXml.getNumChildElements();
-    return "preset" + static_cast<String> (newPresetIDNumber); // format: preset###
+    int newPresetIDNumber = presetXml.getNumChildElements() + 1; // 1 indexed to match ComboBox
+    return "preset" + static_cast<String> (newPresetIDNumber);   // format: preset##
 }
 
 //==============================================================================
@@ -105,8 +105,8 @@ void StatePresets::savePreset (const String& presetName)
 
 void StatePresets::loadPreset (int presetID)
 {
-    jassert (presetID <= presetXml.getNumChildElements());
-    XmlElement loadThisChild {*presetXml.getChildElement (presetID)};
+    jassert (0 < presetID && presetID <= presetXml.getNumChildElements()); // 1 indexed to match ComboBox
+    XmlElement loadThisChild {*presetXml.getChildElement (presetID - 1)};  // (0 indexed method)
     loadStateFromXml (loadThisChild, pluginProcessor);
     currentPresetID = presetID;
 }
