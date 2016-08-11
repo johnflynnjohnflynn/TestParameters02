@@ -119,10 +119,10 @@ void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
 {
     enum choice { ok, cancel };
 
-    AlertWindow alert {"Save preset...", "", AlertWindow::AlertIconType::NoIcon};
+    AlertWindow alert   {"Save preset...", "", AlertWindow::AlertIconType::NoIcon};
     alert.addTextEditor ("presetEditorID", "Enter preset name");
-    alert.addButton ("OK",     choice::ok,     KeyPress (KeyPress::returnKey, 0, 0));
-    alert.addButton ("Cancel", choice::cancel, KeyPress (KeyPress::escapeKey, 0, 0));
+    alert.addButton     ("OK",     choice::ok,     KeyPress (KeyPress::returnKey, 0, 0));
+    alert.addButton     ("Cancel", choice::cancel, KeyPress (KeyPress::escapeKey, 0, 0));
     
     if (alert.runModalLoop() == choice::ok)                                     // LEAKS when quit while open !!!
     {
