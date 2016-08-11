@@ -64,6 +64,7 @@ public:
     bool deletePreset();
                      
     std::vector<String> getPresetNames() const;
+    int getNumPresets() const;
 
 private:
     AudioProcessor& pluginProcessor;

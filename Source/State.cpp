@@ -136,4 +136,9 @@ std::vector<String> StatePresets::getPresetNames() const
     return names;
 }
 
+int StatePresets::getNumPresets() const
+{
+    return presetXml.getNumChildElements();
+}
+
 } // namespace state
