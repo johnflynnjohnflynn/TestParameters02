@@ -60,7 +60,8 @@ public:
     ~StatePresets();
 
     void savePreset (const String& presetName); // preset already exists? confirm overwrite
-    void loadPreset (int presetID) const;
+    void loadPreset (int presetID);
+    bool deletePreset();
                      
     std::vector<String> getPresetNames() const;
 
@@ -68,6 +69,7 @@ private:
     AudioProcessor& pluginProcessor;
     XmlElement presetXml {"PRESETS"}; // local, in-plugin representation
     File presetFile;                  // on-disk representation
+    int currentPresetID {0};
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StatePresets);
 };
