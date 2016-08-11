@@ -65,6 +65,7 @@ public:
                      
     std::vector<String> getPresetNames() const;
     int getNumPresets() const;
+    int getCurrentPresetId() const;
 
 private:
     AudioProcessor& pluginProcessor;

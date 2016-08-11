@@ -141,4 +141,9 @@ int StatePresets::getNumPresets() const
     return presetXml.getNumChildElements();
 }
 
+int StatePresets::getCurrentPresetId() const
+{
+    return currentPresetID;
+}
+
 } // namespace state
