@@ -124,14 +124,12 @@ void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
     alert.addButton ("OK",     choice::ok,     KeyPress (KeyPress::returnKey, 0, 0));
     alert.addButton ("Cancel", choice::cancel, KeyPress (KeyPress::escapeKey, 0, 0));
     
-    if (alert.runModalLoop() == choice::ok) // runModalLoop to show alert, check okay   // LEAKS when quit while open !!!
+    if (alert.runModalLoop() == choice::ok)                                     // LEAKS when quit while open !!!
     {
         String presetName {alert.getTextEditorContents ("presetEditorID")};
+
         processor.statePresets.savePreset (presetName);
-
         updatePresetBox();
-
-        //int lastID {updatePresetBox()};
-        //presetBox.setSelectedId(lastID);
+        presetBox.setSelectedId (processor.statePresets.getNumPresets());
     }
 }
