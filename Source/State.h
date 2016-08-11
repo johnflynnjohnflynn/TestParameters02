@@ -60,7 +60,7 @@ public:
     ~StatePresets();
 
     void savePreset (const String& presetName); // preset already exists? confirm overwrite
-    void loadPreset (int presetID);
+    void loadPreset (int presetID) const;
                      
     std::vector<String> getPresetNames() const;
 
