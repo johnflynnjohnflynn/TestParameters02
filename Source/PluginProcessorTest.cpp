@@ -80,22 +80,18 @@ void PluginProcessorTests::runTest()
 
         beginTest("Load preset 1");
         expectDoesNotThrow (proc.statePresets.loadPreset(2));
-        DBG(proc.getParameters()[0]->getValue());
         expect (proc.getParameters()[0]->getValue() == 0.67068374156951904297);
 
         beginTest("Load preset 2");
         expectDoesNotThrow (proc.statePresets.loadPreset(3));
-        DBG(proc.getParameters()[0]->getValue());
         expect (proc.getParameters()[0]->getValue() == 0.75203621387481689453);
 
         beginTest("Load preset 3");
         expectDoesNotThrow (proc.statePresets.loadPreset(4));
-        DBG(proc.getParameters()[0]->getValue());
         expect (proc.getParameters()[0]->getValue() == 0.79138964414596557617);
 
         beginTest("Load preset 0");
         expectDoesNotThrow (proc.statePresets.loadPreset(1));
-        DBG(proc.getParameters()[0]->getValue());
         expect (proc.getParameters()[0]->getValue() == 0.37275597453117370605);
 
         beginTest("Load preset out of range");
