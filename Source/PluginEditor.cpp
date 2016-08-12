@@ -42,7 +42,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
 
     addAndMakeVisible (presetBox);
     presetBox.setTextWhenNothingSelected("Load preset...");
-    updatePresetBox();
+    refreshPresetBox();
     ifPresetActiveShowInBox();
     presetBox.addListener (this);
 
@@ -102,7 +102,7 @@ void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
     if (clickedButton == &deletePresetButton)
     {
         processor.statePresets.deletePreset();
-        updatePresetBox();
+        refreshPresetBox();
     }
 }
 
@@ -112,7 +112,7 @@ void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedCom
     processor.statePresets.loadPreset (selectedId);
 }
 
-void TestParameters02AudioProcessorEditor::updatePresetBox()
+void TestParameters02AudioProcessorEditor::refreshPresetBox()
 {
     presetBox.clear();
     StringArray presetNames {processor.statePresets.getPresetNames()};
@@ -142,7 +142,7 @@ void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
         String presetName {alert.getTextEditorContents ("presetEditorID")};
 
         processor.statePresets.savePreset (presetName);
-        updatePresetBox();
+        refreshPresetBox();
         presetBox.setSelectedId (processor.statePresets.getNumPresets());
     }
 }

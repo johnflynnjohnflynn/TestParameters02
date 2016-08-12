@@ -48,13 +48,12 @@ private:
     slider::SliderStep freq2Slider;
     slider::SliderStep q2Slider;
 
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
     TestParameters02AudioProcessor& processor;
 
     void buttonClicked (Button* clickedButton) override;
     void comboBoxChanged (ComboBox* changedComboBox) override;
-    void updatePresetBox();
+    
+    void refreshPresetBox();
     void ifPresetActiveShowInBox();
     void savePresetAlertWindow();
     
