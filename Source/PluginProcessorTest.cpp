@@ -94,15 +94,16 @@ void PluginProcessorTests::runTest()
         expectDoesNotThrow (proc.statePresets.loadPreset(1));
         expect (proc.getParameters()[0]->getValue() == 0.37275597453117370605);
 
-        beginTest("Load preset out of range");
-        expectThrows (proc.statePresets.loadPreset(999));
-
         beginTest("getNumPresets()");
         expect (proc.statePresets.getNumPresets() == 4);
 
         beginTest("deletePreset()");
         expectDoesNotThrow (proc.statePresets.deletePreset());
         expect (proc.statePresets.getNumPresets() == 3);
+
+        beginTest("Load preset out of range. Should do nothing");
+        expectDoesNotThrow (proc.statePresets.loadPreset(999));
+        expect (proc.getParameters()[0]->getValue() == 0.37275597453117370605);
     }                                                       // proc destructor called
 
     presetsBackup.copyFileTo (presets);                     // now copy presets file back in place
