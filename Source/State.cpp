@@ -105,10 +105,12 @@ void StatePresets::savePreset (const String& presetName)
 
 void StatePresets::loadPreset (int presetID)
 {
-    jassert (0 < presetID && presetID <= presetXml.getNumChildElements()); // 1 indexed to match ComboBox
-    XmlElement loadThisChild {*presetXml.getChildElement (presetID - 1)};  // (0 indexed method)
-    loadStateFromXml (loadThisChild, pluginProcessor);
-    currentPresetID = presetID;
+    if (1 <= presetID && presetID <= presetXml.getNumChildElements()) // 1 indexed to match ComboBox
+    {
+        XmlElement loadThisChild {*presetXml.getChildElement (presetID - 1)}; // (0 indexed method)
+        loadStateFromXml (loadThisChild, pluginProcessor);
+    }
+    currentPresetID = presetID; // allow 0 for 'no preset selected' (?)
 }
 
 void StatePresets::deletePreset()
