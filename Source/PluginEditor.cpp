@@ -99,11 +99,7 @@ void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
     if (clickedButton == &toggleABButton)     processor.stateAB.toggleAB();
     if (clickedButton == &copyABButton)       processor.stateAB.copyAB();
     if (clickedButton == &savePresetButton)   savePresetAlertWindow();
-    if (clickedButton == &deletePresetButton)
-    {
-        processor.statePresets.deletePreset();
-        refreshPresetBox();
-    }
+    if (clickedButton == &deletePresetButton) deletePresetAndRefresh();
 }
 
 void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedComboBox)
@@ -126,6 +122,12 @@ void TestParameters02AudioProcessorEditor::ifPresetActiveShowInBox()
     const int numPresets    {processor.statePresets.getNumPresets()};
     if (1 <= currentPreset && currentPreset <= numPresets)
         presetBox.setSelectedId(currentPreset);
+}
+
+void TestParameters02AudioProcessorEditor::deletePresetAndRefresh()
+{
+    processor.statePresets.deletePreset();
+    refreshPresetBox();
 }
 
 void TestParameters02AudioProcessorEditor::savePresetAlertWindow()

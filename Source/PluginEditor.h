@@ -53,8 +53,9 @@ private:
     void buttonClicked (Button* clickedButton) override;
     void comboBoxChanged (ComboBox* changedComboBox) override;
     
-    void refreshPresetBox();
-    void ifPresetActiveShowInBox();
+    void refreshPresetBox();                                    // should be a way to tidy all preset
+    void ifPresetActiveShowInBox();                             // stuff into one component/object?
+    void deletePresetAndRefresh();
     void savePresetAlertWindow();
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessorEditor)
