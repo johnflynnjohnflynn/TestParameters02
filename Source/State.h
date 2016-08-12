@@ -63,7 +63,7 @@ public:
     void loadPreset (int presetID);
     void deletePreset();
                      
-    std::vector<String> getPresetNames() const;
+    StringArray getPresetNames() const;
     int getNumPresets() const;
     int getCurrentPresetId() const;
 

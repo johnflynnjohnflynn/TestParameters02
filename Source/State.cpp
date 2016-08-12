@@ -120,18 +120,18 @@ void StatePresets::deletePreset()
         presetXml.removeChildElement (childToDelete, true);
 }
 
-std::vector<String> StatePresets::getPresetNames() const
+StringArray StatePresets::getPresetNames() const
 {
-    std::vector<String> names;
+    StringArray names;
 
     forEachXmlChildElement(presetXml, child)                                    // should avoid macro?
     {
         String n = child->getStringAttribute("presetName");
         if (n == "")
             n = "(Unnamed preset)";
-        names.push_back(n);
+        names.add (n);
     }
-    return names;
+    return names; // hopefully moves
 }
 
 int StatePresets::getNumPresets() const

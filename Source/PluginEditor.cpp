@@ -12,10 +12,9 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-void populateComboBox (ComboBox& comboBox, const std::vector<String> listItems)
+void populateComboBox (ComboBox& comboBox, const StringArray& listItems)
 {
-    const int listItems_size {static_cast<int> (listItems.size())};
-    for (int i = 0; i < listItems_size; ++i)
+    for (int i = 0; i < listItems.size(); ++i)
         comboBox.addItem (listItems[i], i + 1); // 1-indexed ID for ComboBox
 }
 
@@ -116,7 +115,7 @@ void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedCom
 void TestParameters02AudioProcessorEditor::updatePresetBox()
 {
     presetBox.clear();
-    const std::vector<String>& presetNames {processor.statePresets.getPresetNames()};
+    StringArray presetNames {processor.statePresets.getPresetNames()};
 
     populateComboBox (presetBox, presetNames);
 }
