@@ -108,7 +108,7 @@ void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
 
 void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedComboBox)
 {
-    int selectedId {changedComboBox->getSelectedId()};
+    const int selectedId {changedComboBox->getSelectedId()};
     processor.statePresets.loadPreset (selectedId);
 }
 
