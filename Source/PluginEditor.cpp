@@ -19,15 +19,6 @@ void populateComboBox (ComboBox& comboBox, const std::vector<String> listItems)
         comboBox.addItem (listItems[i], i + 1); // 1-indexed ID for ComboBox
 }
 
-void ifPresetActiveUpdateMenu (const TestParameters02AudioProcessor& p,
-                               ComboBox& presetMenu)
-{
-    const int currentPreset {p.statePresets.getCurrentPresetId()};
-    const int numPresets    {p.statePresets.getNumPresets()};
-    if (1 <= currentPreset && currentPreset <= numPresets)
-        presetMenu.setSelectedId(currentPreset);
-}
-
 //==============================================================================
 TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor& p)
     : AudioProcessorEditor (&p),
@@ -53,7 +44,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
     addAndMakeVisible (presetBox);
     presetBox.setTextWhenNothingSelected("Load preset...");
     updatePresetBox();
-    ifPresetActiveUpdateMenu (processor, presetBox);
+    ifPresetActiveShowInBox();
     presetBox.addListener (this);
 
     addAndMakeVisible (savePresetButton);
@@ -128,6 +119,14 @@ void TestParameters02AudioProcessorEditor::updatePresetBox()
     const std::vector<String>& presetNames {processor.statePresets.getPresetNames()};
 
     populateComboBox (presetBox, presetNames);
+}
+
+void TestParameters02AudioProcessorEditor::ifPresetActiveShowInBox()
+{
+    const int currentPreset {processor.statePresets.getCurrentPresetId()};
+    const int numPresets    {processor.statePresets.getNumPresets()};
+    if (1 <= currentPreset && currentPreset <= numPresets)
+        presetBox.setSelectedId(currentPreset);
 }
 
 void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
