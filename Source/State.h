@@ -61,7 +61,7 @@ public:
 
     void savePreset (const String& presetName); // preset already exists? confirm overwrite
     void loadPreset (int presetID);
-    bool deletePreset();
+    void deletePreset();
                      
     std::vector<String> getPresetNames() const;
     int getNumPresets() const;

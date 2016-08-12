@@ -111,16 +111,11 @@ void StatePresets::loadPreset (int presetID)
     currentPresetID = presetID;
 }
 
-bool StatePresets::deletePreset()
+void StatePresets::deletePreset()
 {
     XmlElement* childToDelete {presetXml.getChildElement (currentPresetID - 1)};
     if (childToDelete)
-    {
         presetXml.removeChildElement (childToDelete, true);
-        currentPresetID = 0;
-        return true;
-    }
-    return false;
 }
 
 std::vector<String> StatePresets::getPresetNames() const
