@@ -14,13 +14,12 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "Slider.h"
+#include "State.h"
 
 //==============================================================================
 /**
 */
-class TestParameters02AudioProcessorEditor  : public AudioProcessorEditor,
-                                              public Button::Listener,
-                                              public ComboBox::Listener
+class TestParameters02AudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
     explicit TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor&);
@@ -32,12 +31,7 @@ public:
 
 private:
     //==============================================================================
-    TextButton toggleABButton;
-    TextButton copyABButton;
-
-    ComboBox presetBox;
-    TextButton savePresetButton;
-    TextButton deletePresetButton;
+    state::StateComponent stateComponent;
 
     slider::SliderStep gainStepSizeSlider;
     slider::SliderStep freqStepSizeSlider;
@@ -49,14 +43,6 @@ private:
     slider::SliderStep q2Slider;
 
     TestParameters02AudioProcessor& processor;
-
-    void buttonClicked (Button* clickedButton) override;
-    void comboBoxChanged (ComboBox* changedComboBox) override;
-    
-    void refreshPresetBox();                                    // should be a way to tidy all preset
-    void ifPresetActiveShowInBox();                             // stuff into one component/object?
-    void deletePresetAndRefresh();
-    void savePresetAlertWindow();
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessorEditor)
 };

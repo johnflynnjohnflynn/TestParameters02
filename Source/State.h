@@ -22,7 +22,7 @@ void saveStateToXml (const AudioProcessor& processor, XmlElement& xml);
 void loadStateFromXml (const XmlElement& xml, AudioProcessor& processor);
 
 //==============================================================================
-/** Handler for AB state toggling and copying in plugin.
+/** Handler for AB state toggling and copying in plugin.                        // improve descriptions
     Create public instance in processor and call .toggleAB() and .copyAB()
     methods from button callback in editor.
 */
@@ -74,6 +74,45 @@ private:
     int currentPresetID {0};
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StatePresets);
+};
+
+//==============================================================================
+/** GUI-side component for the State objects. Handles GUI visual layout and 
+    logic of the state handlers.
+
+    Make private member of the PluginEditor. Initialise with the StateAB
+    and StatePresets objects (these should be public members of the
+    PluginProcessor).
+*/
+class StateComponent  : public Component,
+                        public Button::Listener,
+                        public ComboBox::Listener
+{
+public:
+    StateComponent (StateAB& sab, StatePresets& sp);
+    
+    void paint (Graphics&) override;
+    void resized() override;
+
+private:
+    StateAB&      procStateAB;
+    StatePresets& procStatePresets;
+
+    TextButton toggleABButton;
+    TextButton copyABButton;
+    ComboBox   presetBox;
+    TextButton savePresetButton;
+    TextButton deletePresetButton;
+
+    void buttonClicked (Button* clickedButton) override;
+    void comboBoxChanged (ComboBox* changedComboBox) override;
+    
+    void refreshPresetBox();
+    void ifPresetActiveShowInBox();
+    void deletePresetAndRefresh();
+    void savePresetAlertWindow();
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StateComponent);
 };
 
 //==============================================================================

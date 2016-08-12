@@ -12,19 +12,9 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-void populateComboBox (ComboBox& comboBox, const StringArray& listItems)
-{
-    for (int i = 0; i < listItems.size(); ++i)
-        comboBox.addItem (listItems[i], i + 1); // 1-indexed ID for ComboBox
-}
-
-//==============================================================================
 TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (TestParameters02AudioProcessor& p)
     : AudioProcessorEditor (&p),
-      toggleABButton {"A-B"},
-      copyABButton {"Copy"},
-      savePresetButton {"Save preset"},
-      deletePresetButton {"Delete preset"},
+      stateComponent {p.stateAB, p.statePresets},
       gainStepSizeSlider {*p.getParameters()[0]},                           // better way than indices?
       freqStepSizeSlider {*p.getParameters()[1]},
       gainSlider         {*p.getParameters()[2]},
@@ -35,21 +25,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
       q2Slider           {*p.getParameters()[7]},
       processor (p)
 {
-    addAndMakeVisible (toggleABButton);
-    addAndMakeVisible (copyABButton);
-    toggleABButton.addListener (this);
-    copyABButton.addListener (this);
-
-    addAndMakeVisible (presetBox);
-    presetBox.setTextWhenNothingSelected("Load preset...");
-    refreshPresetBox();
-    ifPresetActiveShowInBox();
-    presetBox.addListener (this);
-
-    addAndMakeVisible (savePresetButton);
-    savePresetButton.addListener (this);
-    addAndMakeVisible (deletePresetButton);
-    deletePresetButton.addListener (this);
+    addAndMakeVisible (stateComponent);
     
     addAndMakeVisible (&gainStepSizeSlider);
     addAndMakeVisible (&freqStepSizeSlider);
@@ -77,13 +53,13 @@ void TestParameters02AudioProcessorEditor::resized()
 {
     Rectangle<int> r (getLocalBounds().reduced (10));
 
-    const int sliderHeight {50};
+    stateComponent.setBounds (r.removeFromTop (225));
 
-    toggleABButton    .setBounds (r.removeFromTop (sliderHeight).reduced (10));
-    copyABButton      .setBounds (r.removeFromTop (sliderHeight).reduced (10));
-    presetBox         .setBounds (r.removeFromTop (sliderHeight).reduced (10));
-    savePresetButton  .setBounds (r.removeFromTop (sliderHeight).reduced (10));
-    deletePresetButton.setBounds (r.removeFromTop (sliderHeight).reduced (10));
+    r.removeFromTop (15); // spacer
+
+    const int numSliders {8};
+    const int sliderHeight {r.getHeight() / numSliders};
+
     gainStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     freqStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     gainSlider        .setBounds (r.removeFromTop (sliderHeight));
@@ -92,59 +68,4 @@ void TestParameters02AudioProcessorEditor::resized()
     gain2Slider       .setBounds (r.removeFromTop (sliderHeight));
     freq2Slider       .setBounds (r.removeFromTop (sliderHeight));
     q2Slider          .setBounds (r.removeFromTop (sliderHeight));
-}
-
-void TestParameters02AudioProcessorEditor::buttonClicked (Button* clickedButton)
-{
-    if (clickedButton == &toggleABButton)     processor.stateAB.toggleAB();
-    if (clickedButton == &copyABButton)       processor.stateAB.copyAB();
-    if (clickedButton == &savePresetButton)   savePresetAlertWindow();
-    if (clickedButton == &deletePresetButton) deletePresetAndRefresh();
-}
-
-void TestParameters02AudioProcessorEditor::comboBoxChanged (ComboBox* changedComboBox)
-{
-    const int selectedId {changedComboBox->getSelectedId()};
-    processor.statePresets.loadPreset (selectedId);
-}
-
-void TestParameters02AudioProcessorEditor::refreshPresetBox()
-{
-    presetBox.clear();
-    StringArray presetNames {processor.statePresets.getPresetNames()};
-
-    populateComboBox (presetBox, presetNames);
-}
-
-void TestParameters02AudioProcessorEditor::ifPresetActiveShowInBox()
-{
-    const int currentPreset {processor.statePresets.getCurrentPresetId()};
-    const int numPresets    {processor.statePresets.getNumPresets()};
-    if (1 <= currentPreset && currentPreset <= numPresets)
-        presetBox.setSelectedId(currentPreset);
-}
-
-void TestParameters02AudioProcessorEditor::deletePresetAndRefresh()
-{
-    processor.statePresets.deletePreset();
-    refreshPresetBox();
-}
-
-void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
-{
-    enum choice { ok, cancel };
-
-    AlertWindow alert   {"Save preset...", "", AlertWindow::AlertIconType::NoIcon};
-    alert.addTextEditor ("presetEditorID", "Enter preset name");
-    alert.addButton     ("OK",     choice::ok,     KeyPress (KeyPress::returnKey, 0, 0));
-    alert.addButton     ("Cancel", choice::cancel, KeyPress (KeyPress::escapeKey, 0, 0));
-    
-    if (alert.runModalLoop() == choice::ok)                                     // LEAKS when quit while open !!!
-    {
-        String presetName {alert.getTextEditorContents ("presetEditorID")};
-
-        processor.statePresets.savePreset (presetName);
-        refreshPresetBox();
-        presetBox.setSelectedId (processor.statePresets.getNumPresets());
-    }
 }

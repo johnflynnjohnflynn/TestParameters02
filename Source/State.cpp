@@ -144,4 +144,113 @@ int StatePresets::getCurrentPresetId() const
     return currentPresetID;
 }
 
+//==============================================================================
+void populateComboBox (ComboBox& comboBox, const StringArray& listItems)
+{
+    for (int i = 0; i < listItems.size(); ++i)
+        comboBox.addItem (listItems[i], i + 1); // 1-indexed ID for ComboBox
+}
+
+//==============================================================================
+StateComponent::StateComponent (StateAB& sab, StatePresets& sp)
+    : procStateAB {sab},
+      procStatePresets {sp},
+      toggleABButton {"A-B"},
+      copyABButton {"Copy"},
+      savePresetButton {"Save preset"},
+      deletePresetButton {"Delete preset"}
+{
+    addAndMakeVisible (toggleABButton);
+    addAndMakeVisible (copyABButton);
+    toggleABButton.addListener (this);
+    copyABButton.addListener (this);
+
+    addAndMakeVisible (presetBox);
+    presetBox.setTextWhenNothingSelected("Load preset...");
+    refreshPresetBox();
+    ifPresetActiveShowInBox();
+    presetBox.addListener (this);
+
+    addAndMakeVisible (savePresetButton);
+    savePresetButton.addListener (this);
+    addAndMakeVisible (deletePresetButton);
+    deletePresetButton.addListener (this);
+
+    //setSize (400, 200); // remember to set before xtor finished
+}
+
+void StateComponent::paint (Graphics& g)
+{
+    //g.fillAll (Colours::lightgrey);
+}
+
+void StateComponent::resized()
+{
+    Rectangle<int> r (getLocalBounds());
+
+    const int numComponents {5};
+    const int componentHeight {getHeight() / numComponents};
+
+    toggleABButton    .setBounds (r.removeFromTop (componentHeight).reduced (5));
+    copyABButton      .setBounds (r.removeFromTop (componentHeight).reduced (5));
+    presetBox         .setBounds (r.removeFromTop (componentHeight).reduced (5));
+    savePresetButton  .setBounds (r.removeFromTop (componentHeight).reduced (5));
+    deletePresetButton.setBounds (r.removeFromTop (componentHeight).reduced (5));
+}
+
+void StateComponent::buttonClicked (Button* clickedButton)
+{
+    if (clickedButton == &toggleABButton)     procStateAB.toggleAB();
+    if (clickedButton == &copyABButton)       procStateAB.copyAB();
+    if (clickedButton == &savePresetButton)   savePresetAlertWindow();
+    if (clickedButton == &deletePresetButton) deletePresetAndRefresh();
+}
+
+void StateComponent::comboBoxChanged (ComboBox* changedComboBox)
+{
+    const int selectedId {changedComboBox->getSelectedId()};
+    procStatePresets.loadPreset (selectedId);
+}
+
+void StateComponent::refreshPresetBox()
+{
+    presetBox.clear();
+    StringArray presetNames {procStatePresets.getPresetNames()};
+
+    populateComboBox (presetBox, presetNames);
+}
+
+void StateComponent::ifPresetActiveShowInBox()
+{
+    const int currentPreset {procStatePresets.getCurrentPresetId()};
+    const int numPresets    {procStatePresets.getNumPresets()};
+    if (1 <= currentPreset && currentPreset <= numPresets)
+        presetBox.setSelectedId(currentPreset);
+}
+
+void StateComponent::deletePresetAndRefresh()
+{
+    procStatePresets.deletePreset();
+    refreshPresetBox();
+}
+
+void StateComponent::savePresetAlertWindow()
+{
+    enum choice { ok, cancel };
+
+    AlertWindow alert   {"Save preset...", "", AlertWindow::AlertIconType::NoIcon};
+    alert.addTextEditor ("presetEditorID", "Enter preset name");
+    alert.addButton     ("OK",     choice::ok,     KeyPress (KeyPress::returnKey, 0, 0));
+    alert.addButton     ("Cancel", choice::cancel, KeyPress (KeyPress::escapeKey, 0, 0));
+    
+    if (alert.runModalLoop() == choice::ok)                                     // LEAKS when quit while open !!!
+    {
+        String presetName {alert.getTextEditorContents ("presetEditorID")};
+
+        procStatePresets.savePreset (presetName);
+        refreshPresetBox();
+        presetBox.setSelectedId (procStatePresets.getNumPresets());
+    }
+}
+
 } // namespace state
