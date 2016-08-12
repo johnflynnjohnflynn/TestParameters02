@@ -118,11 +118,6 @@ void TestParameters02AudioProcessorEditor::updatePresetBox()
     const std::vector<String>& presetNames {processor.statePresets.getPresetNames()};
 
     populateComboBox (presetBox, presetNames);
-
-    const int currentPresetId {processor.statePresets.getCurrentPresetId()};
-    const int numPresets      {processor.statePresets.getNumPresets()};
-    if (1 < currentPresetId && currentPresetId <= numPresets)
-        presetBox.setSelectedId (processor.statePresets.getCurrentPresetId());
 }
 
 void TestParameters02AudioProcessorEditor::savePresetAlertWindow()
