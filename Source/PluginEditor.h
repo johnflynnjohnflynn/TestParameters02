@@ -15,6 +15,7 @@
 #include "PluginProcessor.h"
 #include "Slider.h"
 #include "State.h"
+#include "Look.h"
 
 //==============================================================================
 /**
@@ -41,6 +42,8 @@ private:
     slider::SliderStep gain2Slider;
     slider::SliderStep freq2Slider;
     slider::SliderStep q2Slider;
+
+    look::CustomLook look;
 
     TestParameters02AudioProcessor& processor;
     

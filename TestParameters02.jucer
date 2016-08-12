@@ -12,7 +12,15 @@
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.2.3"
               defines="JF_UNIT_TESTS=1">
   <MAINGROUP id="y6Q9xL" name="TestParameters02">
+    <GROUP id="{7C58D1EA-5521-0A52-C35F-7C375168255A}" name="Resources">
+      <FILE id="X6RTPM" name="knob05LargeForeground4-fs8.png" compile="0"
+            resource="1" file="Resources/knob05LargeForeground4-fs8.png"/>
+      <FILE id="k4afmN" name="markerFilmstrip-fs8.png" compile="0" resource="1"
+            file="Resources/markerFilmstrip-fs8.png"/>
+    </GROUP>
     <GROUP id="{22AAC7BD-4C8B-133E-BB8D-E718B9CB5426}" name="Source">
+      <FILE id="XU3ipk" name="Look.cpp" compile="1" resource="0" file="Source/Look.cpp"/>
+      <FILE id="HLoIZQ" name="Look.h" compile="0" resource="0" file="Source/Look.h"/>
       <FILE id="Uo8roE" name="Parameter.cpp" compile="1" resource="0" file="Source/Parameter.cpp"/>
       <FILE id="k5WyrE" name="Parameter.h" compile="0" resource="0" file="Source/Parameter.h"/>
       <FILE id="tvUq2b" name="ParameterTest.cpp" compile="1" resource="0"

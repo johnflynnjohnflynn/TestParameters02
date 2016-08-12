@@ -16,6 +16,8 @@ namespace slider
 SliderStep::SliderStep (AudioProcessorParameter& p)
     : Slider (p.getName (256)), param (p)
 {
+    setSliderStyle (SliderStyle::RotaryHorizontalVerticalDrag);
+
     if (1 <= p.getNumSteps() && p.getNumSteps() <= 100) // <=100? defaults to 37850784 steps!
     {
         const double normStepSize = 1.0 / (p.getNumSteps());

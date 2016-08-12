@@ -36,6 +36,8 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
     addAndMakeVisible (&freq2Slider);
     addAndMakeVisible (&q2Slider);
 
+    LookAndFeel::setDefaultLookAndFeel (&look);
+
     setSize (400, 700); // remember to set before xtor finished
 }
 
