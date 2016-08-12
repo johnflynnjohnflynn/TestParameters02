@@ -79,11 +79,11 @@ void TestParameters02AudioProcessorEditor::resized()
 
     const int sliderHeight {50};
 
-    toggleABButton    .setBounds (r.removeFromTop (sliderHeight));
-    copyABButton      .setBounds (r.removeFromTop (sliderHeight));
-    presetBox         .setBounds (r.removeFromTop (sliderHeight));
-    savePresetButton  .setBounds (r.removeFromTop (sliderHeight));
-    deletePresetButton.setBounds (r.removeFromTop (sliderHeight));
+    toggleABButton    .setBounds (r.removeFromTop (sliderHeight).reduced (10));
+    copyABButton      .setBounds (r.removeFromTop (sliderHeight).reduced (10));
+    presetBox         .setBounds (r.removeFromTop (sliderHeight).reduced (10));
+    savePresetButton  .setBounds (r.removeFromTop (sliderHeight).reduced (10));
+    deletePresetButton.setBounds (r.removeFromTop (sliderHeight).reduced (10));
     gainStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     freqStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
     gainSlider        .setBounds (r.removeFromTop (sliderHeight));
