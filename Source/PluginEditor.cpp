@@ -26,6 +26,11 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
       processor (p)
 {
     addAndMakeVisible (stateComponent);
+
+    gainStepSizeSlider.setSliderStyle (Slider::SliderStyle::IncDecButtons); // override default rotary
+    freqStepSizeSlider.setSliderStyle (Slider::SliderStyle::IncDecButtons);
+    gainStepSizeSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxLeft, false, 75, 16);
+    freqStepSizeSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxLeft, false, 75, 16);
     
     addAndMakeVisible (&gainStepSizeSlider);
     addAndMakeVisible (&freqStepSizeSlider);
@@ -55,24 +60,26 @@ void TestParameters02AudioProcessorEditor::resized()
 {
     Rectangle<int> r (getLocalBounds().reduced (5));
 
-    stateComponent.setBounds (r.removeFromTop (35));
+    auto topBar = r.removeFromTop (35);
+
+    stateComponent.setBounds (topBar.removeFromLeft (700));
+
+    gainStepSizeSlider.setBounds (topBar.removeFromLeft (150).reduced (5));
+    freqStepSizeSlider.setBounds (topBar.reduced (5));
 
     r.removeFromTop (10); // spacer
 
-    const int numSliders {4};
+    const int numSliders {3};
     const int sliderHeight {r.getHeight() / numSliders};
 
     auto slice1 = r.removeFromTop(sliderHeight);
     auto slice2 = r.removeFromTop(sliderHeight);
     auto slice3 = r.removeFromTop(sliderHeight);
-    auto slice4 = r.removeFromTop(sliderHeight);
 
-    gainStepSizeSlider.setBounds (slice1.removeFromLeft  (200));
-    freqStepSizeSlider.setBounds (slice1.removeFromRight (200));
-    gainSlider        .setBounds (slice2.removeFromLeft  (200));
-    gain2Slider       .setBounds (slice2.removeFromRight (200));
-    freqSlider        .setBounds (slice3.removeFromLeft  (200));
-    freq2Slider       .setBounds (slice3.removeFromRight (200));
-    qSlider           .setBounds (slice4.removeFromLeft  (200));
-    q2Slider          .setBounds (slice4.removeFromRight (200));
+    gainSlider        .setBounds (slice1.removeFromLeft  (200));
+    gain2Slider       .setBounds (slice1.removeFromRight (200));
+    freqSlider        .setBounds (slice2.removeFromLeft  (200));
+    freq2Slider       .setBounds (slice2.removeFromRight (200));
+    qSlider           .setBounds (slice3.removeFromLeft  (200));
+    q2Slider          .setBounds (slice3.removeFromRight (200));
 }
