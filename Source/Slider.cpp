@@ -17,6 +17,7 @@ SliderStep::SliderStep (AudioProcessorParameter& p)
     : Slider (p.getName (256)), param (p)
 {
     setSliderStyle (SliderStyle::RotaryHorizontalVerticalDrag);
+    setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, false, 75, 16);
 
     if (1 <= p.getNumSteps() && p.getNumSteps() <= 100) // <=100? defaults to 37850784 steps!
     {
