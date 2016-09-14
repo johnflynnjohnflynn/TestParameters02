@@ -188,14 +188,14 @@ void StateComponent::resized()
 {
     Rectangle<int> r (getLocalBounds());
 
-    const int numComponents {5};
-    const int componentHeight {getHeight() / numComponents};
+    const int numComponents {6};
+    const int componentWidth {getWidth() / numComponents};
 
-    toggleABButton    .setBounds (r.removeFromTop (componentHeight).reduced (5));
-    copyABButton      .setBounds (r.removeFromTop (componentHeight).reduced (5));
-    presetBox         .setBounds (r.removeFromTop (componentHeight).reduced (5));
-    savePresetButton  .setBounds (r.removeFromTop (componentHeight).reduced (5));
-    deletePresetButton.setBounds (r.removeFromTop (componentHeight).reduced (5));
+    toggleABButton    .setBounds (r.removeFromLeft (componentWidth).reduced (5));
+    copyABButton      .setBounds (r.removeFromLeft (componentWidth).reduced (5));
+    presetBox         .setBounds (r.removeFromLeft (componentWidth * 2).reduced (5));
+    savePresetButton  .setBounds (r.removeFromLeft (componentWidth).reduced (5));
+    deletePresetButton.setBounds (r.removeFromLeft (componentWidth).reduced (5));
 }
 
 void StateComponent::buttonClicked (Button* clickedButton)
