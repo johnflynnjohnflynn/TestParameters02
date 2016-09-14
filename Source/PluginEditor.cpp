@@ -38,7 +38,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
 
     LookAndFeel::setDefaultLookAndFeel (&look);
 
-    setSize (400, 700); // remember to set before xtor finished
+    setSize (400, 800); // remember to set before xtor finished
 }
 
 TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
@@ -59,15 +59,20 @@ void TestParameters02AudioProcessorEditor::resized()
 
     r.removeFromTop (15); // spacer
 
-    const int numSliders {8};
+    const int numSliders {4};
     const int sliderHeight {r.getHeight() / numSliders};
 
-    gainStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
-    freqStepSizeSlider.setBounds (r.removeFromTop (sliderHeight));
-    gainSlider        .setBounds (r.removeFromTop (sliderHeight));
-    freqSlider        .setBounds (r.removeFromTop (sliderHeight));
-    qSlider           .setBounds (r.removeFromTop (sliderHeight));
-    gain2Slider       .setBounds (r.removeFromTop (sliderHeight));
-    freq2Slider       .setBounds (r.removeFromTop (sliderHeight));
-    q2Slider          .setBounds (r.removeFromTop (sliderHeight));
+    auto slice1 = r.removeFromTop(sliderHeight);
+    auto slice2 = r.removeFromTop(sliderHeight);
+    auto slice3 = r.removeFromTop(sliderHeight);
+    auto slice4 = r.removeFromTop(sliderHeight);
+
+    gainStepSizeSlider.setBounds (slice1.removeFromLeft  (200));
+    freqStepSizeSlider.setBounds (slice1.removeFromRight (200));
+    gainSlider        .setBounds (slice2.removeFromLeft  (200));
+    gain2Slider       .setBounds (slice2.removeFromRight (200));
+    freqSlider        .setBounds (slice3.removeFromLeft  (200));
+    freq2Slider       .setBounds (slice3.removeFromRight (200));
+    qSlider           .setBounds (slice4.removeFromLeft  (200));
+    q2Slider          .setBounds (slice4.removeFromRight (200));
 }
