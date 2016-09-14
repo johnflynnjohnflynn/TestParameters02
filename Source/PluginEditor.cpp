@@ -38,7 +38,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
 
     LookAndFeel::setDefaultLookAndFeel (&look);
 
-    setSize (400, 800); // remember to set before xtor finished
+    setSize (1000, 700); // remember to set before xtor finished
 }
 
 TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
@@ -53,11 +53,11 @@ void TestParameters02AudioProcessorEditor::paint (Graphics& g)
 
 void TestParameters02AudioProcessorEditor::resized()
 {
-    Rectangle<int> r (getLocalBounds().reduced (10));
+    Rectangle<int> r (getLocalBounds().reduced (5));
 
-    stateComponent.setBounds (r.removeFromTop (225));
+    stateComponent.setBounds (r.removeFromTop (35));
 
-    r.removeFromTop (15); // spacer
+    r.removeFromTop (10); // spacer
 
     const int numSliders {4};
     const int sliderHeight {r.getHeight() / numSliders};
