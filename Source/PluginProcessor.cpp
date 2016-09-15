@@ -35,6 +35,11 @@ TestParameters02AudioProcessor::TestParameters02AudioProcessor()
     addParameter (gain2Param);
     addParameter (freq2Param);
     addParameter (q2Param);
+
+    xn_1.resize (8, 0); // state for up to 8 chans
+    xn_2.resize (8, 0);
+    yn_1.resize (8, 0);
+    yn_2.resize (8, 0);
 }
 
 TestParameters02AudioProcessor::~TestParameters02AudioProcessor()
@@ -95,10 +100,17 @@ void TestParameters02AudioProcessor::changeProgramName (int /*index*/, const Str
 }
 
 //==============================================================================
-void TestParameters02AudioProcessor::prepareToPlay (double /*sampleRate*/, int /*samplesPerBlock*/)
+void TestParameters02AudioProcessor::prepareToPlay (double sampleRate, int /*samplesPerBlock*/)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+
+    xn_1.assign(8, 0); // clear unit delays
+    xn_2.assign(8, 0);
+    yn_1.assign(8, 0);
+    yn_2.assign(8, 0);
+
+    coeffs.setRate (sampleRate);
 }
 
 void TestParameters02AudioProcessor::releaseResources()
@@ -155,12 +167,45 @@ void TestParameters02AudioProcessor::processBlock (AudioSampleBuffer& buffer, Mi
         // ..do something to the data...
     }
     
-    /*std::cout << getParameters()[1]->getName(64) << " " << (String) getParameters()[1]->getValue() << "\n";
+    std::cout << getParameters()[1]->getName(64) << " " << (String) getParameters()[1]->getValue() << "\n";
     std::cout << "*freqStep  " << (String) *freqStepSizeParam << "\n";
     std::cout << getParameters()[3]->getName(64) << " " << (String) getParameters()[3]->getValue() << "\n";
     std::cout << "*freqparam " << (String) *freqParam << "\n";
     std::cout << "*qparam " << (String) *qParam << "\n";
-    std::cout << "\n";*/
+    std::cout << "\n";
+
+    const float freqNorm {freqParam->getRange().convertTo0to1(*freqParam)};
+
+    coeffs.calculate(*gainParam, freqNorm, *qParam);
+
+    const double b0 = coeffs.b0();
+    const double b1 = coeffs.b1();
+    const double b2 = coeffs.b2();
+    const double a1 = coeffs.a1();
+    const double a2 = coeffs.a2();
+
+    float** yn = buffer.getArrayOfWritePointers();
+
+    for (int s = 0; s < buffer.getNumSamples(); ++s)
+    {
+        for (int c = 0; c < totalNumInputChannels; ++c)
+        {
+            yn[c][s] += denormal;
+
+            const double xn = static_cast<double> (yn[c][s]); // perform calcs at double
+
+                                          // direct form 1
+            yn[c][s] = static_cast<float> (b0*xn + b1*xn_1[c] + b2*xn_2[c]
+                                                 - a1*yn_1[c] - a2*yn_2[c]);
+
+            xn_2[c] = xn_1[c];  // advance delay networks
+            xn_1[c] = xn;
+            yn_2[c] = yn_1[c];
+            yn_1[c] = yn[c][s];
+        }
+    }
+
+    denormal *= -1; // avoid removal by DC filter
 }
 
 //==============================================================================

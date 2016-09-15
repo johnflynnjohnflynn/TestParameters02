@@ -16,6 +16,7 @@
 #include "Range.h"
 #include "Parameter.h"
 #include "State.h"
+#include "OrfanidisCalc.h"
 
 //==============================================================================
 /**
@@ -73,6 +74,17 @@ private:
     parameter::ParamStep*           gain2Param;
     parameter::ParamStep*           freq2Param;
     parameter::ParamStep*           q2Param;
+
+    OrfanidisCalc coeffs;
+
+    std::vector<double> xn_1; // state for up to 8 chans
+    std::vector<double> xn_2;
+    std::vector<double> yn_1;
+    std::vector<double> yn_2;
+
+    double denormal {1.0e-16}; // use to keep mantissa from dropping below 1.xxx
+                               // see http://www.earlevel.com/main/2012/12/03/a-note-about-de-normalization/
+                               // also see Falco's DspFilters MathSupplement.h re: 1e-8?
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessor)
 };
