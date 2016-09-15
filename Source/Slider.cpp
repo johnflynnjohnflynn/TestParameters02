@@ -19,6 +19,11 @@ SliderStep::SliderStep (AudioProcessorParameter& p)
     setSliderStyle (SliderStyle::RotaryHorizontalVerticalDrag);
     setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxBelow, false, 75, 16);
 
+    setColour (Slider::textBoxTextColourId,       Colour (0xff373737));                     // Possible move to custom Look???
+    setColour (Slider::textBoxBackgroundColourId, Colour (0xff808080));
+    setColour (Slider::textBoxHighlightColourId,  Colour (0xffffffff));
+    setColour (Slider::textBoxOutlineColourId,    Colour (0x00000000));
+
     if (1 <= p.getNumSteps() && p.getNumSteps() <= 100) // <=100? defaults to 37850784 steps!
     {
         const double normStepSize = 1.0 / (p.getNumSteps());

@@ -66,7 +66,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
 
     LookAndFeel::setDefaultLookAndFeel (&look);
 
-    setSize (1000, 700); // remember to set before xtor finished
+    setSize (1000, 500); // remember to set before xtor finished
 }
 
 TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
@@ -76,14 +76,14 @@ TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
 //==============================================================================
 void TestParameters02AudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll (Colours::lightgrey);
+    g.fillAll (Colour (0xff909090));
 }
 
 void TestParameters02AudioProcessorEditor::resized()
 {
     Rectangle<int> r (getLocalBounds().reduced (5));
 
-    utilityComponent.setBounds (r.removeFromTop (35));
+    utilityComponent.setBounds (r.removeFromTop (25));
 
     const int rows {3};
     const int sliderHeight {r.getHeight() / rows};

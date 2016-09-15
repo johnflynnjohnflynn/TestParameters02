@@ -176,6 +176,16 @@ StateComponent::StateComponent (StateAB& sab, StatePresets& sp)
     addAndMakeVisible (deletePresetButton);
     deletePresetButton.addListener (this);
 
+    
+    toggleABButton.setColour (TextButton::textColourOffId, Colour (0xff373737));    // possibly set in custom Look instead???
+    toggleABButton.setColour (TextButton::buttonColourId, Colour (0xff808080));
+    copyABButton.setColour (TextButton::textColourOffId, Colour (0xff373737));
+    copyABButton.setColour (TextButton::buttonColourId, Colour (0xff808080));
+    savePresetButton.setColour (TextButton::textColourOffId, Colour (0xff373737));
+    savePresetButton.setColour (TextButton::buttonColourId, Colour (0xff808080));
+    deletePresetButton.setColour (TextButton::textColourOffId, Colour (0xff373737));
+    deletePresetButton.setColour (TextButton::buttonColourId, Colour (0xff808080));
+
     //setSize (400, 200); // remember to set before xtor finished
 }
 
@@ -191,11 +201,11 @@ void StateComponent::resized()
     const int numComponents {6};
     const int componentWidth {getWidth() / numComponents};
 
-    toggleABButton    .setBounds (r.removeFromLeft (componentWidth).reduced (5));
-    copyABButton      .setBounds (r.removeFromLeft (componentWidth).reduced (5));
-    presetBox         .setBounds (r.removeFromLeft (componentWidth * 2).reduced (5));
-    savePresetButton  .setBounds (r.removeFromLeft (componentWidth).reduced (5));
-    deletePresetButton.setBounds (r.removeFromLeft (componentWidth).reduced (5));
+    toggleABButton    .setBounds (r.removeFromLeft (componentWidth).reduced (2));
+    copyABButton      .setBounds (r.removeFromLeft (componentWidth).reduced (2));
+    presetBox         .setBounds (r.removeFromLeft (componentWidth * 2).reduced (2));
+    savePresetButton  .setBounds (r.removeFromLeft (componentWidth).reduced (2));
+    deletePresetButton.setBounds (r.removeFromLeft (componentWidth).reduced (2));
 }
 
 void StateComponent::buttonClicked (Button* clickedButton)

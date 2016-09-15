@@ -24,6 +24,11 @@ UtilityComponent::UtilityComponent (state::StateAB& sab, state::StatePresets& sp
     gainStepSizeSlider.setSliderStyle (Slider::SliderStyle::LinearBar); // override default rotary
     freqStepSizeSlider.setSliderStyle (Slider::SliderStyle::LinearBar);
 
+    gainStepSizeSlider.setColour (Slider::backgroundColourId, Colour (0xff808080));     // move to custom Look???
+    gainStepSizeSlider.setColour (Slider::thumbColourId, Colour (0xff606060));
+    freqStepSizeSlider.setColour (Slider::backgroundColourId, Colour (0xff808080));
+    freqStepSizeSlider.setColour (Slider::thumbColourId, Colour (0xff606060));
+
     addAndMakeVisible (gainStepSizeSlider);
     addAndMakeVisible (freqStepSizeSlider);
 }
@@ -36,8 +41,8 @@ void UtilityComponent::resized()
 
     stateComponent.setBounds (r.removeFromLeft (componentWidth * 6));
 
-    gainStepSizeSlider.setBounds (r.removeFromLeft (componentWidth).reduced (5));
-    freqStepSizeSlider.setBounds (r.reduced (5));
+    gainStepSizeSlider.setBounds (r.removeFromLeft (componentWidth).reduced (2));
+    freqStepSizeSlider.setBounds (r.reduced (2));
 }
 
 //==============================================================================
