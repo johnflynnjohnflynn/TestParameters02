@@ -42,14 +42,14 @@ void PluginProcessorTests::runTest()
         expectDoesNotThrow (state::saveStateToXml(proc, xml));
 
         beginTest ("StateAB: Check parameter was stored");
-        expect (xml.getDoubleAttribute ("gainID") == 0.5);
+        expect (xml.getDoubleAttribute ("gain1ID") == 0.5);
         beginTest ("StateAB: Check first parameter was stored");
         expect (test::equalApprox (xml.getDoubleAttribute ("gainStepID"), 0.152542));
         beginTest ("StateAB: Check last parameter was stored");
         expect (xml.getDoubleAttribute ("q2ID") == 0.5);
 
         xml.setAttribute("gainStepID", 0.11f);   // 0. change parameters in xml
-        xml.setAttribute("gainID", 0.75f);       // 2.
+        xml.setAttribute("gain1ID", 0.75f);       // 2.
         xml.setAttribute("q2ID", 0.93f);         // 7.
 
         beginTest ("StateAB: Load state from changed xml");

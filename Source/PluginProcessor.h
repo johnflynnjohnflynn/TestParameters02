@@ -69,14 +69,36 @@ private:
     //==============================================================================
     parameter::ParamStepBroadcast*  gainStepSizeParam;   // Raw pointers here. Processor's
     parameter::ParamStepBroadcast*  freqStepSizeParam;   // managedParameters OwnedArray
-    parameter::ParamStepListenGain* gainParam;           // owns and manages. (See xtor.)
-    parameter::ParamStepListenFreq* freqParam;
-    parameter::ParamStep*           qParam;
-    parameter::ParamStep*           gain2Param;
-    parameter::ParamStep*           freq2Param;
+                                                         // owns and manages. (See xtor.)
+    parameter::ParamStepListenGain* gain1Param;
+    parameter::ParamStepListenFreq* freq1Param;
+    parameter::ParamStep*           q1Param;
+    parameter::ParamStepListenGain* gain2Param;
+    parameter::ParamStepListenFreq* freq2Param;
     parameter::ParamStep*           q2Param;
+    parameter::ParamStepListenGain* gain3Param;
+    parameter::ParamStepListenFreq* freq3Param;
+    parameter::ParamStep*           q3Param;
+    parameter::ParamStepListenGain* gain4Param;
+    parameter::ParamStepListenFreq* freq4Param;
+    parameter::ParamStep*           q4Param;
+    parameter::ParamStepListenGain* gain5Param;
+    parameter::ParamStepListenFreq* freq5Param;
+    parameter::ParamStep*           q5Param;
+    parameter::ParamStepListenGain* gain6Param;
+    parameter::ParamStepListenFreq* freq6Param;
+    parameter::ParamStep*           q6Param;
+    parameter::ParamStepListenGain* gain7Param;
+    parameter::ParamStepListenFreq* freq7Param;
+    parameter::ParamStep*           q7Param;
 
     filter::ParametricBand band1;
+    filter::ParametricBand band2;
+    filter::ParametricBand band3;
+    filter::ParametricBand band4;
+    filter::ParametricBand band5;
+    filter::ParametricBand band6;
+    filter::ParametricBand band7;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestParameters02AudioProcessor)
 };

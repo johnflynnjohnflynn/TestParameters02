@@ -35,12 +35,27 @@ private:
     //==============================================================================
     utility::UtilityComponent utilityComponent;
 
-    slider::SliderStep gainSlider;
-    slider::SliderStep freqSlider;
-    slider::SliderStep qSlider;
+    slider::SliderStep gain1Slider;
+    slider::SliderStep freq1Slider;
+    slider::SliderStep q1Slider;
     slider::SliderStep gain2Slider;
     slider::SliderStep freq2Slider;
     slider::SliderStep q2Slider;
+    slider::SliderStep gain3Slider;
+    slider::SliderStep freq3Slider;
+    slider::SliderStep q3Slider;
+    slider::SliderStep gain4Slider;
+    slider::SliderStep freq4Slider;
+    slider::SliderStep q4Slider;
+    slider::SliderStep gain5Slider;
+    slider::SliderStep freq5Slider;
+    slider::SliderStep q5Slider;
+    slider::SliderStep gain6Slider;
+    slider::SliderStep freq6Slider;
+    slider::SliderStep q6Slider;
+    slider::SliderStep gain7Slider;
+    slider::SliderStep freq7Slider;
+    slider::SliderStep q7Slider;
 
     look::CustomLook look;
 
