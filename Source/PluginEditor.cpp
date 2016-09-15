@@ -55,17 +55,21 @@ void TestParameters02AudioProcessorEditor::resized()
 
     utilityComponent.setBounds (r.removeFromTop (35));
 
-    const int numSliders {3};
-    const int sliderHeight {r.getHeight() / numSliders};
+    const int rows {3};
+    const int sliderHeight {r.getHeight() / rows};
+
+    const int cols {2};
+    const int sliderWidth {r.getWidth() / cols};
 
     auto slice1 = r.removeFromTop(sliderHeight);
-    auto slice2 = r.removeFromTop(sliderHeight);
-    auto slice3 = r.removeFromTop(sliderHeight);
+    gainSlider        .setBounds (slice1.removeFromLeft (sliderWidth).reduced (10));
+    gain2Slider       .setBounds (slice1.reduced (10));
 
-    gainSlider        .setBounds (slice1.removeFromLeft  (200).reduced (10));
-    gain2Slider       .setBounds (slice1.removeFromRight (200).reduced (10));
-    freqSlider        .setBounds (slice2.removeFromLeft  (200).reduced (10));
-    freq2Slider       .setBounds (slice2.removeFromRight (200).reduced (10));
-    qSlider           .setBounds (slice3.removeFromLeft  (200).reduced (10));
-    q2Slider          .setBounds (slice3.removeFromRight (200).reduced (10));
+    auto slice2 = r.removeFromTop(sliderHeight);
+    freqSlider        .setBounds (slice2.removeFromLeft (sliderWidth).reduced (10));
+    freq2Slider       .setBounds (slice2.reduced (10));
+    
+    auto slice3 = r.removeFromTop(sliderHeight);
+    qSlider           .setBounds (slice3.removeFromLeft (sliderWidth).reduced (10));
+    q2Slider          .setBounds (slice3.reduced (10));
 }
