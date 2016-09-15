@@ -21,11 +21,8 @@ UtilityComponent::UtilityComponent (state::StateAB& sab, state::StatePresets& sp
 {
     addAndMakeVisible (stateComponent);
 
-    gainStepSizeSlider.setSliderStyle (Slider::SliderStyle::IncDecButtons); // override default rotary
-    freqStepSizeSlider.setSliderStyle (Slider::SliderStyle::IncDecButtons);
-
-    gainStepSizeSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxLeft, false, 75, 32);
-    freqStepSizeSlider.setTextBoxStyle (Slider::TextEntryBoxPosition::TextBoxLeft, false, 75, 32);
+    gainStepSizeSlider.setSliderStyle (Slider::SliderStyle::LinearBar); // override default rotary
+    freqStepSizeSlider.setSliderStyle (Slider::SliderStyle::LinearBar);
 
     addAndMakeVisible (gainStepSizeSlider);
     addAndMakeVisible (freqStepSizeSlider);
