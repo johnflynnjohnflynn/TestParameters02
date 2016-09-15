@@ -81,7 +81,7 @@ void TestParameters02AudioProcessorEditor::paint (Graphics& g)
 
 void TestParameters02AudioProcessorEditor::resized()
 {
-    Rectangle<int> r (getLocalBounds().reduced (5));
+    Rectangle<int> r (getLocalBounds().reduced (2));
 
     utilityComponent.setBounds (r.removeFromTop (25));
 
