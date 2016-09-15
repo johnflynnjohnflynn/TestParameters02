@@ -53,9 +53,7 @@ void TestParameters02AudioProcessorEditor::resized()
 {
     Rectangle<int> r (getLocalBounds().reduced (5));
 
-    auto topBar = r.removeFromTop (35);
-
-    utilityComponent.setBounds (topBar);
+    utilityComponent.setBounds (r.removeFromTop (35));
 
     r.removeFromTop (10); // spacer
 
