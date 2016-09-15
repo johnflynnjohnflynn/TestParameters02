@@ -179,7 +179,7 @@ StateComponent::StateComponent (StateAB& sab, StatePresets& sp)
     //setSize (400, 200); // remember to set before xtor finished
 }
 
-void StateComponent::paint (Graphics& g)
+void StateComponent::paint (Graphics& /*g*/)
 {
     //g.fillAll (Colours::lightgrey);
 }

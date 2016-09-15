@@ -16,9 +16,9 @@ void look::CustomLook::drawRotarySlider (Graphics& g,
                                          int width,
                                          int height,
                                          float sliderPos0to1,
-                                         float rotaryStartAngle,
-                                         float rotaryEndAngle,
-                                         Slider& slider)
+                                         float /*rotaryStartAngle*/,
+                                         float /*rotaryEndAngle*/,
+                                         Slider& /*slider*/)
 {
     // const bool isMouseOver = slider.isMouseOverOrDragging() && slider.isEnabled();
 
