@@ -45,6 +45,8 @@
       <FILE id="kOhVWk" name="StateTest.cpp" compile="1" resource="0" file="Source/StateTest.cpp"/>
       <FILE id="Z4kR9S" name="Test.cpp" compile="1" resource="0" file="Source/Test.cpp"/>
       <FILE id="NCzONt" name="Test.h" compile="0" resource="0" file="Source/Test.h"/>
+      <FILE id="Qiybr3" name="Utility.cpp" compile="1" resource="0" file="Source/Utility.cpp"/>
+      <FILE id="bJDTeX" name="Utility.h" compile="0" resource="0" file="Source/Utility.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

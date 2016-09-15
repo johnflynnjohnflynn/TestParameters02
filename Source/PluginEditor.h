@@ -16,6 +16,7 @@
 #include "Slider.h"
 #include "State.h"
 #include "Look.h"
+#include "Utility.h"
 
 //==============================================================================
 /**
@@ -32,10 +33,8 @@ public:
 
 private:
     //==============================================================================
-    state::StateComponent stateComponent;
+    utility::UtilityComponent utilityComponent;
 
-    slider::SliderStep gainStepSizeSlider;
-    slider::SliderStep freqStepSizeSlider;
     slider::SliderStep gainSlider;
     slider::SliderStep freqSlider;
     slider::SliderStep qSlider;
