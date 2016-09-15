@@ -55,8 +55,6 @@ void TestParameters02AudioProcessorEditor::resized()
 
     utilityComponent.setBounds (r.removeFromTop (35));
 
-    r.removeFromTop (10); // spacer
-
     const int numSliders {3};
     const int sliderHeight {r.getHeight() / numSliders};
 
