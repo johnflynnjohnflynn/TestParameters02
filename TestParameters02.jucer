@@ -13,6 +13,8 @@
               defines="JF_UNIT_TESTS=1">
   <MAINGROUP id="y6Q9xL" name="TestParameters02">
     <GROUP id="{7C58D1EA-5521-0A52-C35F-7C375168255A}" name="Resources">
+      <FILE id="D7iph7" name="BalanceEQ_01-fs8.png" compile="0" resource="1"
+            file="Resources/BalanceEQ_01-fs8.png"/>
       <FILE id="X6RTPM" name="knob05LargeForeground4-fs8.png" compile="0"
             resource="1" file="Resources/knob05LargeForeground4-fs8.png"/>
       <FILE id="k4afmN" name="markerFilmstrip-fs8.png" compile="0" resource="1"

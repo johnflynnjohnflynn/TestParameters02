@@ -38,6 +38,8 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
       gain7Slider        {*p.getParameters()[20]},
       freq7Slider        {*p.getParameters()[21]},
       q7Slider           {*p.getParameters()[22]},
+      backgroundImage {ImageCache::getFromMemory (BinaryData::BalanceEQ_01fs8_png,
+                                                  BinaryData::BalanceEQ_01fs8_pngSize)},
       processor (p)
 {
     addAndMakeVisible (&utilityComponent);
@@ -76,7 +78,7 @@ TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
 //==============================================================================
 void TestParameters02AudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll (Colour (0xff909090));
+    g.drawImage (backgroundImage, 0, 0, 1000, 500, 0, 0, 2000, 1000);
 }
 
 void TestParameters02AudioProcessorEditor::resized()
@@ -84,6 +86,9 @@ void TestParameters02AudioProcessorEditor::resized()
     Rectangle<int> r (getLocalBounds().reduced (2));
 
     utilityComponent.setBounds (r.removeFromTop (25));
+
+    r.removeFromTop (25);  // space for UI labels and logos
+    r.removeFromLeft (25);
 
     const int rows {3};
     const int sliderHeight {r.getHeight() / rows};

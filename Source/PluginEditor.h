@@ -57,6 +57,8 @@ private:
     slider::SliderStep freq7Slider;
     slider::SliderStep q7Slider;
 
+    Image backgroundImage;
+
     look::CustomLook look;
 
     TestParameters02AudioProcessor& processor;
