@@ -38,8 +38,8 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
       gain7Slider        {*p.getParameters()[20]},
       freq7Slider        {*p.getParameters()[21]},
       q7Slider           {*p.getParameters()[22]},
-      backgroundImage {ImageCache::getFromMemory (BinaryData::BalanceEQ_01fs8_png,
-                                                  BinaryData::BalanceEQ_01fs8_pngSize)},
+      backgroundImage {ImageCache::getFromMemory (BinaryData::BalanceEQ_02fs8_png,
+                                                  BinaryData::BalanceEQ_02fs8_pngSize)},
       processor (p)
 {
     addAndMakeVisible (&utilityComponent);
@@ -68,7 +68,7 @@ TestParameters02AudioProcessorEditor::TestParameters02AudioProcessorEditor (Test
 
     LookAndFeel::setDefaultLookAndFeel (&look);
 
-    setSize (1000, 500); // remember to set before xtor finished
+    setSize (900, 500); // remember to set before xtor finished
 }
 
 TestParameters02AudioProcessorEditor::~TestParameters02AudioProcessorEditor()
@@ -96,30 +96,32 @@ void TestParameters02AudioProcessorEditor::resized()
     const int cols {7};
     const int sliderWidth {r.getWidth() / cols};
 
+    const int border {5};
+
     auto slice1 = r.removeFromTop(sliderHeight);
-    gain1Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (10));
-    gain2Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (10));
-    gain3Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (10));
-    gain4Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (10));
-    gain5Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (10));
-    gain6Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (10));
-    gain7Slider.setBounds (slice1.reduced (10));
+    gain1Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (border));
+    gain2Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (border));
+    gain3Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (border));
+    gain4Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (border));
+    gain5Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (border));
+    gain6Slider.setBounds (slice1.removeFromLeft (sliderWidth).reduced (border));
+    gain7Slider.setBounds (slice1.reduced (border));
 
     auto slice2 = r.removeFromTop(sliderHeight);
-    freq1Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (10));
-    freq2Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (10));
-    freq3Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (10));
-    freq4Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (10));
-    freq5Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (10));
-    freq6Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (10));
-    freq7Slider.setBounds (slice2.reduced (10));
+    freq1Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (border));
+    freq2Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (border));
+    freq3Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (border));
+    freq4Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (border));
+    freq5Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (border));
+    freq6Slider.setBounds (slice2.removeFromLeft (sliderWidth).reduced (border));
+    freq7Slider.setBounds (slice2.reduced (border));
     
     auto slice3 = r.removeFromTop(sliderHeight);
-    q1Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (10));
-    q2Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (10));
-    q3Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (10));
-    q4Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (10));
-    q5Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (10));
-    q6Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (10));
-    q7Slider.setBounds (slice3.reduced (10));
+    q1Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (border));
+    q2Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (border));
+    q3Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (border));
+    q4Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (border));
+    q5Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (border));
+    q6Slider.setBounds (slice3.removeFromLeft (sliderWidth).reduced (border));
+    q7Slider.setBounds (slice3.reduced (border));
 }
